@@ -1,15 +1,46 @@
-import socket from './socket';
+import Socket from './socket';
 import http from "./httpServices";
 
-const endpoint = "http://localhost:5000/api/users";
+const apiEndpoint = "http://localhost:4000/api";
 
-export const register = user => {
-    //return http.post(endpoint, {username: user});
-    socket.emit("user login", user);  
+class UserService {
+  static ioSocket = Socket;
+  static socket;
+
+  /**Observer Pattern */
+  static update = () => {
+    this.socket = this.ioSocket.get();
+  };
+
+  static registerUser = (userData) => {
+    return http.post(`${apiEndpoint}/user/register`, userData);
+  };
+
+  static loginUser = (userData, registerToken) => {
+    return http.post(`${apiEndpoint}/auth`, userData, {
+      headers: {
+        "x-auth-token": registerToken,
+      },
+    });
+  };
+
+  static connectUser = (user) => {
+    this.socket.volatile.emit("user_login", user);
+  };
+
+  static disconnect = () => {
+    this.socket.disconnect();
+  };
+
+  static getAllUsers = (setAllUsers) => {
+    this.socket.on("all_users", (users) => {
+      setAllUsers(users);
+    });
+  };
+
+  static updateUserStatus = (status) => {
+    this.socket.emit("update_status", status);
+  };
 }
 
-export const getAllUsers = callBack => {
-    socket.on("all users", users => {
-        callBack(users);
-    } )
-}
+export default UserService;

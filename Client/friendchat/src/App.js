@@ -1,64 +1,75 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
+import { useStoreState, useStoreActions, useStoreRehydrated } from "easy-peasy";
 import Col from "react-bootstrap/Col";
-import ChatBox from './components/chatbox/ChatBox';
-import Login from './components/login/login';
-import UserList from './components/users/userList';
-import { register, getAllUsers } from './services/userServices';
-import { getMessage, sendMessage } from './services/messageService';
-import Input from './components/input/input';
+import Auth from "./components/auth/Auth";
+import Users from "./components/users/Users";
+import Profile from "./components/profile/Profile";
+import Rooms from "./components/rooms/Rooms";
+import UserService from "./services/userServices";
 
-function App() {
-  //const socket = io(URL);
-  const [user, setUser] = useState(null);
-  const [allUsers, setAllUsers] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [currentMessage, setCurrentMessage] = useState("");
+function App() {  
+  const isRehydrated = useStoreRehydrated();
+  const user = useStoreState(state => state.user);
+  const rooms = useStoreState((state) => state.getRooms);
+  const { addRoom, forwardMessage } = useStoreActions(
+    (actions) => actions
+  );
+  const hasRoom = useStoreState((state) => state.hasRoom);
 
+  const handleCheckPacket = (packet) => {
+    const { sender, to: receiver } = packet;
 
-  console.log("hello");
-  const handleLogin = user => {
-    try {
-      setUser(user);
-      register(user);
-    } catch (error) {
-      console.log(error);
+    if (receiver === "#public")
+      return forwardMessage({ key: receiver, msg: packet });
+
+    if (sender === user.username) {
+      if (hasRoom(receiver))
+        return forwardMessage({ key: receiver, msg: packet });
+
+      return addRoom({ key: receiver, roomId: receiver, msg: packet });
     }
+
+    if (!hasRoom(sender)) {
+      return addRoom({ key: sender, roomId: sender, msg: packet });
+    } else forwardMessage({ key: sender, msg: packet });
   };
 
-  const handleSendMessage = msg => {
-    sendMessage({ sender: user.username, text: msg });
-  }
+  useEffect(() => {
+    addRoom({ key: "#public", roomId: "#public" });
+  }, []);
 
   useEffect(() => {
-    getAllUsers(setAllUsers);
-  }, [allUsers]);
-
-  useEffect(() => {
-    getMessage(setCurrentMessage);
-  }, [messages]);
-
-  useEffect(() => {
-    if (currentMessage) {
-      const allMessages = [...messages, currentMessage];
-      setMessages(allMessages);
+    if (user) {
+      UserService.connectUser(user);
     }
-  }, [currentMessage]);
+  }, [user]);
 
-  if (!user) return <Login onLogin={handleLogin} />
+  if (!isRehydrated) return <div>Loading...</div>
+  if (!user) return <Auth />;
 
   return (
     <>
-      <Col sm={3} style={{marginRight: '10px'}}>
-        <UserList users={allUsers} />
+      <Col sm={3}>
+        <div className="side-bar rounded-top bg-light">
+          <Profile />
+          <Users />
+        </div>
       </Col>
-
-      <Col sm={true} className='chat-box'>
-        <ChatBox messages={messages} />
-        <Input onSubmit={handleSendMessage}/>
+      <Col sm={9}>
+        <div className="chat-section">
+          <Rooms rooms={rooms} onCheckPacket={handleCheckPacket} />
+        </div>
       </Col>
     </>
   );
 }
 
 export default App;
+
+/* { sender: user.username,
+     payload: {type: String,
+               data: String},
+     roomId: "#public" }*/
+
+     // abcd1234

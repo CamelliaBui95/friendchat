@@ -1,20 +1,16 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import "./login.css";
+import "./register.css";
 import { useState, useEffect } from "react";
-import  UserService from "../../services/userServices";
-import Joi from 'joi';
+import Joi from "joi";
 
-const Login = ({ validate, validateProperty, onLogin, user, registerToken }) => {
-  /*const [username, setUsername] = useState("");
-  const {onLogin, setLoginError} = useStoreActions(actions => actions); 
-  const loginError = useStoreState(state => state.loginError);*/
-
-  const [userData, setUserData] = useState({ email: "", password: "" });
+const Register = ({onRegister, validate, validateProperty}) => {
+  const [userData, setUserData] = useState({username: "", email: "", password: ""});
   const [errors, setErrors] = useState({});
 
   const schema = {
+    username: Joi.string().min(3).max(50).required(),
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .min(5)
@@ -25,41 +21,47 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken }) => 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Client-side validation
+
     const errors = validate(userData, schema);
+    
     if (errors) return setErrors(errors);
 
-    onLogin(userData, registerToken);
-
+    onRegister(userData);
   };
 
-  const handleChange = ({currentTarget: input}) => {
-    const inputErrors = {...errors};
+  const handleChange = ({ currentTarget: input }) => {
+    const inputErrors = { ...errors };
 
     const errorMessage = validateProperty(input, schema);
+
     if (errorMessage) inputErrors[input.name] = errorMessage;
     else delete inputErrors[input.name];
 
     const data = { ...userData };
     data[input.name] = input.value;
 
-    setUserData(data);
     setErrors(inputErrors);
+    setUserData(data);
   };
 
-
-  if (user) return (
-    <div className="login dialog-box">
-      <h2>Hello, {user.username} !</h2>
-      <Button variant="primary" type="submit" onClick={() => onLogin(user)}>
-        Join Chat
-      </Button>
-    </div>
-  );
-
   return (
-    <Form className="login" onSubmit={(e) => handleSubmit(e)}>
-      <h2>Log In</h2>
+    <Form className="register" onSubmit={(e) => handleSubmit(e)}>
+      <h2>Register</h2>
+
+      <Form.Group className="mt-3" controlId="username">
+        <Form.Label>Username</Form.Label>
+        <Form.Control
+          className="shadow-none"
+          type="text"
+          value={userData.username}
+          name="username"
+          onChange={(e) => handleChange(e)}
+        />
+        {errors.username && (
+          <Alert variant="secondary error-message">{errors.username}</Alert>
+        )}
+      </Form.Group>
+
       <Form.Group className="mt-3" controlId="email">
         <Form.Label>Email</Form.Label>
         <Form.Control
@@ -93,10 +95,10 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken }) => 
         type="submit"
         disabled={validate(userData, schema)}
       >
-        Join Chat
+        Sign Up
       </Button>
     </Form>
   );
 };
 
-export default Login;
+export default Register;

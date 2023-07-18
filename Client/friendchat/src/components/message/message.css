@@ -1,3 +1,21 @@
-.chatBox li {
+.chat-window li {
     border: none;
+    padding: 0 0.5em 0.3em 0;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.bubble {
+    padding: 0.27em 0.77em;
+    border-radius: 1em;
+    max-width: 50%;
+}
+
+.bubble-left {
+    background-color: cornflowerblue;
+    color: #fff
+}
+
+.bubble-right {
+    background-color: #efefef;
 }

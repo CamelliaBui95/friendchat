@@ -1,26 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import App from './App';
-import ErrorPage from './routes/errorPage';
-import Root from './routes/root';
+import App from "./App";
+import Root from "./components/Root";
+import { createStore, StoreProvider, persist } from "easy-peasy";
+import model from "./model";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root children={<App/>}/>,
-    errorElement: <ErrorPage/>
-  },
-]);
+const store = createStore(persist(model, { allow: ["user"] }));
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router}/>
-  </React.StrictMode>
+  <StoreProvider store={store}>
+    <Root children={<App/> } />
+  </StoreProvider>
 );
-
-
