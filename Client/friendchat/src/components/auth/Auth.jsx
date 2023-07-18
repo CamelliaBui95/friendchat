@@ -11,8 +11,8 @@ const Auth = () => {
     const { user } = useStoreState(state => state);
     const { setUser } = useStoreActions(actions => actions);
     const [userData, setUserData] = useState();
+    const [allUsernames, setAllUsernames] = useState();
     const [tokens, setTokens] = useState({});
-    const [serverError, setServerError] = useState({});
 
     const validate = (userData, schema) => {
         const joiSchema = Joi.object(schema);
@@ -52,7 +52,7 @@ const Auth = () => {
 
             Socket.pollSocket(authToken);
         } catch (ex) {
-            setServerError({ message: ex.response.data });
+            console.log(ex.response.data);
         }
     }
 
@@ -66,7 +66,8 @@ const Auth = () => {
             registerToken
           );
         } catch (ex) {
-          setServerError({ message: ex.response.data });
+          //setServerError({ message: ex.response.data });
+          console.log(ex.response.data);
         }
     }
 
@@ -92,18 +93,26 @@ const Auth = () => {
     }, []);
 
     useEffect(() => {
-       if(serverError.message) 
-        alert(serverError.message);
-    }, [serverError])
+      //  if(serverError.message)
+      //   alert(serverError.message);
+      const fetchAllUsernames = async () => {
+        const response = await UserService.getAllUsernames();
+        const {data} = response;
+        setAllUsernames(data);
+      };
+
+      fetchAllUsernames()
+ 
+    }, [])
 
     if (!tokens.registerToken)
-        return <Register validate={validate} validateProperty={validateProperty} onRegister={handleRegister} />;
+      return <Register validate={validate} validateProperty={validateProperty} onRegister={handleRegister} allUsernames={allUsernames} />;
 
     return (
       <Login
         validate={validate}
         validateProperty={validateProperty}
-        onLogin={(userData && tokens.authToken )? handleLoginWithAuth : handleLogin}
+        onLogin={(userData && tokens.authToken) ? handleLoginWithAuth : handleLogin}
         user={userData}
         registerToken={tokens.registerToken}
       />

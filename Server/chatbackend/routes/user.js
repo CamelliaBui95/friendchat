@@ -3,6 +3,10 @@ const { User, validateUser } = require("../models/user");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
+router.get("/all", async (req, res) => {
+  let allUsers = await User.find().select("username").sort("asc");
+  res.send(allUsers);
+});
 
 router.post("/register", async (req, res) => {
   /**User Request Validation */

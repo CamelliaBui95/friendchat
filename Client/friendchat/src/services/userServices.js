@@ -24,6 +24,10 @@ class UserService {
     });
   };
 
+  static getAllUsernames = () => {
+    return http.get(`${apiEndpoint}/user/all`);
+  }
+
   static connectUser = (user) => {
     this.socket.volatile.emit("user_login", user);
   };

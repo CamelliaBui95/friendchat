@@ -5,18 +5,19 @@ import "./register.css";
 import { useState, useEffect } from "react";
 import Joi from "joi";
 
-const Register = ({onRegister, validate, validateProperty}) => {
+const Register = ({onRegister, validate, validateProperty, allUsernames}) => {
   const [userData, setUserData] = useState({username: "", email: "", password: ""});
   const [errors, setErrors] = useState({});
 
   const schema = {
-    username: Joi.string().min(3).max(50).required(),
+    username: Joi.string().min(3).max(50).required().label("Username"),
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .min(5)
       .max(50)
-      .required(),
-    password: Joi.string().min(8).max(255).required(),
+      .required()
+      .label("Email"),
+    password: Joi.string().min(8).max(255).required().label("Password"),
   };
 
   const handleSubmit = async (e) => {
@@ -37,12 +38,21 @@ const Register = ({onRegister, validate, validateProperty}) => {
     if (errorMessage) inputErrors[input.name] = errorMessage;
     else delete inputErrors[input.name];
 
+    if (input.name === "username")
+      if (!isUsernameAvailable(input.value))
+        inputErrors["username"] = "Username already exists";
+    else delete inputErrors[input.name];
+
     const data = { ...userData };
     data[input.name] = input.value;
 
     setErrors(inputErrors);
     setUserData(data);
   };
+
+  const isUsernameAvailable = username => {
+    return allUsernames.find(user => user.username === username) === undefined;
+  }
 
   return (
     <Form className="register" onSubmit={(e) => handleSubmit(e)}>
@@ -93,7 +103,7 @@ const Register = ({onRegister, validate, validateProperty}) => {
       <Button
         variant="primary mt-3"
         type="submit"
-        disabled={validate(userData, schema)}
+        disabled={validate(userData, schema) || Object.keys(errors).length !== 0}
       >
         Sign Up
       </Button>
