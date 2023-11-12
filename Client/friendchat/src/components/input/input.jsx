@@ -9,6 +9,7 @@ import Emojis from "../emojis/Emojis";
 const Input = ({ onSubmit }) => {
   const [value, setValue] = useState("");
   const [file, setFile] = useState(null);
+  const [emojisDisplay, setEmojisDisplay] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +23,6 @@ const Input = ({ onSubmit }) => {
   };
 
   useEffect(() => {
-    console.log("in here")
     if (file)
       fileToDataUrl(file).then(dataUrl => {
         if (/^image/.test(file.type)) 
@@ -34,7 +34,7 @@ const Input = ({ onSubmit }) => {
 
   return (
     <Form onSubmit={(e) => handleSubmit(e)}>
-      <Emojis></Emojis>
+      <Emojis display={emojisDisplay}></Emojis>
       <InputGroup className="input">
         <Form.Control
           className="shadow-none"
@@ -50,7 +50,7 @@ const Input = ({ onSubmit }) => {
         >
           Choose file
         </Button>
-        <Button variant="outline-secondary" id="button-addon2" >
+        <Button variant="outline-secondary" id="button-addon2" onClick={() => setEmojisDisplay(!emojisDisplay)}>
           Emojis
         </Button>
         <Button variant="outline-secondary" id="button-addon2" type="submit">
