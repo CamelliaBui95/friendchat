@@ -7,6 +7,10 @@
     content: none;
 }
 
+.users li {
+    cursor: pointer;
+}
+
 .status {
     font-size: 1rem;
     margin-right: 10px;
