@@ -9,6 +9,7 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 const user = require('./routes/user');
 const auth = require('./routes/auth');
+//const { getSslConfigObj } = require("./utils/utils");
 const { userLoginHandlers, updateUserHandlers } = require("./handlers/userHandlers");
 const { messagesDelivery } = require('./handlers/messagesHandlers');
 
@@ -24,6 +25,11 @@ mongoose
   })
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB...", err));
+
+/*const server = https.createServer(
+  getSslConfigObj(__dirname),
+  app
+);*/
 
 const io = new Server(server, { cors: { origin: '*' } });
 

@@ -27,18 +27,20 @@ const Register = ({onRegister, validate, validateProperty, allUsernames}) => {
     
     if (errors) return setErrors(errors);
 
-    onRegister(userData);
+    const serverErr = await onRegister(userData);
+    if (serverErr) setErrors(serverErr);
+
   };
 
   const handleChange = ({ currentTarget: input }) => {
     const inputErrors = { ...errors };
 
     const errorMessage = validateProperty(input, schema);
-
+  
     if (errorMessage) inputErrors[input.name] = errorMessage;
     else delete inputErrors[input.name];
 
-    if (input.name === "username")
+    if (input.name === "username" && !inputErrors.hasOwnProperty("username"))
       if (!isUsernameAvailable(input.value))
         inputErrors["username"] = "Username already exists";
     else delete inputErrors[input.name];

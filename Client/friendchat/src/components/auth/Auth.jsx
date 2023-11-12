@@ -65,9 +65,11 @@ const Auth = () => {
             { email: userData.email, password: userData.password },
             registerToken
           );
+          return null;
         } catch (ex) {
           //setServerError({ message: ex.response.data });
           console.log(ex.response.data);
+          return {"email" : ex.response.data};
         }
     }
 
