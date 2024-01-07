@@ -7,7 +7,7 @@ const userLoginHandlers = (io, socket) => {
     /** user = {username: String, id: Number, isInPublic: boolean} */
     console.log("a user login")
     const userId = socket.user._id;
-    const user = await User.findById(userId); // find user with provided id in db
+    const user = await User.findById(userId);
     user.status = userData.status;
     await user.save();
 

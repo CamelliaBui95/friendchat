@@ -5,7 +5,7 @@ import "./register.css";
 import { useState, useEffect } from "react";
 import Joi from "joi";
 
-const Register = ({onRegister, validate, validateProperty, allUsernames}) => {
+const Register = ({onRegister, validate, validateProperty, allUsernames, onLogin}) => {
   const [userData, setUserData] = useState({username: "", email: "", password: ""});
   const [errors, setErrors] = useState({});
 
@@ -70,7 +70,9 @@ const Register = ({onRegister, validate, validateProperty, allUsernames}) => {
           onChange={(e) => handleChange(e)}
         />
         {errors.username && (
-          <Alert variant="secondary error-message">{errors.username}</Alert>
+          <Alert variant="secondary error-message" className="mt-2">
+            {errors.username}
+          </Alert>
         )}
       </Form.Group>
 
@@ -84,7 +86,9 @@ const Register = ({onRegister, validate, validateProperty, allUsernames}) => {
           onChange={(e) => handleChange(e)}
         />
         {errors.email && (
-          <Alert variant="secondary error-message">{errors.email}</Alert>
+          <Alert variant="secondary error-message" className="mt-2">
+            {errors.email}
+          </Alert>
         )}
       </Form.Group>
 
@@ -99,16 +103,22 @@ const Register = ({onRegister, validate, validateProperty, allUsernames}) => {
         />
       </Form.Group>
       {errors.password && (
-        <Alert variant="secondary error-message">{errors.password}</Alert>
+        <Alert variant="secondary error-message" className="mt-2">
+          {errors.password}
+        </Alert>
       )}
 
       <Button
         variant="primary mt-3"
+        style={{marginRight: "1rem"}}
         type="submit"
-        disabled={validate(userData, schema) || Object.keys(errors).length !== 0}
+        disabled={
+          validate(userData, schema) || Object.keys(errors).length !== 0
+        }
       >
         Sign Up
       </Button>
+      <Button variant="outline-primary mt-3" onClick={onLogin}>Log In</Button>
     </Form>
   );
 };

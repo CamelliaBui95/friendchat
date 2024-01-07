@@ -16,6 +16,10 @@ class UserService {
     return http.post(`${apiEndpoint}/user/register`, userData);
   };
 
+  static getUserToken = (userData) => {
+    return http.post(`${apiEndpoint}/user/getUserToken`, userData);
+  }
+
   static loginUser = (userData, registerToken) => {
     return http.post(`${apiEndpoint}/auth`, userData, {
       headers: {
@@ -33,7 +37,7 @@ class UserService {
   };
 
   static disconnect = () => {
-    this.socket.disconnect();
+    if (this.ioSocket.getIsConnected()) this.socket.disconnect();
   };
 
   static getAllUsers = (setAllUsers) => {

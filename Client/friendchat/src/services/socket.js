@@ -5,6 +5,7 @@ const URL = `http://localhost:4000`;
 class Socket {
   static socket; /**Singleton Pattern*/
   static handlers = [];
+  static isConnected = false;
 
   static pollSocket = (authToken) => {
     this.socket = io(URL, {
@@ -29,11 +30,14 @@ class Socket {
 
   static get = () => this.socket;
 
-  static isConnected = (callBack) => {
+  static hasConnected = (callBack) => {
     this.socket.on("socket_connected", () => {
       callBack(true);
+      this.isConnected = true;
     });
   };
+
+  static getIsConnected = () => this.isConnected;
 }
 
 export default Socket;

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import  UserService from "../../services/userServices";
 import Joi from 'joi';
 
-const Login = ({ validate, validateProperty, onLogin, user, registerToken }) => {
+const Login = ({ validate, validateProperty, onLogin, user, registerToken, onRegister }) => {
   /*const [username, setUsername] = useState("");
   const {onLogin, setLoginError} = useStoreActions(actions => actions); 
   const loginError = useStoreState(state => state.loginError);*/
@@ -25,12 +25,12 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken }) => 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Client-side validation
+
     const errors = validate(userData, schema);
     if (errors) return setErrors(errors);
 
-    onLogin(userData, registerToken);
-
+    const error = await onLogin(userData, registerToken);
+    if (error) setErrors({password: "Invalid Email or Password"});
   };
 
   const handleChange = ({currentTarget: input}) => {
@@ -70,7 +70,9 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken }) => 
           onChange={(e) => handleChange(e)}
         />
         {errors.email && (
-          <Alert variant="secondary error-message">{errors.email}</Alert>
+          <Alert variant="secondary error-message" className="mt-2">
+            {errors.email}
+          </Alert>
         )}
       </Form.Group>
 
@@ -85,16 +87,24 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken }) => 
         />
       </Form.Group>
       {errors.password && (
-        <Alert variant="secondary error-message">{errors.password}</Alert>
+        <Alert variant="secondary error-message" className="mt-2">
+          {errors.password}
+        </Alert>
       )}
 
-      <Button
-        variant="primary mt-3"
-        type="submit"
-        disabled={validate(userData, schema)}
-      >
-        Join Chat
-      </Button>
+      <div>
+        <Button
+          variant="primary mt-3"
+          style={{ marginRight: "1rem" }}
+          type="submit"
+          disabled={validate(userData, schema)}
+        >
+          Join Chat
+        </Button>
+        <Button variant="outline-primary mt-3" onClick={onRegister}>
+          Sign Up
+        </Button>
+      </div>
     </Form>
   );
 };

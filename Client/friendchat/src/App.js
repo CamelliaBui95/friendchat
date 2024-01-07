@@ -40,13 +40,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user)
       UserService.connectUser(user);
-    }
+
+    return () => UserService.disconnect();
   }, [user]);
 
   if (!isRehydrated) return <div>Loading...</div>
-  if (!user) return <Auth />;
+  if (!user) return <Auth/>;
 
   return (
     <>

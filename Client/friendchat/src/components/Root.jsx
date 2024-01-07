@@ -18,7 +18,7 @@ const Root = ({ children: Component }) => {
     if (authToken) Socket.pollSocket(authToken);
     else return;
 
-    Socket.isConnected(setSocketConnected);
+    Socket.hasConnected(setSocketConnected);
   }, []);
 
   if (!socketConnected && sessionStorage.getItem("authToken"))
