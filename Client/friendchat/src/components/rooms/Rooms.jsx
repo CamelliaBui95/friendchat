@@ -90,7 +90,6 @@ const Rooms = ({ rooms, onCheckPacket }) => {
             eventKey={key}
             title={renderTabTitle(key)}
             key={index}
-            className="tab-key"
           >
             <Room
               roomKey={key}

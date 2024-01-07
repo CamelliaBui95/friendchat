@@ -8,8 +8,8 @@ import Socket from "../../services/socket";
 import Joi from "joi";
 
 const Auth = () => {
-  const { user } = useStoreState((state) => state);
-  const { setUser } = useStoreActions((actions) => actions);
+  const { user, logOut } = useStoreState((state) => state);
+  const { setUser, setLogOut } = useStoreActions((actions) => actions);
   const [userData, setUserData] = useState();
   const [allUsernames, setAllUsernames] = useState();
   const [tokens, setTokens] = useState({});
@@ -64,6 +64,7 @@ const Auth = () => {
         registerToken: registerToken,
       });
       setUserData(user);
+      setLogOut({willLogOut: false});
 
       Socket.pollSocket(authToken);
       return null;
@@ -90,6 +91,8 @@ const Auth = () => {
 
   const handleLoginWithAuth = (userData) => {
     setUser(userData);
+    setLogOut({ willLogOut: false });
+
     UserService.connectUser(userData);
   };
 
@@ -100,7 +103,7 @@ const Auth = () => {
     if (registerToken) storedTokens.registerToken = registerToken;
 
     const authToken = sessionStorage.getItem("authToken");
-    if (authToken) {
+    if (authToken && !logOut) {
       storedTokens.authToken = authToken;
       Socket.pollSocket(authToken);
       UserService.connectUser(user);

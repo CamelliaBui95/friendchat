@@ -9,6 +9,6 @@
 }
 
 .scroll {
-    min-height: 90vh;
+    min-height: 90%;
     overflow-y: auto;
 }

@@ -1,4 +1,7 @@
 import "./App.css";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import { useEffect, useState } from "react";
 import { useStoreState, useStoreActions, useStoreRehydrated } from "easy-peasy";
 import Col from "react-bootstrap/Col";
@@ -11,11 +14,12 @@ import UserService from "./services/userServices";
 function App() {  
   const isRehydrated = useStoreRehydrated();
   const user = useStoreState(state => state.user);
-  const rooms = useStoreState((state) => state.getRooms);
-  const { addRoom, forwardMessage } = useStoreActions(
+  const rooms = useStoreState(state => state.getRooms);
+  const { addRoom, forwardMessage, setLogOut } = useStoreActions(
     (actions) => actions
   );
   const hasRoom = useStoreState((state) => state.hasRoom);
+  const logOut = useStoreState(state => state.logOut);
 
   const handleCheckPacket = (packet) => {
     const { sender, to: receiver } = packet;
@@ -44,13 +48,31 @@ function App() {
       UserService.connectUser(user);
 
     return () => UserService.disconnect();
-  }, [user]);
+  }, []);
 
   if (!isRehydrated) return <div>Loading...</div>
-  if (!user) return <Auth/>;
+  if (!user || logOut) return <Auth/>;
 
   return (
     <>
+      <Navbar bg="light" data-bs-theme="light">
+        <Container fluid>
+          <Navbar.Brand href="/" className="logo">
+            FriendChat
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link onClick={() => console.log("profile")}>
+                My Profile
+              </Nav.Link>
+              <Nav.Link onClick={() => setLogOut({willLogOut: true})} className="danger">
+                Log Out
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
       <Col sm={3}>
         <div className="side-bar rounded-top bg-light">
           <Profile />

@@ -21,7 +21,13 @@ router.post("/", httpAuth, async (req, res) => {
 
   const token = user.getAuthToken({ _id: user._id, isAuthorized: true });
 
-  user.status = user.status === "disconnected" ? "online" : user.status;
+  let status = user.status;
+  if (status !== "disconnected")
+    return res.status(400).send("User is already in the chat room.");
+
+  status = "online";
+
+  user.status = status;
 
   res.header("x-auth-token", token).send({
     username: user.username,

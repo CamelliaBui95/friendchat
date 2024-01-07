@@ -1,41 +1,68 @@
-
 .homePage {
   display: flex;
 }
 
 .chat-box {
-  height: 90vh;
+  height: 80vh;
+}
+
+@media (min-width: 1550px) {
+  .chat-box {
+    height: 85vh;
+  }
 }
 
 .side-bar {
-    position: fixed;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    width: inherit;
-    height: 100vh;
-    padding: 10px;
+  position: fixed;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  width: inherit;
+  height: 100%;
+  padding: 10px;
 }
 
 .chat-section {
-    position: fixed;
-    width: inherit;
-    padding: 10px;
+  position: fixed;
+  height: 90%;
+  width: inherit;
+  padding: 10px;
 }
 
 /* Status display */
 .status {
-    font-size: 1rem;
-    margin-right: 10px;
+  font-size: 1rem;
+  margin-right: 10px;
 }
 
 .online {
-    color: rgb(66, 177, 66);
+  color: rgb(66, 177, 66);
 }
 
 .idle {
-    color: rgb(226, 150, 36);
+  color: rgb(226, 150, 36);
 }
 
 .busy {
-    color: rgb(245, 79, 13);
+  color: rgb(245, 79, 13);
 }
 
+/*NavBar styling*/
+
+.logo {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.navbar-expand .navbar-nav {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.danger {
+  color: rgb(252, 78, 78);
+}
+
+.danger:hover {
+  color: red !important;
+}

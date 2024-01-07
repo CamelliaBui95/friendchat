@@ -30,7 +30,7 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken, onReg
     if (errors) return setErrors(errors);
 
     const error = await onLogin(userData, registerToken);
-    if (error) setErrors({password: "Invalid Email or Password"});
+    if (error) setErrors({password: error});
   };
 
   const handleChange = ({currentTarget: input}) => {
