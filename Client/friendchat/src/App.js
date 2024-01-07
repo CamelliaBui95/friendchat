@@ -63,7 +63,7 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link onClick={() => console.log("profile")}>
+              <Nav.Link onClick={() => console.log("profile")} className="default">
                 My Profile
               </Nav.Link>
               <Nav.Link onClick={() => setLogOut({willLogOut: true})} className="danger">

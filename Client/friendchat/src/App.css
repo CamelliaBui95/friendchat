@@ -50,6 +50,12 @@
 .logo {
   font-size: 1.75rem;
   font-weight: 500;
+  color: #0064b5;
+  transition: color 0.5s;
+}
+
+.logo:hover {
+  color: #024983;
 }
 
 .navbar-expand .navbar-nav {
@@ -65,4 +71,12 @@
 
 .danger:hover {
   color: red !important;
+}
+
+.default {
+  color: #0064b5;
+}
+
+.default:hover {
+  color: #024983;
 }
