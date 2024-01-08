@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import "./input.css";
 import { useState, useEffect } from "react";
+import { useStoreState, useStoreActions} from "easy-peasy";
 import { getFile, fileToDataUrl } from "../../utils/utils";
 import Emojis from "../emojis/Emojis";
 
@@ -10,6 +11,7 @@ const Input = ({ onSubmit }) => {
   const [value, setValue] = useState("");
   const [file, setFile] = useState(null);
   const [emojisDisplay, setEmojisDisplay] = useState(false);
+  const getEmoji = useStoreState(state => state.getEmoji);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +23,12 @@ const Input = ({ onSubmit }) => {
     const file = await getFile();
     setFile(file);
   };
+
+  const handleClickEmoji = id => {
+    let newVal = value;
+    newVal += getEmoji(id).content;
+    setValue(newVal);
+  }
 
   useEffect(() => {
     if (file)
@@ -34,7 +42,7 @@ const Input = ({ onSubmit }) => {
 
   return (
     <Form onSubmit={(e) => handleSubmit(e)}>
-      <Emojis display={emojisDisplay}></Emojis>
+      <Emojis display={emojisDisplay} onEmojiClick={handleClickEmoji}></Emojis>
       <InputGroup className="input">
         <Form.Control
           className="shadow-none"
