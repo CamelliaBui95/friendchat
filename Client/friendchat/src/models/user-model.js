@@ -14,6 +14,7 @@ const userModel = {
   logOut: false,
   setLogOut: action((state, { willLogOut }) => {
     state.logOut = willLogOut;
+    console.log("user disconnected...");
     if (willLogOut) {
       UserService.disconnect();
       state.user = null;

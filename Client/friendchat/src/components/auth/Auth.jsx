@@ -65,6 +65,7 @@ const Auth = () => {
       });
       setUserData(user);
       setLogOut({willLogOut: false});
+      setWillLogIn(true);
 
       Socket.pollSocket(authToken);
       return null;
@@ -83,7 +84,6 @@ const Auth = () => {
       );
       return null;
     } catch (ex) {
-      //setServerError({ message: ex.response.data });
       console.log(ex.response.data);
       return { email: ex.response.data };
     }

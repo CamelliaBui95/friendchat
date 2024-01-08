@@ -37,7 +37,9 @@ class UserService {
   };
 
   static disconnect = () => {
-    if (this.ioSocket.getIsConnected()) this.socket.disconnect();
+    sessionStorage.removeItem("registerToken");
+    sessionStorage.removeItem("authToken");
+    this.socket.disconnect();  
   };
 
   static getAllUsers = (setAllUsers) => {

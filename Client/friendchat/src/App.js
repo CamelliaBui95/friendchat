@@ -46,9 +46,9 @@ function App() {
   useEffect(() => {
     if (user)
       UserService.connectUser(user);
-
     return () => UserService.disconnect();
   }, []);
+
 
   if (!isRehydrated) return <div>Loading...</div>
   if (!user || logOut) return <Auth/>;

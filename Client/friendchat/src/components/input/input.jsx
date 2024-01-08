@@ -2,12 +2,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import "./input.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useStoreState, useStoreActions} from "easy-peasy";
 import { getFile, fileToDataUrl } from "../../utils/utils";
 import Emojis from "../emojis/Emojis";
 
 const Input = ({ onSubmit }) => {
+  const textRef = useRef(null);
   const [value, setValue] = useState("");
   const [file, setFile] = useState(null);
   const [emojisDisplay, setEmojisDisplay] = useState(false);
@@ -28,6 +29,7 @@ const Input = ({ onSubmit }) => {
     let newVal = value;
     newVal += getEmoji(id).content;
     setValue(newVal);
+    textRef.current.focus();
   }
 
   useEffect(() => {
@@ -50,6 +52,7 @@ const Input = ({ onSubmit }) => {
           aria-describedby="basic-addon2"
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          ref={textRef}
         />
         <Button
           variant="outline-secondary"
