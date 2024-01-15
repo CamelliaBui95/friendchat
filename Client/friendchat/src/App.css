@@ -1,9 +1,17 @@
+body {
+  height: 100vh;
+}
+
 .homePage {
   display: flex;
 }
 
 .chat-box {
   height: 80vh;
+}
+
+h2 {
+  text-align: center;
 }
 
 @media (min-width: 1550px) {
@@ -79,4 +87,15 @@
 
 .default:hover {
   color: #024983;
+}
+
+/*Brand*/
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  padding-top: 3rem;
+}
+
+.brand-name {
+  color: #0064b5;
 }

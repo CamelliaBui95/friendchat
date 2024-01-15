@@ -51,7 +51,14 @@ function App() {
 
 
   if (!isRehydrated) return <div>Loading...</div>
-  if (!user || logOut) return <Auth/>;
+  if (!user || logOut) return (
+    <>
+      <h1>
+        Welcome to <span className="brand-name">FriendChat</span> !
+      </h1>
+      <Auth />
+    </>
+  );
 
   return (
     <>
