@@ -1,8 +1,10 @@
 .login {
-    width: 20%;
+    width: 30%;
     margin: 50px auto;
-    padding: 15px;
+    padding: 3rem;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: white;
+    border-radius: 10%;
 }
 
 .dialog-box {
