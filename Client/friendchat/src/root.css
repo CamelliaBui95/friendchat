@@ -1,0 +1,89 @@
+/**/
+.ml-1 {
+    margin-left: 1.5rem;
+}
+.py-8 {
+    padding: 8rem 0;
+}
+
+.px-8 {
+    padding: 0 8rem;
+}
+
+.p-8 {
+    padding: 8rem;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.relative {
+    position: relative;
+}
+
+.translate-x-50 {
+    transform: translateX(50%);
+}
+
+.translate-x-70 {
+    transform: translateX(70%);
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-xl {
+    font-size: 2.5rem;
+}
+
+.text-md {
+    font-size: 1rem;
+}
+
+.text-grey-light {
+    color: rgb(214, 195, 195);
+
+}
+
+/**/
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: white;
+    transition: color 0.5s;
+}
+
+.logo:hover {
+    color: white;
+}
+
+.nav-item {
+    font-size: 1.4rem;
+    color: white;
+    opacity: 0.8;
+    transition: all 0.3s;
+}
+
+.nav-item:hover,
+.nav-item:focus {
+    opacity: 1;
+    color: white;
+}
+
+.navbar-expand .navbar-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+/*.wrapper {
+    height: 90vh;
+}*/
+
