@@ -1,7 +1,5 @@
 import "./App.css";
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import { useEffect, useState } from "react";
 import { useStoreState, useStoreActions, useStoreRehydrated } from "easy-peasy";
 import Col from "react-bootstrap/Col";
@@ -62,24 +60,6 @@ function App() {
 
   return (
     <>
-      <Navbar bg="light" data-bs-theme="light">
-        <Container fluid>
-          <Navbar.Brand href="/" className="logo">
-            FriendChat
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link onClick={() => console.log("profile")} className="default">
-                My Profile
-              </Nav.Link>
-              <Nav.Link onClick={() => setLogOut({willLogOut: true})} className="danger">
-                Log Out
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
       <Col sm={3}>
         <div className="side-bar rounded-top bg-light">
           <Profile />

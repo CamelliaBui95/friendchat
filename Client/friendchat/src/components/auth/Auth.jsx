@@ -113,8 +113,6 @@ const Auth = () => {
   }, []);
 
   useEffect(() => {
-    //  if(serverError.message)
-    //   alert(serverError.message);
     const fetchAllUsernames = async () => {
       const response = await UserService.getAllUsernames();
       const { data } = response;

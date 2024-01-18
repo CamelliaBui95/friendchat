@@ -1,8 +1,21 @@
 .register {
-    width: 30%;
-    margin: 50px auto;
-    padding: 2rem;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    background-color: white;
-    border-radius: 10%;
+  width: 30%;
+  margin: 50px auto;
+  padding: 3rem;
+  box-shadow: var(--shadow-sm-2);
+  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5%;
+}
+
+@media (max-width: 780px) {
+  .register {
+    width: 90%;
+  }
+}
+
+@media (min-width: 780px) and (max-width: 1200px) {
+  .register {
+    width: 60%;
+  }
 }

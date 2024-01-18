@@ -20,10 +20,10 @@ class UserService {
     return http.post(`${apiEndpoint}/user/getUserToken`, userData);
   }
 
-  static loginUser = (userData, registerToken) => {
+  static loginUser = (userData, userToken) => {
     return http.post(`${apiEndpoint}/auth`, userData, {
       headers: {
-        "x-auth-token": registerToken,
+        "x-auth-token": userToken,
       },
     });
   };
@@ -37,7 +37,7 @@ class UserService {
   };
 
   static disconnect = () => {
-    sessionStorage.removeItem("registerToken");
+    sessionStorage.removeItem("userToken");
     sessionStorage.removeItem("authToken");
     this.socket.disconnect();  
   };

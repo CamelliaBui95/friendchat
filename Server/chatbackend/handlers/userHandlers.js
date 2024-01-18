@@ -38,6 +38,9 @@ const userLoginHandlers = (io, socket) => {
       status: { $in: ["online", "idle", "busy"] },
     }).sort("name");
 
+    if (!disconnectedUser)
+      return;
+
     delete sockets[disconnectedUser.username];
     io.emit("all_users", users);
     console.log("a user disconnect");

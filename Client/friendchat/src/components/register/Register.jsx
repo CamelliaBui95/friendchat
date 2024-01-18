@@ -2,12 +2,19 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import "./register.css";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useStoreState, useStoreActions } from "easy-peasy";
+import { validate, validateProperty } from "../../utils/dataValidator";
 import Joi from "joi";
+import { Link } from "react-router-dom";
 
-const Register = ({onRegister, validate, validateProperty, allUsernames, onLogin}) => {
+const Register = () => {
+  const { handleRegister, handleLogin, fetchAllUsernames } = useStoreActions(actions => actions);
+  const { authError, allUsernames, user } = useStoreState(state => state);
   const [userData, setUserData] = useState({username: "", email: "", password: ""});
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const schema = {
     username: Joi.string().min(3).max(50).required().label("Username"),
@@ -23,19 +30,20 @@ const Register = ({onRegister, validate, validateProperty, allUsernames, onLogin
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = validate(userData, schema);
+    const errors = validate({userData, schema});
     
     if (errors) return setErrors(errors);
 
-    const serverErr = await onRegister(userData);
-    if (serverErr) setErrors(serverErr);
-
+    await handleRegister(userData);
+    if (authError === null) {
+      navigate("/login");
+    }
   };
 
   const handleChange = ({ currentTarget: input }) => {
     const inputErrors = { ...errors };
 
-    const errorMessage = validateProperty(input, schema);
+    const errorMessage = validateProperty({input, schema});
   
     if (errorMessage) inputErrors[input.name] = errorMessage;
     else delete inputErrors[input.name];
@@ -56,46 +64,48 @@ const Register = ({onRegister, validate, validateProperty, allUsernames, onLogin
     return allUsernames.find(user => user.username === username) === undefined;
   }
 
+  useEffect(() => {
+    if (authError)
+      setErrors({email: authError});
+
+  }, [authError])
+
+  useEffect(() => {
+    fetchAllUsernames();
+  }, [])
+
   return (
-    <Form className="register" onSubmit={(e) => handleSubmit(e)}>
-      <h2>Register</h2>
+    <Form className="register text-pink" onSubmit={(e) => handleSubmit(e)}>
+      <h2 className="text-center">Register</h2>
 
       <Form.Group className="mt-3" controlId="username">
-        <Form.Label>Username</Form.Label>
+        <Form.Label className="text-md">Username</Form.Label>
         <Form.Control
-          className="shadow-none"
+          className="shadow-none form-input"
           type="text"
           value={userData.username}
           name="username"
           onChange={(e) => handleChange(e)}
         />
-        {errors.username && (
-          <Alert variant="secondary error-message" className="mt-2">
-            {errors.username}
-          </Alert>
-        )}
+        {errors.username && <p className="error-message">{errors.username}</p>}
       </Form.Group>
 
       <Form.Group className="mt-3" controlId="email">
-        <Form.Label>Email</Form.Label>
+        <Form.Label className="text-md">Email</Form.Label>
         <Form.Control
-          className="shadow-none"
+          className="shadow-none form-input"
           type="text"
           value={userData.email}
           name="email"
           onChange={(e) => handleChange(e)}
         />
-        {errors.email && (
-          <Alert variant="secondary error-message" className="mt-2">
-            {errors.email}
-          </Alert>
-        )}
+        {errors.email && <p className="error-message">{errors.email}</p>}
       </Form.Group>
 
       <Form.Group className="mt-3" controlId="password">
-        <Form.Label>Password</Form.Label>
+        <Form.Label className="text-md">Password</Form.Label>
         <Form.Control
-          className="shadow-none"
+          className="shadow-none form-input"
           type="password"
           value={userData.password}
           name="password"
@@ -109,16 +119,24 @@ const Register = ({onRegister, validate, validateProperty, allUsernames, onLogin
       )}
 
       <Button
-        variant="primary mt-3"
-        style={{marginRight: "1rem"}}
+        className="secondary-btn text-md"
+        variant="primary mt-4"
+        style={{ marginRight: "1rem" }}
         type="submit"
         disabled={
-          validate(userData, schema) || Object.keys(errors).length !== 0
+          validate({ userData, schema }) || Object.keys(errors).length !== 0
         }
       >
         Sign Up
       </Button>
-      <Button variant="outline-primary mt-3" onClick={onLogin}>Log In</Button>
+      <Button
+        variant="outline-primary mt-4"
+        className="secondary-btn-outline text-md mt-3"
+        as={Link}
+        to="/login"
+      >
+        Log In
+      </Button>
     </Form>
   );
 };

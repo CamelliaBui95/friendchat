@@ -1,11 +1,15 @@
 import { action, thunk } from "easy-peasy";
 import UserService from "../services/userServices";
 import Socket from "../services/socket";
-import Joi from "joi";
 
 const authModel = {
   authToken: null,
   userToken: null,
+  authError: null,
+
+  setAuthError: action((state, error) => {
+    state.authError = error;
+  }),
 
   setAuthToken: action((state, authToken) => {
     state.authToken = authToken;
@@ -42,22 +46,22 @@ const authModel = {
       actions.setUser(user);
 
       Socket.pollSocket(authToken);
-      return null;
+      actions.setAuthError(null);
     } catch (ex) {
-      return ex.response.data;
+      actions.setAuthError(ex.response.data);
     }
   }),
 
   handleRegister: thunk(async (actions, userData, helpers) => {
     try {
       const { data: userToken } = await UserService.registerUser(userData);
-      actions.handleLogin(
-        { email: userData.email, password: userData.password },
-        userToken
+      await actions.handleLogin(
+        {userData: { email: userData.email, password: userData.password },
+        userToken}
       );
-      return null;
+      actions.setAuthError(null);
     } catch (ex) {
-      return { email: ex.response.data };
+      actions.setAuthError(ex.response.data);
     }
   }),
 

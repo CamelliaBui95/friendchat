@@ -1,16 +1,31 @@
 .login {
-    width: 30%;
-    margin: 50px auto;
-    padding: 3rem;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    background-color: white;
-    border-radius: 10%;
+  width: 30%;
+  margin: 50px auto;
+  padding: 3rem;
+  box-shadow: var(--shadow-sm-2);
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5%;
+}
+
+@media (max-width: 780px) {
+  .login {
+    width: 90%;
+  }
+}
+
+@media (min-width: 780px) and (max-width: 1200px) {
+  .login {
+    width: 60%;
+  }
 }
 
 .dialog-box {
-    text-align: center;
+  text-align: center;
 }
 
 .dialog-box h2 {
-    margin-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
 }
+
+
+

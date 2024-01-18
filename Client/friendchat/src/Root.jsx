@@ -33,29 +33,36 @@ const Root = () => {
   return (
     <Container fluid>
       <Row>
-      <Navbar>
-        <Container fluid className="px-3">
-          <Navbar.Brand href="/" className="logo ml-1">
-            FriendChat
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-            <Nav.Link as={Link} to="/" className="nav-item mx-3">
-                About
-              </Nav.Link>
-              <Nav.Link as={Link} to="login" className="nav-item mx-3">
-                Log In
-              </Nav.Link>
-              <Nav.Link as={Link} to="register" className="nav-item mx-3">
-                Sign Up
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        <Navbar expand="lg">
+          <Container fluid className="px-3">
+            <Navbar.Brand href="/" className="logo ml-1">
+              FriendChat
+            </Navbar.Brand>
+          </Container>
+          <Container>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse
+              id="basic-navbar-nav"
+              className="justify-content-end"
+            >
+              <Nav className="" fluid>
+                <Nav.Link as={Link} to="/" className="nav-item mx-3">
+                  About
+                </Nav.Link>
+                <Nav.Link as={Link} to="login" className="nav-item mx-3">
+                  Log In
+                </Nav.Link>
+                <Nav.Link as={Link} to="register" className="nav-item mx-3">
+                  Sign Up
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
       </Row>
-      <Row><Outlet/></Row>
+      <Row>
+        <Outlet />
+      </Row>
     </Container>
   );
 };

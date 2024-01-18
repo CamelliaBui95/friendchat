@@ -1,4 +1,4 @@
-import { action } from "easy-peasy";
+import { action, thunk } from "easy-peasy";
 import UserService from "../services/userServices";
 
 const userModel = {
@@ -25,6 +25,15 @@ const userModel = {
   setAllUsers: action((state, payload) => {
     state.allUsers = payload;
   }),
+  allUsernames: [],
+  setAllUsernames: action((state, usernames) => {
+    state.allUsernames = usernames;
+  }),
+  fetchAllUsernames: thunk(async (actions) => {
+    const response = await UserService.getAllUsernames();
+    const { data } = response;
+    actions.setAllUsernames(data);
+  })
 };
 
 export default userModel;

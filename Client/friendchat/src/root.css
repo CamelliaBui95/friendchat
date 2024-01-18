@@ -59,6 +59,12 @@
   align-items: center;
 }
 
+.flex-row-end {
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: end !important;
+}
+
 .text-xl {
   font-size: 2.5rem;
 }
@@ -73,6 +79,14 @@
 
 .text-blue-dark {
   color: var(--dark-blue);
+}
+
+.text-pink {
+  color: var(--pink);
+}
+
+.text-beige {
+  color: var(--beige);
 }
 
 .text-bold-7 {
@@ -119,15 +133,67 @@
   color: white;
 }
 
-.navbar-expand .navbar-nav {
+/*.navbar-expand .navbar-nav {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-}
+}*/
 
 /*.wrapper {
     height: 90vh;
 }*/
+
+/*Form Button*/
+.secondary-btn {
+  background-color: rgba(198, 35, 104, 0.8);
+  border: 2px solid var(--pink);
+  box-shadow: var(--shadow-sm-1);
+  border-radius: 1rem;
+  padding: 0.5rem 1.5rem;
+}
+
+.secondary-btn:hover,
+.secondary-btn:active,
+.secondary-btn:focus {
+  background-color: rgba(198, 35, 104, 1) !important;
+  border: 2px solid var(--pink) !important;
+}
+
+.secondary-btn:disabled,
+.secondary-btn[disabled] {
+  background-color: rgba(198, 35, 104, 0.5) !important;
+  border: 2px solid rgba(198, 35, 104, 0.1) !important;
+}
+
+.secondary-btn-outline {
+  border: 2px solid var(--pink);
+  border-radius: 1rem;
+
+  padding: 0.5rem 1.5rem;
+  color: var(--pink);
+}
+
+.secondary-btn-outline:hover,
+.secondary-btn-outline:active,
+.secondary-btn-outline:focus {
+  background-color: rgba(198, 35, 104, 1) !important;
+  border: 2px solid rgba(198, 35, 104, 1) !important;
+}
+
+.form-input {
+  border: 1px solid rgba(198, 35, 104, 0.3) !important;
+}
+
+.form-input:focus,
+.form-input:active {
+  border: 2px solid rgba(198, 35, 104, 1) !important;
+}
+
+.error-message {
+  color: rgb(248, 48, 48);
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
 
 
