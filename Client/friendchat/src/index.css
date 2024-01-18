@@ -12,4 +12,11 @@ code {
     monospace;
 }
 
+:root {
+  --dark-blue: #1d4072;
+  --light-grey: rgb(214, 195, 195);
+  --shadow-sm-1: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  --shadow-sm-2: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 

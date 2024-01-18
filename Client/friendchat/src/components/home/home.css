@@ -1,0 +1,51 @@
+/*Landing Image*/
+
+.slogan {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.landing-img {
+  transform: translateY(-15%);
+  width: 750px;
+}
+
+@media (max-width: 1500px) {
+  .landing-img {
+  }
+}
+
+@media (min-width: 1550px) {
+  .landing-img {
+    width: 900px;
+  }
+
+  .slogan {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+  }
+}
+
+/*Primary Button*/
+.primary-btn {
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #1d4072;
+    border: none;
+    box-shadow: var(--shadow-sm-2);
+    transition: all 0.3s;
+}
+
+.primary-btn:hover,
+.primary-btn:focus {
+    background-color: rgba(255, 255, 255, 1) !important;
+    color: var(--dark-blue) !important;
+}
+
+.primary-btn:active {
+    background-color: var(--dark-blue) !important;
+    color: white !important;
+}

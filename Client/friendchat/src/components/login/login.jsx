@@ -3,14 +3,14 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import "./login.css";
 import { useState, useEffect } from "react";
-import  UserService from "../../services/userServices";
+import { useStoreActions, useStoreState } from "easy-peasy";
+import {validate, validateProperty} from "../../utils/dataValidator";
+
 import Joi from 'joi';
 
-const Login = ({ validate, validateProperty, onLogin, user, registerToken, onRegister }) => {
-  /*const [username, setUsername] = useState("");
-  const {onLogin, setLoginError} = useStoreActions(actions => actions); 
-  const loginError = useStoreState(state => state.loginError);*/
-
+const Login = () => {
+  const { handleLogin, handleLoginWithAuth, handleRegister } = useStoreActions(actions => actions);
+  const { userToken, user } = useStoreState(state => state);
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
 
@@ -29,15 +29,15 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken, onReg
     const errors = validate(userData, schema);
     if (errors) return setErrors(errors);
 
-    const error = await onLogin(userData, registerToken);
+    const error = await handleLogin({ userData, userToken });
     if (error) setErrors({password: error});
   };
 
-  const handleChange = ({currentTarget: input}) => {
-    const inputErrors = {...errors};
+  const handleChange = ({ currentTarget: input }) => {
+    const inputErrors = { ...errors };
 
-    const errorMessage = validateProperty(input, schema);
-    if (errorMessage) inputErrors[input.name] = errorMessage;
+    const errMsg = validateProperty({ input, schema });
+    if (errMsg) inputErrors[input.name] = errMsg;
     else delete inputErrors[input.name];
 
     const data = { ...userData };
@@ -51,7 +51,7 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken, onReg
   if (user) return (
     <div className="login dialog-box">
       <h2>Hello, {user.username} !</h2>
-      <Button variant="primary" type="submit" onClick={() => onLogin(user)}>
+      <Button variant="primary" type="submit" onClick={() => handleLoginWithAuth(user)}>
         Join Chat
       </Button>
     </div>
@@ -101,7 +101,7 @@ const Login = ({ validate, validateProperty, onLogin, user, registerToken, onReg
         >
           Join Chat
         </Button>
-        <Button variant="outline-primary mt-3" onClick={onRegister}>
+        <Button variant="outline-primary mt-3" onClick={handleRegister}>
           Sign Up
         </Button>
       </div>

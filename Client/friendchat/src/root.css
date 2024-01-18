@@ -1,117 +1,133 @@
 /**/
 .ml-1 {
-    margin-left: 1.5rem;
+  margin-left: 1.5rem;
 }
 .py-8 {
-    padding: 8rem 0;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
 }
 
 .px-8 {
-    padding: 0 8rem;
+  padding-left: 8rem;
+  padding-right: 8rem;
 }
 
 .p-8 {
-    padding: 8rem;
+  padding: 8rem;
 }
 
 .absolute {
-    position: absolute;
+  position: absolute;
 }
 
 .relative {
-    position: relative;
+  position: relative;
 }
 
 .z-1 {
-    z-index: 1;
+  z-index: 1;
 }
 
 .z-2 {
-    z-index: 2;
+  z-index: 2;
 }
 
 .translate-x-50 {
-    transform: translateX(50%);
+  transform: translateX(50%);
 }
 
 .translate-x-70 {
-    transform: translateX(70%);
+  transform: translateX(70%);
 }
 
 .translate-x-90 {
-    transform: translateX(90%);
+  transform: translateX(90%);
 }
 
 .translate-minus-y-20 {
-    transform: translateY(-20%);
+  transform: translateY(-20%);
 }
 
-.top-minus-40 {
-    top: -40%;
-}
-
-.top-80 {
-    top: 80%;
-}
-
-.left-minus-5 {
-    left: -4%;
+.translate-x-minus-50 {
+  transform: translateX(-50);
 }
 
 .flex-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .text-xl {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 .text-md {
-    font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .text-grey-light {
-    color: rgb(214, 195, 195);
+  color: var(--light-grey);
+}
 
+.text-blue-dark {
+  color: var(--dark-blue);
+}
+
+.text-bold-7 {
+  font-weight: 700;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.h-85 {
+  height: 85vh;
+}
+
+.highlight-dark-blue {
+  color: var(--dark-blue);
 }
 
 /**/
 
 .logo {
-    font-size: 2.5rem;
-    font-weight: 500;
-    color: white;
-    transition: color 0.5s;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: white;
+  opacity: 0.9;
+  transition: all 0.5s;
 }
 
 .logo:hover {
-    color: white;
+  color: white;
+  opacity: 1;
 }
 
 .nav-item {
-    font-size: 1.4rem;
-    color: white;
-    opacity: 0.8;
-    transition: all 0.3s;
+  font-size: 1.4rem;
+  color: white;
+  opacity: 0.8;
+  transition: all 0.3s;
 }
 
 .nav-item:hover,
 .nav-item:focus {
-    opacity: 1;
-    color: white;
+  opacity: 1;
+  color: white;
 }
 
 .navbar-expand .navbar-nav {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 /*.wrapper {
     height: 90vh;
 }*/
+
 

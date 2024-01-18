@@ -41,5 +41,6 @@ export const fileToDataUrl = (file) => {
   });
 };
 
+
   
 // file.type = "image/jpeg"

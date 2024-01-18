@@ -8,6 +8,8 @@ import Root from "./Root";
 import { createStore, StoreProvider, persist } from "easy-peasy";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import storeModel from "./models/model";
+import Login from "./components/login/login";
+import Register from "./components/register/Register";
 
 const store = createStore(persist(storeModel, { allow: ["user"] }));
 
@@ -20,17 +22,16 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        children: [
-         
-        ],
+        children: [],
       },
       {
-        path: "home",
-        element: <App />,
-        children: [
-         
-        ],
+        path: "login",
+        element: <Login />,
       },
+      {
+        path: "register",
+        element: <Register />,
+      }
     ],
   },
 ]);

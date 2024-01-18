@@ -11,6 +11,7 @@ import "./root.css";
 
 const Root = () => {
   const [socketConnected, setSocketConnected] = useState(false);
+  
 
   useEffect(() => {
     /**Subscribe UserService and MessageService as io Socket's observers.
@@ -19,6 +20,7 @@ const Root = () => {
     Socket.addHandler(MessageService);
 
     const authToken = sessionStorage.getItem("authToken");
+
     if (authToken) Socket.pollSocket(authToken);
     else return;
 
@@ -42,7 +44,7 @@ const Root = () => {
             <Nav.Link as={Link} to="/" className="nav-item mx-3">
                 About
               </Nav.Link>
-              <Nav.Link as={Link} to="home" className="nav-item mx-3">
+              <Nav.Link as={Link} to="login" className="nav-item mx-3">
                 Log In
               </Nav.Link>
               <Nav.Link as={Link} to="register" className="nav-item mx-3">
