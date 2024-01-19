@@ -1,15 +1,17 @@
 import "./App.css";
 import Container from "react-bootstrap/Container";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStoreState, useStoreActions, useStoreRehydrated } from "easy-peasy";
 import Col from "react-bootstrap/Col";
-import Auth from "./components/auth/Auth";
 import Users from "./components/users/Users";
 import Profile from "./components/profile/Profile";
 import Rooms from "./components/rooms/Rooms";
 import UserService from "./services/userServices";
 
 function App() {  
+  const navigate = useNavigate();
+  const { username } = useParams();
   const isRehydrated = useStoreRehydrated();
   const user = useStoreState(state => state.user);
   const rooms = useStoreState(state => state.getRooms);
@@ -42,21 +44,24 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (user)
+
+    if (user && user.username === username)
       UserService.connectUser(user);
+    else navigate("/login");
+      
     return () => UserService.disconnect();
   }, []);
 
 
-  if (!isRehydrated) return <div>Loading...</div>
-  if (!user || logOut) return (
-    <>
-      <h1>
-        Welcome to <span className="brand-name">FriendChat</span> !
-      </h1>
-      <Auth />
-    </>
-  );
+  if (!isRehydrated) return <div>Loading...in app</div>
+  // if (!user || logOut) return (
+  //   <>
+  //     <h1>
+  //       Welcome to <span className="brand-name">FriendChat</span> !
+  //     </h1>
+  //     <Auth />
+  //   </>
+  // );*/
 
   return (
     <>

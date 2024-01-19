@@ -1,11 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import { useStoreState } from 'easy-peasy';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import "./home.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const { user } = useStoreState(state => state);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) navigate(`app/${user.username}`);
+  }, [user]);
+
   return (
     <Row className="wrapper px-8 py-5 overflow-hidden h-85">
 

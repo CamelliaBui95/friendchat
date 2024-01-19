@@ -1,77 +1,5 @@
 /**/
-.ml-1 {
-  margin-left: 1.5rem;
-}
-.py-8 {
-  padding-top: 8rem;
-  padding-bottom: 8rem;
-}
 
-.px-8 {
-  padding-left: 8rem;
-  padding-right: 8rem;
-}
-
-.p-8 {
-  padding: 8rem;
-}
-
-.absolute {
-  position: absolute;
-}
-
-.relative {
-  position: relative;
-}
-
-.z-1 {
-  z-index: 1;
-}
-
-.z-2 {
-  z-index: 2;
-}
-
-.translate-x-50 {
-  transform: translateX(50%);
-}
-
-.translate-x-70 {
-  transform: translateX(70%);
-}
-
-.translate-x-90 {
-  transform: translateX(90%);
-}
-
-.translate-minus-y-20 {
-  transform: translateY(-20%);
-}
-
-.translate-x-minus-50 {
-  transform: translateX(-50);
-}
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-row-end {
-  display: flex;
-  justify-content: flex-end !important;
-  align-items: end !important;
-}
-
-.text-xl {
-  font-size: 2.5rem;
-}
-
-.text-md {
-  font-size: 1.25rem;
-}
 
 .text-grey-light {
   color: var(--light-grey);
@@ -93,13 +21,7 @@
   font-weight: 700;
 }
 
-.overflow-hidden {
-  overflow: hidden;
-}
 
-.h-85 {
-  height: 85vh;
-}
 
 .highlight-dark-blue {
   color: var(--dark-blue);

@@ -10,7 +10,7 @@ import Joi from "joi";
 import { Link } from "react-router-dom";
 
 const Register = () => {
-  const { handleRegister, handleLogin, fetchAllUsernames } = useStoreActions(actions => actions);
+  const { handleRegister, fetchAllUsernames } = useStoreActions(actions => actions);
   const { authError, allUsernames, user } = useStoreState(state => state);
   const [userData, setUserData] = useState({username: "", email: "", password: ""});
   const [errors, setErrors] = useState({});

@@ -13,16 +13,15 @@ import Register from "./components/register/Register";
 
 const store = createStore(persist(storeModel, { allow: ["user"] }));
 
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-
     children: [
       {
         path: "/",
         element: <Home />,
-        children: [],
       },
       {
         path: "login",
@@ -31,20 +30,18 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
-      }
+      },
     ],
+  },
+  {
+    path: "app/:username",
+    element: <App />,
   },
 ]);
 
-/*const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <StoreProvider store={store}>
-    <Root children={<App />} />
-  </StoreProvider>
-);*/
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StoreProvider store={store}>
-    <RouterProvider router={router}/>
+    <Root/>
   </StoreProvider>
-)
+);
+

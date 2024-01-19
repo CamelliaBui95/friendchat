@@ -33,13 +33,18 @@ class UserService {
   }
 
   static connectUser = (user) => {
-    this.socket.volatile.emit("user_login", user);
+    if (this.socket)
+      this.socket.volatile.emit("user_login", user);
   };
 
   static disconnect = () => {
     sessionStorage.removeItem("userToken");
     sessionStorage.removeItem("authToken");
-    this.socket.disconnect();  
+ 
+    if (this.socket) {
+      console.log("disconnecting...");
+      this.socket.disconnect();
+    }  
   };
 
   static getAllUsers = (setAllUsers) => {
