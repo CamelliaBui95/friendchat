@@ -1,11 +1,11 @@
 .register {
-  width: 30%;
+  width: 35%;
   margin: 50px auto;
   padding: 3rem;
   box-shadow: var(--shadow-sm-2);
   background-color: white;
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 5%;
+  border-radius: 0.75rem;
 }
 
 @media (max-width: 780px) {

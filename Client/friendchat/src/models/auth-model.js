@@ -27,7 +27,6 @@ const authModel = {
         const { data } = await UserService.getUserToken(userData);
         userToken = data;
       } catch (ex) {
-
         return ex.response.data;
       }
     }
@@ -55,10 +54,10 @@ const authModel = {
   handleRegister: thunk(async (actions, userData, helpers) => {
     try {
       const { data: userToken } = await UserService.registerUser(userData);
-      await actions.handleLogin(
-        {userData: { email: userData.email, password: userData.password },
-        userToken}
-      );
+      await actions.handleLogin({
+        userData: { email: userData.email, password: userData.password },
+        userToken,
+      });
       actions.setAuthError(null);
     } catch (ex) {
       actions.setAuthError(ex.response.data);
@@ -67,7 +66,11 @@ const authModel = {
 
   handleLoginWithAuth: thunk(async (actions, userData) => {
     actions.setUser(userData);
-    UserService.connectUser(userData);
+    try {
+      UserService.connectUser(userData);
+    } catch (error) {
+      actions.setAuthError(error);
+    }
   }),
 };
 

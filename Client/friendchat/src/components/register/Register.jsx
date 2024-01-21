@@ -1,6 +1,3 @@
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
 import "./register.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -75,7 +72,79 @@ const Register = () => {
   }, [])
 
   return (
-    <Form className="register text-pink" onSubmit={(e) => handleSubmit(e)}>
+    <div className="form-container pt-[7rem]">
+      <form className="register text-pink" onSubmit={(e) => handleSubmit(e)}>
+        <h2 className="text-center">Register</h2>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="username" className="text-xl">
+            Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            className="form-input rounded-xl text-lg"
+            value={userData.username}
+            name="username"
+            onChange={(e) => handleChange(e)}
+          />
+          {errors.username && (
+            <p className="error-message">{errors.username}</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 mt-3">
+          <label htmlFor="email" className="text-xl">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            className="form-input rounded-xl text-lg"
+            value={userData.email}
+            name="email"
+            onChange={(e) => handleChange(e)}
+          />
+          {errors.email && <p className="error-message">{errors.email}</p>}
+        </div>
+        <div className="flex flex-col gap-2 mt-3">
+          <label htmlFor="password" className="text-xl">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            className="form-input rounded-xl text-lg"
+            value={userData.password}
+            name="password"
+            onChange={(e) => handleChange(e)}
+          />
+          {errors.password && (
+            <p className="error-message">{errors.password}</p>
+          )}
+        </div>
+        <div className="mt-4">
+          <button
+            className="secondary-btn text-xl"
+            style={{ marginRight: "1rem" }}
+            type="submit"
+            disabled={
+              validate({ userData, schema }) || Object.keys(errors).length !== 0
+            }
+          >
+            Sign Up
+          </button>
+          <Link
+            className="secondary-btn-outline text-xl"
+            to="/login"
+          >
+            Login
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+{/* <Form className="register text-pink" onSubmit={(e) => handleSubmit(e)}>
       <h2 className="text-center">Register</h2>
 
       <Form.Group className="mt-3" controlId="username">
@@ -137,8 +206,6 @@ const Register = () => {
       >
         Log In
       </Button>
-    </Form>
-  );
-};
+    </Form> */}
 
 export default Register;

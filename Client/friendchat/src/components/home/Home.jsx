@@ -15,26 +15,28 @@ const Home = () => {
   }, [user]);
 
   return (
-    <Row className="wrapper px-8 py-5 overflow-hidden h-85">
-
-      <Col className="slogan">
-        <h2 className="text-white text-xl">
-          Connect to be <span className="highlight-dark-blue text-bold-7">yourself</span>
+    <div className="wrapper grid grid-cols-1 sm:grid-cols-12 overflow-hidden ">
+      <div className="slogan col-span-5 place-self-center flex flex-col flex-wrap justify-center">
+        <h2 className="text-white text-4xl">
+          Connect to be{" "}
+          <span className="highlight-dark-blue text-bold-7">yourself</span>
         </h2>
-        <p className="text-blue-dark text-md">
+        <p className="text-blue-dark text-xl">
           Speak your mind, chat your heart with +10,000 members on our platform.
         </p>
-        <Button className='primary-btn' as={Link} to='login'>Let's Start</Button>
-      </Col>
+        <Button className="primary-btn w-full sm:w-fit" as={Link} to="login">
+          Let's Start
+        </Button>
+      </div>
 
-      <Col lg={7} className="relative">
+      <div className="relative col-span-7 place-self-center">
         <img
           src="../images/friendChat_landingImg.png"
-          alt=""
-          className="landing-img absolute"
+          alt="landing image"
+          className="landing-img 3xl:w-[900px]"
         />
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 }
 

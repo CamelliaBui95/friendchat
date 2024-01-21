@@ -1,0 +1,32 @@
+.status-container {
+    box-shadow: var(--shadow-sm-1);
+}
+
+.status {
+    font-size: 1.5rem;
+    position: absolute;
+    cursor: pointer;
+    bottom: -1%;
+    right: -5%;
+}
+
+.status-menu {
+    left: 95%;
+    top: 90%;
+}
+
+.status-menu li:nth-child(2) {
+    border-top: 1px solid rgb(204, 199, 199);
+}
+
+.online {
+    color: rgb(66, 177, 66);
+}
+
+.idle {
+    color: rgb(226, 150, 36);
+}
+
+.busy {
+    color: rgb(245, 79, 13);
+}

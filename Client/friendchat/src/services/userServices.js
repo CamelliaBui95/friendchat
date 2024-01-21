@@ -40,7 +40,7 @@ class UserService {
   static disconnect = () => {
     sessionStorage.removeItem("userToken");
     sessionStorage.removeItem("authToken");
- 
+
     if (this.socket) {
       console.log("disconnecting...");
       this.socket.disconnect();

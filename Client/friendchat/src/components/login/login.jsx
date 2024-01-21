@@ -1,16 +1,16 @@
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
 import "./login.css";
 import { useState } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import {validate, validateProperty} from "../../utils/dataValidator";
-import Joi from 'joi';
-import { Link } from "react-router-dom";
+import { validate, validateProperty } from "../../utils/dataValidator";
+import Joi from "joi";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { handleLogin, handleLoginWithAuth, handleRegister } = useStoreActions(actions => actions);
-  const { userToken, user } = useStoreState(state => state);
+  const navigate = useNavigate();
+  const { handleLogin, handleLoginWithAuth } = useStoreActions(
+    (actions) => actions
+  );
+  const { userToken, user } = useStoreState((state) => state);
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
 
@@ -30,7 +30,7 @@ const Login = () => {
     if (errors) return setErrors(errors);
 
     const error = await handleLogin({ userData, userToken });
-    if (error) setErrors({password: error});
+    if (error) setErrors({ password: error });
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -47,18 +47,78 @@ const Login = () => {
     setErrors(inputErrors);
   };
 
-
-  if (user) return (
-    <div className="login dialog-box">
-      <h2>Hello, {user.username} !</h2>
-      <Button variant="primary" type="submit" onClick={() => handleLoginWithAuth(user)}>
-        Join Chat
-      </Button>
-    </div>
-  );
+  if (user)
+    return (
+      <div className="dialog-box-container pt-[10rem]">
+        <div className="dialog-box w-[80%] md:w-[40%] h-[200px]">
+          <h2 className="mb-4 text-blue-dark">Hello, {user.username} !</h2>
+          <button
+            className="secondary-btn text-xl"
+            type="submit"
+            onClick={() => navigate(`/app/${user.username}`)}
+          >
+            Join Chat
+          </button>
+        </div>
+      </div>
+    );
 
   return (
-    <Form className="login text-pink" onSubmit={(e) => handleSubmit(e)}>
+    <div className="form-container pt-[7rem]">
+      <form className="login text-pink" onSubmit={(e) => handleSubmit(e)}>
+        <h2 className="text-center">Log In</h2>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-xl">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            className="form-input rounded-xl text-lg"
+            onChange={(e) => handleChange(e)}
+            value={userData.email}
+            name="email"
+          />
+          {errors.email && <p className="error-message">{errors.email}</p>}
+        </div>
+        <div className="flex flex-col gap-2 mt-3">
+          <label htmlFor="password" className="text-xl">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            className="form-input rounded-xl text-lg"
+            value={userData.password}
+            name="password"
+            onChange={(e) => handleChange(e)}
+          />
+          {errors.password && (
+            <p className="error-message">{errors.password}</p>
+          )}
+        </div>
+        <div className="mt-4">
+          <button
+            className="secondary-btn text-xl"
+            style={{ marginRight: "1rem" }}
+            type="submit"
+            disabled={validate({ userData, schema })}
+          >
+            Join Chat
+          </button>
+          <Link className="secondary-btn-outline text-xl" to="/register">
+            Sign Up
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
+
+{
+  /* <Form className="login text-pink" onSubmit={(e) => handleSubmit(e)}>
       <h2 className="text-center">Log In</h2>
       <Form.Group className="mt-3" controlId="email">
         <Form.Label className="text-md">Email</Form.Label>
@@ -103,8 +163,5 @@ const Login = () => {
           Sign Up
         </Button>
       </div>
-    </Form>
-  );
-};
-
-export default Login;
+    </Form> */
+}
