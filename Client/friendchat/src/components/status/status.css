@@ -1,5 +1,5 @@
 .status-container {
-    box-shadow: var(--shadow-sm-1);
+    box-shadow: var(--shadow-sm-3);
 }
 
 .status {
@@ -19,6 +19,15 @@
     border-top: 1px solid rgb(204, 199, 199);
 }
 
+.status-menu li {
+    transition: all 0.3s;
+}
+
+.status-menu li:hover {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
 .online {
     color: rgb(66, 177, 66);
 }
@@ -29,4 +38,8 @@
 
 .busy {
     color: rgb(245, 79, 13);
+}
+
+.profile-img {
+    box-shadow: var(--shadow-sm-2);
 }

@@ -2,7 +2,7 @@ import { action, thunk, computed } from "easy-peasy";
 
 const roomModel = {
   rooms: {},
-  addRoom: action((state, { key, roomId, msg }) => {
+  addRoom: action((state, { key, roomId, msg, imgUrl, status }) => {
     if (localStorage.getItem(key)) {
       const cachedRoomData = JSON.parse(localStorage.getItem(key));
       state.rooms[key] = cachedRoomData;
@@ -10,6 +10,8 @@ const roomModel = {
     } else {
       state.rooms[key] = {
         roomId,
+        status,
+        imgUrl,
         readMessages: [],
         unreadMessages: [],
       };

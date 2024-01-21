@@ -1,0 +1,17 @@
+.item {
+    color: var(--dark-blue);
+    transition: all 0.3s;
+}
+
+.item:hover {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+.scale-on-hover {
+    transition: all 0.3s;
+}
+
+.scale-on-hover:hover {
+    transform: scale(1.2);
+}

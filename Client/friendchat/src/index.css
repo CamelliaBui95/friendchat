@@ -11,6 +11,7 @@
     --pink: rgb(198, 35, 104);
     --shadow-sm-1: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     --shadow-sm-2: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --shadow-sm-3: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     --bg-gradient: linear-gradient(
       124deg,
       rgba(242, 184, 118, 1) 10%,
@@ -31,17 +32,6 @@ body {
 
 button {
   transition: all 0.3s;
-}
-
-.list li::before {
-  content: "( )";
-}
-.list li {
-  padding: 5px;
-  background-color: blue;
-}
-.list li:nth-child(2) {
-  background-color: grey;
 }
 /*body {
   height: 100vh;

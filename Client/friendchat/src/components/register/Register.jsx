@@ -6,6 +6,15 @@ import { validate, validateProperty } from "../../utils/dataValidator";
 import Joi from "joi";
 import { Link } from "react-router-dom";
 
+const userImages = [
+  "../images/cat-user.png",
+  "../images/cat-user-2.png",
+  "../images/cat-user-3.png",
+  "../images/cat-user-4.png",
+  "../images/cat-user-5.png",
+  "../images/cat-user-6.png",
+];
+
 const Register = () => {
   const { handleRegister, fetchAllUsernames } = useStoreActions(actions => actions);
   const { authError, allUsernames, user } = useStoreState(state => state);
@@ -31,7 +40,9 @@ const Register = () => {
     
     if (errors) return setErrors(errors);
 
-    await handleRegister(userData);
+    const imgUrl = userImages[Math.floor(Math.random() * userImages.length)];
+
+    await handleRegister({...userData, imgUrl});
     if (authError === null) {
       navigate("/login");
     }

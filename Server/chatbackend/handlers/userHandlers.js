@@ -18,9 +18,12 @@ const userLoginHandlers = (io, socket) => {
 
     if (user.isInPublic) socket.join("#public");
 
-    const users = await User.find({
-      status: { $in: ["online", "idle", "busy"] },
-    }).sort("name");
+    const users = await User.find(
+      {
+        status: { $in: ["online", "idle", "busy"] },
+      },
+      { _id: 0, password: 0 }
+    ).sort("name");
       
     io.to("#public").emit("all_users", users);
   });

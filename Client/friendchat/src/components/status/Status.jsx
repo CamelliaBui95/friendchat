@@ -5,7 +5,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 const statuses = { online: "Online", busy: "Busy", idle: "Idle" };
 
 const Status = () => {
-  const { username, status: currentStatus } = useStoreState(
+  const { username, status: currentStatus, imgUrl } = useStoreState(
     (state) => state.user
   );
   const [toggleStatusMenu, setToggleStatusMenu] = useState(false);
@@ -17,23 +17,23 @@ const Status = () => {
       <div className="flex flex-col justify-center items-center">
         <div className="relative">
           <img
-            src="../images/cat-user.png"
+            src={imgUrl}
             alt=""
-            className="w-[90px] h-[90px] 3xl:w-[100px] 3xl:h-[100px] rounded-full shadow-md mb-1"
+            className="profile-img w-[90px] h-[90px] 3xl:w-[100px] 3xl:h-[100px] rounded-full mb-1"
           />
           <i
             className={`fa fa-circle status ${currentStatus}`}
             onClick={() => setToggleStatusMenu(!toggleStatusMenu)}
           ></i>
           <ul
-            className={`status-menu ${hidden} absolute p-2 min-w-[100px] bg-white shadow-md rounded-xl`}
+            className={`status-menu ${hidden} absolute p-2 m-0 min-w-[120px] bg-white shadow-md rounded-xl`}
           >
             {Object.keys(statuses).map((status, index) => {
               return (
                 status !== currentStatus && (
                   <li
                     key={index}
-                    className="py-1 pr-2 cursor-pointer"
+                    className="py-1 px-2 cursor-pointer"
                     onClick={() => setUserStatus(status)}
                   >
                     <i className={"fa fa-circle " + status}></i>

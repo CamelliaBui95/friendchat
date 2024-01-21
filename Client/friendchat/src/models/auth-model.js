@@ -55,7 +55,7 @@ const authModel = {
     try {
       const { data: userToken } = await UserService.registerUser(userData);
       await actions.handleLogin({
-        userData: { email: userData.email, password: userData.password },
+        userData: { email: userData.email, password: userData.password, imgUrl: userData.imgUrl },
         userToken,
       });
       actions.setAuthError(null);

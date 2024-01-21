@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema({
     maxLength: 255,
     required: true,
   },
+  imgUrl: {
+    type: String,
+    trim: true,
+    required: false
+  }
+  ,
   status: {
     type: String,
     default: "online",
@@ -49,6 +55,7 @@ const validateNewUser = (user) => {
     username: Joi.string().min(3).max(50).required(),
     email: Joi.string().email().min(5).max(50).required(),
     password: Joi.string().min(8).max(50).required(),
+    imgUrl: Joi.string()
   });
 
   return schema.validate(user);
@@ -58,6 +65,7 @@ const validateUser = (user) => {
   const schema = Joi.object({
     email: Joi.string().email().min(5).max(50).required(),
     password: Joi.string().min(8).max(50).required(),
+    imgUrl: Joi.string()
   });
 
   return schema.validate(user);

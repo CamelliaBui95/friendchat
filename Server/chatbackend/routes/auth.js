@@ -30,6 +30,7 @@ router.post("/", httpAuth, async (req, res) => {
     username: user.username,
     email: user.email,
     status: user.status,
+    imgUrl: user.imgUrl,
     isInPublic: user.isInPublic,
   });
 

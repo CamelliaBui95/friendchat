@@ -1,0 +1,16 @@
+.tab-container {
+    box-shadow: var(--shadow-sm-2);
+    border-bottom: 1px solid rgb(204, 199, 199);
+}
+
+.tab-container > li {
+    transition: all 0.3s;
+}
+
+
+#search {
+  border: 1px solid var(--dark-blue);
+  border-radius: 20px;
+  flex-grow: 1;
+  padding: 0.2rem 0.5rem;
+}
