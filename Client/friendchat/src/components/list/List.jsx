@@ -72,9 +72,7 @@ const mockUsers = [
 
 const List = ({ selectedTab, searchValue }) => {
   const { allUsers: users } = useStoreState((state) => state);
-  const rooms = useStoreState((state) => state.getRooms);
-  const hasRoom = useStoreState((state) => state.hasRoom);
-  const { setAllUsers, addRoom, setActiveRoom } = useStoreActions(
+  const { setAllUsers } = useStoreActions(
     (actions) => actions
   );
 
@@ -82,18 +80,6 @@ const List = ({ selectedTab, searchValue }) => {
     UserService.getAllUsers(setAllUsers);
   }, [users]);
 
-  const handleSelectUser = (user) => {
-    if (hasRoom(user.username)) {
-      setActiveRoom(user.username);
-      return;
-    }
-    addRoom({
-      key: user.username,
-      roomId: user.username,
-      status: user.status,
-      imgUrl: user.imgUrl,
-    });
-  };
 
   let filteredItems;
   if (selectedTab === "users")
@@ -101,8 +87,8 @@ const List = ({ selectedTab, searchValue }) => {
       user.username.toLowerCase().includes(searchValue.toLowerCase())
     );
   else if (selectedTab === "messages")
-    filteredItems = rooms.filter((room) =>
-      room[0].toLowerCase().includes(searchValue.toLowerCase())
+    filteredItems = users.filter((user) =>
+    user.username.toLowerCase().includes(searchValue.toLowerCase())
     );
 
   return (
@@ -115,19 +101,19 @@ const List = ({ selectedTab, searchValue }) => {
               index={index}
               imgUrl={user.imgUrl}
               status={user.status}
-              onClick={() => handleSelectUser(user)}
+              onClick={() => console.log(user)}
               onClose={null}
             />
           ))}
         {selectedTab === "messages" &&
-          filteredItems.map((room, index) => (
+          filteredItems.map((user, index) => (
             <Card
-              label={room[0]}
+              label={user.username}
               index={index}
-              imgUrl={room[1].imgUrl}
-              status={room[1].status}
-              onClose={() => console.log("close")}
-              // onClick={() => handleSelectUser(user)}
+              imgUrl={user.imgUrl}
+              status={user.status}
+              onClick={() => console.log(user)}
+              onClose={null}
             />
           ))}
       </ul>

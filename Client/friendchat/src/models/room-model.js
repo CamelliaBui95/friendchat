@@ -41,7 +41,7 @@ const roomModel = {
     if (room) localStorage.setItem(roomKey, JSON.stringify(room));
   }),
 
-  /** */
+
   activeRoom: "",
   setActiveRoom: action((state, roomKey) => {
     if (

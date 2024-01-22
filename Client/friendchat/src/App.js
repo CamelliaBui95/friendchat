@@ -8,6 +8,7 @@ import UserService from "./services/userServices";
 import NavBar from "./components/navBar/NavBar";
 import Tabs from "./components/tabs/Tabs";
 import List from "./components/list/List";
+import ConversationController from "./components/conversation/ConversationController";
 
 const navItems = [
   { label: "My Profile", path: "/my-profile" },
@@ -18,7 +19,7 @@ function App() {
   const navigate = useNavigate();
   const { username } = useParams();
   const isRehydrated = useStoreRehydrated();
-  const { user, allUsers } = useStoreState((state) => state);
+  const { user } = useStoreState((state) => state);
   const rooms = useStoreState((state) => state.getRooms);
   const { addRoom, forwardMessage, setLogOut } = useStoreActions(
     (actions) => actions
@@ -82,7 +83,9 @@ function App() {
             </div>
           </div>
           <div className="col-span-9 h-full ">
-            <div className="border border-white h-full rounded-xl"></div>
+            <div className="h-full">
+              <ConversationController/>
+            </div>
           </div>
         </div>
       </div>

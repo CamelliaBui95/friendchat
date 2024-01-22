@@ -1,0 +1,11 @@
+.conversation-info {
+    border-bottom: 1.5px solid var(--light-grey);
+    box-shadow: var(--shadow-sm-3);
+}
+
+.conversation-box {
+    height: 90%;
+    background-color: white;
+    padding: 1.75rem;
+    margin: 0;
+}

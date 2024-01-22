@@ -1,19 +1,8 @@
 
-
 .homePage {
   display: flex;
 }
 
-.chat-box {
-  height: 80vh;
-}
-
-
-@media (min-width: 1550px) {
-  .chat-box {
-    height: 85vh;
-  }
-}
 
 .side-bar {
   position: fixed;
@@ -23,12 +12,7 @@
   padding: 10px;
 }
 
-.chat-section {
-  position: fixed;
-  height: 90%;
-  width: inherit;
-  padding: 10px;
-}
+
 
 /* Status display */
 .status {

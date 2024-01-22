@@ -4,7 +4,6 @@ class MessageService {
   static ioSocket = Socket;
   static socket;
   
-  /**Observer Pattern */
   static update = () => {
     this.socket = this.ioSocket.get();
   };
