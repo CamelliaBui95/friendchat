@@ -71,24 +71,55 @@ const mockUsers = [
 ];
 
 const List = ({ selectedTab, searchValue }) => {
-  const { allUsers: users } = useStoreState((state) => state);
-  const { setAllUsers } = useStoreActions(
-    (actions) => actions
-  );
+  const usersList = useStoreState((state) => state.usersList);
+  const conversationsList = useStoreState((state) => state.conversationsList);
+  const { allUsers } = useStoreState((state) => state);
+  const hasConversation = useStoreState((state) => state.hasConversation);
+  const {
+    setAllUsers,
+    updateUsers,
+    addConversation,
+    setActiveConversation,
+    updateConversation,
+  } = useStoreActions((actions) => actions);
+
+  const handleUserClick = (user) => {
+    if (!hasConversation(user._id))
+      addConversation({
+        _id: user._id,
+        master: user.username,
+        status: user.status,
+        imgUrl: user.imgUrl,
+      });
+
+    setActiveConversation(user._id);
+  };
+
+  const handleConversationClick = (convo) => {
+    setActiveConversation(convo._id);
+  };
 
   useEffect(() => {
     UserService.getAllUsers(setAllUsers);
-  }, [users]);
-
+    UserService.updateUserList((updatedUser) => {
+      updateUsers(updatedUser);
+      updateConversation({
+        _id: updatedUser._id,
+        master: updatedUser.username,
+        status: updatedUser.status,
+        imgUrl: updatedUser.imgUrl,
+      })
+    });
+  }, [usersList]);
 
   let filteredItems;
   if (selectedTab === "users")
-    filteredItems = users.filter((user) =>
+    filteredItems = usersList.filter((user) =>
       user.username.toLowerCase().includes(searchValue.toLowerCase())
     );
   else if (selectedTab === "messages")
-    filteredItems = users.filter((user) =>
-    user.username.toLowerCase().includes(searchValue.toLowerCase())
+    filteredItems = conversationsList.filter((convo) =>
+      convo.master.toLowerCase().includes(searchValue.toLowerCase())
     );
 
   return (
@@ -101,18 +132,18 @@ const List = ({ selectedTab, searchValue }) => {
               index={index}
               imgUrl={user.imgUrl}
               status={user.status}
-              onClick={() => console.log(user)}
+              onClick={() => handleUserClick(user)}
               onClose={null}
             />
           ))}
         {selectedTab === "messages" &&
-          filteredItems.map((user, index) => (
+          filteredItems.map((convo, index) => (
             <Card
-              label={user.username}
+              label={convo.master}
               index={index}
-              imgUrl={user.imgUrl}
-              status={user.status}
-              onClick={() => console.log(user)}
+              imgUrl={convo.imgUrl}
+              status={convo.status}
+              onClick={() => handleConversationClick(convo)}
               onClose={null}
             />
           ))}

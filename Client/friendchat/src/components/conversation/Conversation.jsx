@@ -1,30 +1,14 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {useStoreState, useStoreActions} from "easy-peasy";
 import "./conversation.css";
-
-const mockConversation = {
-  username: "Test User 2",
-  status: "online",
-  imgUrl: "../images/cat-user.png",
-};
+import ConversationHeader from "./ConversationHeader";
 
 const Conversation = () => {
+  const {activeConversation} = useStoreState(state => state);
+
   return (
     <div className="h-full">
-      <div className="conversation-info flex flex-row justify-start items-center h-[10%] p-2 rounded-t-lg bg-white">
-        <div className="flex flex-row relative">
-          <img
-            src={mockConversation.imgUrl}
-            className="w-[50px] rounded-full"
-          />
-          <i
-            className={
-              "fa fa-circle absolute bottom-0 right-0 " +
-              mockConversation.status
-            }
-          ></i>
-        </div>
-        <p className="mb-0 ml-2 text-xl font-semibold">{mockConversation.username}</p>
-      </div>
+      <ConversationHeader title={activeConversation.master} status={activeConversation.status} imgUrl={activeConversation.imgUrl}/>
       <div className="h-[90%]">
         <ul className="conversation-box overflow-y-auto">
 

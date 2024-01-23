@@ -27,7 +27,7 @@ const Tabs = ({ onSelectTab, selectedTab, onSearch, searchValue }) => {
       </li>
       <li className="search-box-wrapper flex flex-grow-1 items-center gap-2 p-2">
         <i
-          class="fa-solid fa-magnifying-glass text-2xl"
+          className="fa-solid fa-magnifying-glass text-2xl"
           style={{ color: "#1d4072" }}
         ></i>
         <input

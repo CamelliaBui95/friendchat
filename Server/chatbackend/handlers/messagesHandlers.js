@@ -14,32 +14,10 @@ const messagesDelivery = (io, socket) => {
     })
 }
 
-/*const roomServicesHandler = (io, socket) => {  
-    socket.on("set_private_room", async request => {
-        /**request = {sender, to} 
-
-        const receiverId = request.to;
-        const roomId = socket.data.userId + receiverId;
-        const toSocket = getSocket(receiverId);
-        if (!toSocket)
-            throw new Error("User Not Exist");
-
-        socket.join(roomId);
-        toSocket.join(roomId);
-
-        io.to(roomId).emit("set_private_room", {
-          sender: getUser(socket.data.username),
-          to: getUser(toSocket.data.username),
-          roomId,
-        });
-        
-    })  
-}*/
-
 module.exports = { messagesDelivery };
 
-/* { sender: user.username,
+/* { sender: sender._id,
      payload: {type: String,
                data: String},
 
-     to: "#public" }*/
+     to: user._id }*/

@@ -1,4 +1,4 @@
-import { action, thunk } from "easy-peasy";
+import { action, computed, thunk } from "easy-peasy";
 import UserService from "../services/userServices";
 
 const userModel = {
@@ -21,10 +21,28 @@ const userModel = {
     }
   }),
 
-  allUsers: [],
+  allUsers: {},
   setAllUsers: action((state, payload) => {
-    state.allUsers = payload;
+    state.allUsers = {};
+    for (let i = 0; i < payload.length; i++) {
+      const user = payload[i];
+      state.allUsers[user._id] = user;
+    }
   }),
+  usersList: computed((state) => Object.values(state.allUsers)),
+  updateUsers: action((state, updatedUser) => {
+    /*if (updatedUser.status === "disconnected") {
+      state.allUsers = Object.keys(state.allUsers)
+        .filter((key) => key != updatedUser._id)
+        .reduce((newList, key) => {
+          newList[key] = state.allUsers[key];
+          return newList;
+        });
+
+    } else*/
+      state.allUsers[updatedUser._id] = updatedUser;
+  }),
+
   allUsernames: [],
   setAllUsernames: action((state, usernames) => {
     state.allUsernames = usernames;
@@ -33,7 +51,7 @@ const userModel = {
     const response = await UserService.getAllUsernames();
     const { data } = response;
     actions.setAllUsernames(data);
-  })
+  }),
 };
 
 export default userModel;

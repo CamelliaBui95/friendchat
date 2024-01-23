@@ -2,23 +2,23 @@ import { action, computed } from "easy-peasy";
 
 const messageModel = {
   forwardMessage: action((state, packet) => {
-    const { key, msg } = packet;
+    const { id, msg } = packet;
     const { sender } = msg;
-    if (sender === state.user.username) state.rooms[key].readMessages.push(msg);
-    else state.rooms[key].unreadMessages.push(msg);
+    if (sender === state.user._id) state.conversations[key].readMessages.push(msg);
+    else state.conversations[key].unreadMessages.push(msg);
   }),
-  onReadMessages: action((state, roomKey) => {
-    if (roomKey && state.rooms.hasOwnProperty(roomKey)) {
-      const unreadMessages = state.rooms[roomKey].unreadMessages;
-      state.rooms[roomKey].readMessages.push(...unreadMessages);
-      state.rooms[roomKey].unreadMessages = [];
+  onReadMessages: action((state, convoID) => {
+    if (convoID && state.conversations.hasOwnProperty(convoID)) {
+      const unreadMessages = state.conversations[convoID].unreadMessages;
+      state.conversations[convoID].readMessages.push(...unreadMessages);
+      state.conversations[convoID].unreadMessages = [];
     }
   }),
   getUnreadMessages: computed((state) => {
-    return (key) => state.rooms[key].unreadMessages;
+    return (id) => state.conversations[id].unreadMessages;
   }),
   getReadMessages: computed((state) => {
-    return (key) => state.rooms[key].readMessages;
+    return (id) => state.rooms[id].readMessages;
   }),
 };
 

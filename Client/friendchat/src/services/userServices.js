@@ -56,6 +56,12 @@ class UserService {
   static updateUserStatus = (status) => {
     this.socket.emit("update_status", status);
   };
+
+  static updateUserList = (setUpdateUsers) => {
+    this.socket.on("update_user_list", (updatedUser) => {
+      setUpdateUsers(updatedUser);
+    })
+  }
 }
 
 export default UserService;

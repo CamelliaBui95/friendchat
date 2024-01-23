@@ -21,7 +21,7 @@ function App() {
   const isRehydrated = useStoreRehydrated();
   const { user } = useStoreState((state) => state);
   const rooms = useStoreState((state) => state.getRooms);
-  const { addRoom, forwardMessage, setLogOut } = useStoreActions(
+  const { addConversation, forwardMessage, setLogOut, addRoom } = useStoreActions(
     (actions) => actions
   );
   const hasRoom = useStoreState((state) => state.hasRoom);
@@ -48,12 +48,13 @@ function App() {
   };
 
   useEffect(() => {
-    addRoom({
-      key: "#public",
-      roomId: "#public",
+    addConversation({
+      _id: "#public",
+      master: "#public",
       status: "online",
-      imgUrl: "../images/cat-user.png",
+      imgUrl: "../images/cat-user.png"
     });
+
   }, []);
 
   useEffect(() => {

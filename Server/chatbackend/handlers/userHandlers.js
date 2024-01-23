@@ -14,7 +14,7 @@ const userLoginHandlers = (io, socket) => {
     socket.user.username = user.username.toLowerCase();
 
     /** add current socket to sockets, using user's name as its key */
-    sockets[user.username] = socket;
+    sockets[userId] = socket;
 
     if (user.isInPublic) socket.join("#public");
 
@@ -22,10 +22,11 @@ const userLoginHandlers = (io, socket) => {
       {
         status: { $in: ["online", "idle", "busy"] },
       },
-      { _id: 0, password: 0 }
+      { password: 0 }
     ).sort("name");
-      
-    io.to("#public").emit("all_users", users);
+    
+    
+    io.emit("all_users", users);
   });
 
   socket.on("disconnect", async () => {
@@ -44,8 +45,10 @@ const userLoginHandlers = (io, socket) => {
     if (!disconnectedUser)
       return;
 
-    delete sockets[disconnectedUser.username];
+    delete sockets[disconnectedUser._id];
+
     io.emit("all_users", users);
+
     console.log("a user disconnect");
   });
 };
@@ -60,12 +63,13 @@ const updateUserHandlers = (io, socket) => {
       status: { $in: ["online", "idle", "busy"] },
     }).sort("name");
         
-    io.emit("all_users", users);
+    //io.emit("all_users", users);
+    io.emit("update_user_list", updatedUser);
   });
 };
 
-const getSocket = (username) => {
-  return sockets[username];
+const getSocket = (id) => {
+  return sockets[id];
 };
 
 module.exports = {
