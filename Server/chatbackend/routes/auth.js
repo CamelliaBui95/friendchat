@@ -27,6 +27,7 @@ router.post("/", httpAuth, async (req, res) => {
   user.status = status;
 
   res.header("x-auth-token", token).send({
+    _id: user._id,
     username: user.username,
     email: user.email,
     status: user.status,

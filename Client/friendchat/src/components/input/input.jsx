@@ -1,9 +1,6 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import "./input.css";
 import { useState, useEffect, useRef } from "react";
-import { useStoreState, useStoreActions} from "easy-peasy";
+import { useStoreState, useStoreActions } from "easy-peasy";
 import { getFile, fileToDataUrl } from "../../utils/utils";
 import Emojis from "../emojis/Emojis";
 
@@ -12,7 +9,7 @@ const Input = ({ onSubmit }) => {
   const [value, setValue] = useState("");
   const [file, setFile] = useState(null);
   const [emojisDisplay, setEmojisDisplay] = useState(false);
-  const getEmoji = useStoreState(state => state.getEmoji);
+  const getEmoji = useStoreState((state) => state.getEmoji);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,50 +22,70 @@ const Input = ({ onSubmit }) => {
     setFile(file);
   };
 
-  const handleClickEmoji = id => {
+  const handleClickEmoji = (id) => {
     let newVal = value;
     newVal += getEmoji(id).content;
     setValue(newVal);
     textRef.current.focus();
-  }
+  };
 
   useEffect(() => {
     if (file)
-      fileToDataUrl(file).then(dataUrl => {
-        if (/^image/.test(file.type)) 
-          onSubmit({ payload: { type: file.type, data: dataUrl } })
+      fileToDataUrl(file).then((dataUrl) => {
+        if (/^image/.test(file.type))
+          onSubmit({ payload: { type: file.type, data: dataUrl } });
         setFile(null);
-      }   
-      );
+      });
   }, [file]);
 
   return (
-    <Form onSubmit={(e) => handleSubmit(e)}>
+    <><div
+      onSubmit={(e) => handleSubmit(e)}
+      className="h-[10%] w-full bg-white rounded-b-xl p-1 flex flex-row justify-center items-center"
+    >
       <Emojis display={emojisDisplay} onEmojiClick={handleClickEmoji}></Emojis>
-      <InputGroup className="input">
-        <Form.Control
-          className="shadow-none"
+      <form className="input flex flex-row flex-grow-1 justify-start items-center h-full">
+        <input
+          className="focus:outline-none flex-grow-1 h-[80%]"
           aria-label="message"
-          aria-describedby="basic-addon2"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           ref={textRef}
         />
-        <Button
-          variant="outline-secondary"
-          id="button-addon2"
+      </form>
+      <button
+          id="choose-file-btn"
           onClick={handleFile}
+          className="rounded-xl p-3 hover:bg-slate-300"
         >
-          Choose file
-        </Button>
-        <Button variant="outline-secondary" id="button-addon2" onClick={() => setEmojisDisplay(!emojisDisplay)}>
-          Emojis
-        </Button>
-        <Button variant="outline-secondary" id="button-addon2" type="submit">
-          Send
-        </Button>
-      </InputGroup>
-    </Form>
+          <i
+            className="fa-solid fa-image text-3xl"
+            style={{ color: "#1d4072" }}
+          ></i>
+        </button>
+        <button
+          id="emojis-btn"
+          onClick={() => setEmojisDisplay(!emojisDisplay)}
+          className="rounded-xl p-3 hover:bg-slate-300"
+        >
+          <i
+            className="fa-regular fa-face-smile text-3xl"
+            style={{ color: "#1d4072" }}
+          ></i>
+        </button>
+        <button
+          id="submit-btn"
+          className="rounded-xl p-3 hover:bg-slate-300"
+          onClick={(e) => handleSubmit(e)}
+        >
+          <i
+            className="fa-regular fa-paper-plane text-3xl"
+            style={{ color: "#1d4072" }}
+          ></i>
+        </button>
+    </div>
+    
+    </>
   );
 };
 

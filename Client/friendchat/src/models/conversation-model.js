@@ -15,12 +15,15 @@ const conversationModel = {
         master,
         status,
         imgUrl,
-        readMessages: [],
-        unreadMessages: [],
+        messages: [],
+        unreadCount: 0
       };
     }
 
-    if (message) state.conversations[_id].unreadMessages.push(message);
+    if (message) {
+      state.conversations[_id].messages.push(message);
+      state.conversations[_id].unreadCount += 1;
+    }
     else state.activeConversation = state.conversations[_id];
   }),
   getConversations: computed((state) => Object.values(state.conversations)),

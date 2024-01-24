@@ -4,8 +4,8 @@
 }
 
 .conversation-box {
-    height: 90%;
     background-color: white;
+    border-bottom: 1.5px solid var(--light-grey);
     padding: 1.75rem;
     margin: 0;
 }

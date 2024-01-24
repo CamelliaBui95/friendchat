@@ -47,7 +47,8 @@ const userLoginHandlers = (io, socket) => {
 
     delete sockets[disconnectedUser._id];
 
-    io.emit("all_users", users);
+    //io.emit("all_users", users);
+    io.emit("update_user_list", disconnectedUser);
 
     console.log("a user disconnect");
   });

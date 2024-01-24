@@ -2,23 +2,19 @@ import { action, computed } from "easy-peasy";
 
 const messageModel = {
   forwardMessage: action((state, packet) => {
-    const { id, msg } = packet;
+    const { key, msg } = packet;
     const { sender } = msg;
-    if (sender === state.user._id) state.conversations[key].readMessages.push(msg);
-    else state.conversations[key].unreadMessages.push(msg);
+    state.conversations[key].messages.push(msg);
+
+    if (sender !== state.user._id && key !== state.activeConversation._id)
+      state.conversations[key].unreadCount += 1;
   }),
   onReadMessages: action((state, convoID) => {
-    if (convoID && state.conversations.hasOwnProperty(convoID)) {
-      const unreadMessages = state.conversations[convoID].unreadMessages;
-      state.conversations[convoID].readMessages.push(...unreadMessages);
-      state.conversations[convoID].unreadMessages = [];
-    }
+    if (convoID && state.conversations.hasOwnProperty(convoID))
+      state.conversations[convoID].unreadCount = 0;
   }),
-  getUnreadMessages: computed((state) => {
-    return (id) => state.conversations[id].unreadMessages;
-  }),
-  getReadMessages: computed((state) => {
-    return (id) => state.rooms[id].readMessages;
+  getMessages: computed((state) => {
+    return (id) => state.conversations[id].messages;
   }),
 };
 

@@ -57,7 +57,7 @@ router.post("/register", async (req, res) => {
 
   await user.save();
 
-  res.send(token);
+  res.send({token});
 });
 
 module.exports = router;

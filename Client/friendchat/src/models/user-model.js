@@ -29,7 +29,9 @@ const userModel = {
       state.allUsers[user._id] = user;
     }
   }),
-  usersList: computed((state) => Object.values(state.allUsers)),
+  usersList: computed((state) => {
+    return Object.values(state.allUsers).filter(user => user.status !== "disconnected")
+  }),
   updateUsers: action((state, updatedUser) => {
     /*if (updatedUser.status === "disconnected") {
       state.allUsers = Object.keys(state.allUsers)
@@ -41,6 +43,9 @@ const userModel = {
 
     } else*/
       state.allUsers[updatedUser._id] = updatedUser;
+  }),
+  getUser: computed(state => {
+    return (id) => state.allUsers[id];
   }),
 
   allUsernames: [],

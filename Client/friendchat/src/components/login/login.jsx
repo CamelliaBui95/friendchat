@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { handleLogin, handleLoginWithAuth } = useStoreActions(
+  const { handleLogin } = useStoreActions(
     (actions) => actions
   );
   const { userToken, user } = useStoreState((state) => state);

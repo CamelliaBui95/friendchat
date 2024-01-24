@@ -1,14 +1,15 @@
 import { useStoreState } from "easy-peasy";
 import "./message.css";
 import React, {useEffect, useState} from "react";
-import ListGroup from "react-bootstrap/esm/ListGroup";
 
 function Message({ sender, payload, onCheckSender }) {
   const { user } = useStoreState(state => state);
+  const senderData = useStoreState(state => state.getUser(sender));
   const [renderSender, setRenderSender] = useState(true);
 
   useEffect(() => {
     setRenderSender(!onCheckSender());
+    console.log(senderData)
   }, [])
 
   const renderMessage = () => {
@@ -22,18 +23,20 @@ function Message({ sender, payload, onCheckSender }) {
   }
 
   const msgClassName =
-    user.username === sender ? "ms-2 ms-auto bubble bubble-right" : "ms-2 me-auto bubble bubble-left";
+    user._id === sender ? "ms-2 ms-auto bubble bubble-right" : "ms-2 me-auto bubble bubble-left";
   
   return (
-    <ListGroup.Item
-      as="li"
-      className="d-flex flex-column justify-content-between align-items-start"
+    <li
+      className="flex flex-col justify-between items-start"
     >
-      {renderSender && user.username !== sender && (
-        <div className="fw-bold ms-2 mb-2">{sender}</div>
+      {renderSender && user._id !== sender && (
+        <div className="mt-2 mb-1 flex flex-row justify-start items-center relative">
+          <img src={senderData.imgUrl} width="40px" className="rounded-full"/>
+          <p className="mb-0 ml-1 font-semibold text-lg">{senderData.username}</p>
+        </div>
       )}
-      <div className={msgClassName}>{renderMessage()}</div>
-    </ListGroup.Item>
+      <div className={msgClassName + " my-1"}>{renderMessage()}</div>
+    </li>
   );
 }
 

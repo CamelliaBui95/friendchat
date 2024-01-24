@@ -20,12 +20,12 @@ function App() {
   const { username } = useParams();
   const isRehydrated = useStoreRehydrated();
   const { user } = useStoreState((state) => state);
-  const rooms = useStoreState((state) => state.getRooms);
-  const { addConversation, forwardMessage, setLogOut, addRoom } = useStoreActions(
+
+  const { addConversation, forwardMessage } = useStoreActions(
     (actions) => actions
   );
-  const hasRoom = useStoreState((state) => state.hasRoom);
-  const logOut = useStoreState((state) => state.logOut);
+  const getUser = useStoreState((state) => state.getUser);
+  const hasConversation = useStoreState((state) => state.hasConversation);
   const [tab, setTab] = useState("users");
   const [searchVal, setSearchVal] = useState("");
 
@@ -35,16 +35,28 @@ function App() {
     if (receiver === "#public")
       return forwardMessage({ key: receiver, msg: packet });
 
-    if (sender === user.username) {
-      if (hasRoom(receiver))
+    if (sender === user._id) {
+      /*if (hasConversation(receiver))
         return forwardMessage({ key: receiver, msg: packet });
 
-      return addRoom({ key: receiver, roomId: receiver, msg: packet });
+      const other = getUser(receiver);
+      return addConversation({ 
+
+       });*/
+      return forwardMessage({ key: receiver, msg: packet });
     }
 
-    if (!hasRoom(sender)) {
-      return addRoom({ key: sender, roomId: sender, msg: packet });
-    } else forwardMessage({ key: sender, msg: packet });
+    if (!hasConversation(sender)) {
+      const other = getUser(sender);
+      return addConversation({
+        _id: sender,
+        master: other.username,
+        status: other.status,
+        imgUrl: other.imgUrl,
+        message: packet,
+      });
+    }
+    else forwardMessage({ key: sender, msg: packet });
   };
 
   useEffect(() => {
@@ -52,9 +64,8 @@ function App() {
       _id: "#public",
       master: "#public",
       status: "online",
-      imgUrl: "../images/cat-user.png"
+      imgUrl: "../images/cat-user.png",
     });
-
   }, []);
 
   useEffect(() => {
@@ -85,7 +96,7 @@ function App() {
           </div>
           <div className="col-span-9 h-full ">
             <div className="h-full">
-              <ConversationController/>
+              <ConversationController onCheckPacket={handleCheckPacket}/>
             </div>
           </div>
         </div>
