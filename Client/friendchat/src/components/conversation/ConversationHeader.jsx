@@ -7,11 +7,11 @@ const ConversationHeader = ({imgUrl, status, title}) => {
         <div className="flex flex-row relative">
           <img
             src={imgUrl}
-            className="w-[50px] rounded-full"
+            className="w-[40px] 3xl:w-[50px] rounded-full"
           />
           <i
             className={
-              "fa fa-circle absolute bottom-0 right-0 " +
+              "fa fa-circle absolute bottom-0 right-0 text-[0.9rem] 3xl:text-[1rem] " +
               status
             }
           ></i>

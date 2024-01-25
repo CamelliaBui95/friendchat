@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import {useStoreState, useStoreActions} from "easy-peasy";
+import {useStoreState} from "easy-peasy";
 import "./conversation.css";
 import ConversationHeader from "./ConversationHeader";
 import Message from "../message/Message";
@@ -9,8 +9,7 @@ const Conversation = ({onSendMessage, notification}) => {
   const boxRef = useRef(null);
   const {activeConversation} = useStoreState(state => state);
   const [prevSender, setPrevSender] = useState("");
-  const getMessages = useStoreState(state => state.getMessages);
-  const [messages, setMessages] = useState([]);
+  const messages = useStoreState(state => state.getMessages(activeConversation._id));
 
   const checkSender = sender => {
     if (!sender || prevSender !== sender) {
@@ -34,17 +33,11 @@ const Conversation = ({onSendMessage, notification}) => {
     return () => observer.disconnect();
   }, [])
 
-  useEffect(() => {
-    if(activeConversation)
-      setMessages(getMessages(activeConversation._id));
-
-  }, [activeConversation])
-
   return (
     <div className="h-full overflow-hidden">
       {activeConversation && <ConversationHeader title={activeConversation.master} status={activeConversation.status} imgUrl={activeConversation.imgUrl}/>}
       <div className="h-[90%]">
-        <ul className="conversation-box h-[90%] overflow-y-auto" ref={boxRef}>
+        <ul className="conversation-box h-[90%] overflow-y-auto overflow-x-hidden" ref={boxRef}>
           {messages.map((msg, index) => <Message sender={msg.sender} key={index} payload={msg.payload} onCheckSender={() => checkSender(msg.sender)}/>)}
           {notification.length > 0 && <p className="w-full mt-2 text-center text-xl italic">{notification}</p>}
         </ul>

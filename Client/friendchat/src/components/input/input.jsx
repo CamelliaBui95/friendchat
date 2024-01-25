@@ -39,52 +39,55 @@ const Input = ({ onSubmit }) => {
   }, [file]);
 
   return (
-    <><div
-      onSubmit={(e) => handleSubmit(e)}
-      className="h-[10%] w-full bg-white rounded-b-xl p-1 flex flex-row justify-center items-center"
-    >
-      <Emojis display={emojisDisplay} onEmojiClick={handleClickEmoji}></Emojis>
-      <form className="input flex flex-row flex-grow-1 justify-start items-center h-full">
-        <input
-          className="focus:outline-none flex-grow-1 h-[80%]"
-          aria-label="message"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          ref={textRef}
-        />
-      </form>
-      <button
+    <>
+      <div
+        onSubmit={(e) => handleSubmit(e)}
+        className="h-[10%] w-full bg-white rounded-b-xl p-2 flex flex-row justify-center items-center"
+      >
+        <Emojis
+          display={emojisDisplay}
+          onEmojiClick={handleClickEmoji}
+        ></Emojis>
+        <form className="input flex flex-row flex-grow-1 justify-start items-center h-full">
+          <input
+            className="focus:outline-none flex-grow-1 h-[80%]"
+            aria-label="message"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            ref={textRef}
+          />
+        </form>
+        <button
           id="choose-file-btn"
           onClick={handleFile}
-          className="rounded-xl p-3 hover:bg-slate-300"
+          className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
         >
           <i
-            className="fa-solid fa-image text-3xl"
+            className="fa-solid fa-image text-2xl 3xl:text-4xl"
             style={{ color: "#1d4072" }}
           ></i>
         </button>
         <button
           id="emojis-btn"
           onClick={() => setEmojisDisplay(!emojisDisplay)}
-          className="rounded-xl p-3 hover:bg-slate-300"
+          className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
         >
           <i
-            className="fa-regular fa-face-smile text-3xl"
+            className="fa-regular fa-face-smile text-2xl 3xl:text-4xl"
             style={{ color: "#1d4072" }}
           ></i>
         </button>
         <button
           id="submit-btn"
-          className="rounded-xl p-3 hover:bg-slate-300"
+          className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
           onClick={(e) => handleSubmit(e)}
         >
           <i
-            className="fa-regular fa-paper-plane text-3xl"
+            className="fa-regular fa-paper-plane text-2xl 3xl:text-4xl"
             style={{ color: "#1d4072" }}
           ></i>
         </button>
-    </div>
-    
+      </div>
     </>
   );
 };

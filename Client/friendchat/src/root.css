@@ -58,39 +58,37 @@
 .secondary-btn {
   color: white;
   background-color: rgba(198, 35, 104, 0.8);
-  /* border: 2px solid var(--pink); */
   box-shadow: var(--shadow-sm-1);
   border-radius: 1rem;
-  padding: 0.5rem 1.5rem;
+  padding: 0.6rem 1.5rem;
 }
 
 .secondary-btn:hover,
 .secondary-btn:active,
 .secondary-btn:focus {
-  background-color: rgba(198, 35, 104, 1) !important;
-  border: 2px solid var(--pink) !important;
+  background-color: rgb(197, 42, 107) !important;
 }
 
 .secondary-btn:disabled,
 .secondary-btn[disabled] {
   background-color: rgba(198, 35, 104, 0.5) !important;
-  border: 2px solid rgba(198, 35, 104, 0.1) !important;
+  outline: 2px solid rgba(198, 35, 104, 0.1) !important;
 }
 
 .secondary-btn-outline {
-  border: 2px solid var(--pink);
+  outline: 2px solid var(--pink);
   border-radius: 1rem;
   box-sizing: border-box;
   padding: 0.5rem 1.5rem;
   color: var(--pink);
   text-decoration-line: none;
+  transition: all 0.3s;
 }
 
 .secondary-btn-outline:hover,
 .secondary-btn-outline:active,
 .secondary-btn-outline:focus {
   background-color: rgba(198, 35, 104, 1) !important;
-  border: 2px solid rgba(198, 35, 104, 1) !important;
   color: white;
 }
 
@@ -101,7 +99,7 @@
 
 .form-input:focus,
 .form-input:active {
-  border: 2px solid rgba(198, 35, 104, 1) !important;
+  outline: 2px solid rgba(198, 35, 104, 1) !important;
 }
 
 .error-message {

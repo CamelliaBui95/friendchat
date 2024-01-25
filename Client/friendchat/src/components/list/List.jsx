@@ -98,7 +98,3 @@ const List = ({ selectedTab, searchValue }) => {
 };
 
 export default List;
-
-// {
-//   users.map((user, index) => <UserCard user={user} index={index} />);
-// }

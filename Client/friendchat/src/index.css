@@ -33,13 +33,7 @@ body {
 button {
   transition: all 0.3s;
 }
-/*body {
-  height: 100vh;
-  background-image: url('../public/images/layered-waves-xl.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}*/
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

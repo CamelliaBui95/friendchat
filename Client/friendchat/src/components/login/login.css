@@ -21,6 +21,10 @@
 
 .dialog-box {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 0.75rem;
   margin: 50px auto;
   box-shadow: var(--shadow-sm-2);

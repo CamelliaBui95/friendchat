@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import App from "./App";
-import Home from "./components/home/Home";
 import Root from "./Root";
 import { createStore, StoreProvider, persist } from "easy-peasy";
 import storeModel from "./models/model";

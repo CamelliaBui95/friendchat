@@ -34,7 +34,7 @@ function Message({ sender, payload, onCheckSender }) {
           <p className="mb-0 ml-1 font-semibold text-lg">{senderData.username}</p>
         </div>
       )}
-      <div className={msgClassName + " my-1"}>{renderMessage()}</div>
+      <div className={msgClassName + " my-1 break-all"}>{renderMessage()}</div>
     </li>
   );
 }
