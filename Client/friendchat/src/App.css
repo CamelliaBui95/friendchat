@@ -32,6 +32,10 @@
   color: rgb(245, 79, 13);
 }
 
+.disconnected {
+  color: rgb(95, 94, 94);
+}
+
 /*NavBar styling*/
 
 

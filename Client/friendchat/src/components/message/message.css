@@ -12,7 +12,7 @@
 }
 
 .bubble-left {
-    background-color: cornflowerblue;
+    background-color: var(--dark-blue);
     color: #fff
 }
 

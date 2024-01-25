@@ -4,76 +4,10 @@ import UserService from "../../services/userServices";
 import "./list.css";
 import Card from "../card/Card";
 
-const mockUsers = [
-  {
-    username: "User 1",
-    status: "online",
-    imgUrl: "../images/cat-user.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 2",
-    status: "idle",
-    imgUrl: "../images/cat-user-2.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 3",
-    status: "busy",
-    img: "../images/cat-user-3.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 4",
-    status: "idle",
-    img: "../images/cat-user-2.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 5",
-    status: "online",
-    img: "../images/cat-user-4.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 6",
-    status: "online",
-    img: "../images/cat-user-3.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 7",
-    status: "online",
-    img: "../images/cat-user-5.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 8",
-    status: "online",
-    img: "../images/cat-user-6.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-  {
-    username: "User 9",
-    status: "online",
-    img: "../images/cat-user.png",
-    email: "user1@abc.com",
-    isInPublic: true,
-  },
-];
-
 const List = ({ selectedTab, searchValue }) => {
   const usersList = useStoreState((state) => state.usersList);
   const conversationsList = useStoreState((state) => state.conversationsList);
-  const { allUsers } = useStoreState((state) => state);
+  const {activeConversation} = useStoreState(state => state);
   const hasConversation = useStoreState((state) => state.hasConversation);
   const {
     setAllUsers,
@@ -81,6 +15,8 @@ const List = ({ selectedTab, searchValue }) => {
     addConversation,
     setActiveConversation,
     updateConversation,
+    storeConversation,
+    removeConversation
   } = useStoreActions((actions) => actions);
 
   const handleUserClick = (user) => {
@@ -98,6 +34,14 @@ const List = ({ selectedTab, searchValue }) => {
   const handleConversationClick = (convo) => {
     setActiveConversation(convo._id);
   };
+
+  const handleCloseConversation = (convo) => {
+    if(activeConversation._id === convo._id) {
+      setActiveConversation("#public"); 
+    }
+    storeConversation(convo._id);
+    removeConversation(convo._id);
+  }
 
   useEffect(() => {
     UserService.getAllUsers(setAllUsers);
@@ -144,7 +88,8 @@ const List = ({ selectedTab, searchValue }) => {
               imgUrl={convo.imgUrl}
               status={convo.status}
               onClick={() => handleConversationClick(convo)}
-              onClose={null}
+              onClose={() => handleCloseConversation(convo)}
+              countBadge={convo.unreadCount}
             />
           ))}
       </ul>

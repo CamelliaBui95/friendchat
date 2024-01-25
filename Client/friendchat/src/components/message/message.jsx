@@ -9,7 +9,6 @@ function Message({ sender, payload, onCheckSender }) {
 
   useEffect(() => {
     setRenderSender(!onCheckSender());
-    console.log(senderData)
   }, [])
 
   const renderMessage = () => {
@@ -23,7 +22,7 @@ function Message({ sender, payload, onCheckSender }) {
   }
 
   const msgClassName =
-    user._id === sender ? "ms-2 ms-auto bubble bubble-right" : "ms-2 me-auto bubble bubble-left";
+    user._id === sender ? "mr-[30px] ms-auto bubble bubble-right" : "ml-[40px] bubble bubble-left";
   
   return (
     <li
@@ -31,7 +30,7 @@ function Message({ sender, payload, onCheckSender }) {
     >
       {renderSender && user._id !== sender && (
         <div className="mt-2 mb-1 flex flex-row justify-start items-center relative">
-          <img src={senderData.imgUrl} width="40px" className="rounded-full"/>
+          <img src={senderData.imgUrl} width="40px" className="rounded-full shadow-md"/>
           <p className="mb-0 ml-1 font-semibold text-lg">{senderData.username}</p>
         </div>
       )}

@@ -23,6 +23,7 @@ const conversationModel = {
     if (message) {
       state.conversations[_id].messages.push(message);
       state.conversations[_id].unreadCount += 1;
+      state.totalUnreadCount += 1;
     }
     else state.activeConversation = state.conversations[_id];
   }),
@@ -43,9 +44,9 @@ const conversationModel = {
     return (id) => state.conversations.hasOwnProperty(id);
   }),
   removeConversation: action((state, id) => {
-    delete state.conversations[id];
-    if (state.activeConversation._id === id)
+    if (state.activeConversation._id === id) 
       state.activeConversation = state.conversations["#public"];
+    delete state.conversations[id];
   }),
   storeConversation: action((state, id) => {
     const conversation = state.conversations[id];

@@ -6,10 +6,12 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 const ConversationController = ({onCheckPacket}) => {
   const {activeConversation, user} = useStoreState(state => state);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [notification, setNotification] = useState("");
   const {onReadMessages} = useStoreActions(actions => actions);
 
   useEffect(() => {
     MessageService.getMessage(setCurrentMessage);
+    MessageService.getNotification(setNotification);
   }, []);
 
   useEffect(() => {
@@ -17,17 +19,18 @@ const ConversationController = ({onCheckPacket}) => {
   }, [currentMessage])
 
   useEffect(() => {
-    onReadMessages(activeConversation._id);
+    if(activeConversation)
+      onReadMessages(activeConversation._id);
+    setNotification("");
   }, [activeConversation])
 
   
   const handleSendMessage = (msg) => {
-    console.log(user)
     MessageService.sendMessage({ sender: user._id, to: activeConversation._id, ...msg });
   };
 
   return (
-    <Conversation onSendMessage={handleSendMessage} />
+    <Conversation onSendMessage={handleSendMessage} notification={notification}/>
   )
 }
 

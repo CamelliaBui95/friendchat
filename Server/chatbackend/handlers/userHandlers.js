@@ -26,7 +26,8 @@ const userLoginHandlers = (io, socket) => {
     ).sort("name");
     
     
-    io.emit("all_users", users);
+    io.to(socket.id).emit("all_users", users);
+    io.emit("update_user_list", user);
   });
 
   socket.on("disconnect", async () => {
@@ -38,9 +39,9 @@ const userLoginHandlers = (io, socket) => {
       { new: true }
     );
 
-    const users = await User.find({
+    /*const users = await User.find({
       status: { $in: ["online", "idle", "busy"] },
-    }).sort("name");
+    }).sort("name");*/
 
     if (!disconnectedUser)
       return;

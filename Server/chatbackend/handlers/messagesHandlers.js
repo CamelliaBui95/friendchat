@@ -6,9 +6,12 @@ const messagesDelivery = (io, socket) => {
         if(receiver === "#public")
             io.to(receiver).emit("chat_message", packet);
         else {
-            const senderSocketID = getSocket(packet.sender).id;
-            const receiverSocketID = getSocket(receiver).id;
-            io.to([senderSocketID, receiverSocketID]).emit("chat_message", packet);
+            const senderSocket = getSocket(packet.sender);
+            const receiverSocket = getSocket(receiver);
+            if(receiverSocket)
+                io.to([senderSocket.id, receiverSocket.id]).emit("chat_message", packet);
+            else
+                io.to(senderSocket.id).emit("get_notified", "This User has disconnected");
         }
     })
 }

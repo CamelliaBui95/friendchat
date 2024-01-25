@@ -17,6 +17,12 @@ class MessageService {
         callback(msg);
     })
   }
+
+  static getNotification = callback => {
+    this.socket.on("get_notified", notification => {
+      callback(notification);
+    })
+  }
 }
 
 export default MessageService;

@@ -33,15 +33,6 @@ const userModel = {
     return Object.values(state.allUsers).filter(user => user.status !== "disconnected")
   }),
   updateUsers: action((state, updatedUser) => {
-    /*if (updatedUser.status === "disconnected") {
-      state.allUsers = Object.keys(state.allUsers)
-        .filter((key) => key != updatedUser._id)
-        .reduce((newList, key) => {
-          newList[key] = state.allUsers[key];
-          return newList;
-        });
-
-    } else*/
       state.allUsers[updatedUser._id] = updatedUser;
   }),
   getUser: computed(state => {

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStoreState, useStoreActions, useStoreRehydrated } from "easy-peasy";
 import Status from "./components/status/Status";
-import Rooms from "./components/rooms/Rooms";
 import UserService from "./services/userServices";
 import NavBar from "./components/navBar/NavBar";
 import Tabs from "./components/tabs/Tabs";
@@ -19,9 +18,9 @@ function App() {
   const navigate = useNavigate();
   const { username } = useParams();
   const isRehydrated = useStoreRehydrated();
-  const { user } = useStoreState((state) => state);
+  const { user, totalUnreadCount } = useStoreState((state) => state);
 
-  const { addConversation, forwardMessage } = useStoreActions(
+  const { addConversation, forwardMessage, setActiveConversation } = useStoreActions(
     (actions) => actions
   );
   const getUser = useStoreState((state) => state.getUser);
@@ -57,6 +56,7 @@ function App() {
       });
     }
     else forwardMessage({ key: sender, msg: packet });
+
   };
 
   useEffect(() => {
@@ -66,6 +66,7 @@ function App() {
       status: "online",
       imgUrl: "../images/cat-user.png",
     });
+    setActiveConversation("#public");
   }, []);
 
   useEffect(() => {
@@ -90,12 +91,13 @@ function App() {
                 selectedTab={tab}
                 searchValue={searchVal}
                 onSearch={setSearchVal}
+                countBadge={totalUnreadCount}
               />
               <List selectedTab={tab} searchValue={searchVal} />
             </div>
           </div>
-          <div className="col-span-9 h-full ">
-            <div className="h-full">
+          <div className="col-span-9 h-full overflow-hidden">
+            <div className="h-full overflow-hidden">
               <ConversationController onCheckPacket={handleCheckPacket}/>
             </div>
           </div>
