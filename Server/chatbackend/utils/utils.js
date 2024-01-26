@@ -70,20 +70,6 @@ const fs = require('fs');
 const path = require('path');
 
 const getSslConfigObj = (dir) => {
-    /*const privateKey = fs.readFile(path.join(dir, "sslCert", "key.pem"), (err, key) => {
-        if (err) return ""
-        return key;
-     });
-     const cert = fs.readFile(
-       path.join(dir, "sslCert", "cert.pem"),
-       (err, cert) => {
-         if (err) return "";
-         return cert;
-       })
-        ;*/
-    
-    //console.log(privateKey)
-    //console.log(cert);
      return {
        key: fs.readFileSync(path.join(dir, "sslCert", "key.pem")),
        cert: fs.readFileSync(path.join(dir, "sslCert", "cert.pem")),
