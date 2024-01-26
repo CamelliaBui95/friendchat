@@ -11,16 +11,6 @@ const userModel = {
     UserService.updateUserStatus(status);
   }),
 
-  logOut: false,
-  setLogOut: action((state, { willLogOut }) => {
-    state.logOut = willLogOut;
-    console.log("user disconnected...");
-    if (willLogOut) {
-      UserService.disconnect();
-      state.user = null;
-    }
-  }),
-
   allUsers: {},
   setAllUsers: action((state, payload) => {
     state.allUsers = {};

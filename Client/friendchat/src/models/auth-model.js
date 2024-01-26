@@ -13,10 +13,13 @@ const authModel = {
 
   setAuthToken: action((state, authToken) => {
     state.authToken = authToken;
+    sessionStorage.setItem("authToken", authToken);
   }),
 
   setUserToken: action((state, userToken) => {
     state.userToken = userToken;
+    sessionStorage.setItem("userToken", userToken);
+    
   }),
 
   handleLogin: thunk(async (actions, payload, helpers) => {
@@ -34,9 +37,6 @@ const authModel = {
     try {
       const response = await UserService.loginUser(userData, userToken);
       const authToken = response.headers["x-auth-token"];
-
-      sessionStorage.setItem("authToken", authToken);
-      sessionStorage.setItem("userToken", userToken);
 
       const user = response.data;
 
@@ -67,14 +67,13 @@ const authModel = {
     }
   }),
 
-  // handleLoginWithAuth: thunk(async (actions, userData) => {
-  //   actions.setUser(userData);
-  //   try {
-  //     UserService.connectUser(userData);
-  //   } catch (error) {
-  //     actions.setAuthError(error);
-  //   }
-  // }),
+  handleLogOut: action((state) => {
+    console.log("user has disconnected...");
+    sessionStorage.clear();
+    UserService.disconnect();
+    state.user = null;
+  }),
+
 };
 
 export default authModel;

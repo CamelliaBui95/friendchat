@@ -14,3 +14,7 @@
   flex-grow: 1;
   padding: 0.2rem 0.5rem;
 }
+
+#search:focus {
+  outline: 1px solid var(--dark-blue);
+}

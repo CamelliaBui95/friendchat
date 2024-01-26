@@ -9,10 +9,7 @@ import Tabs from "./components/tabs/Tabs";
 import List from "./components/list/List";
 import ConversationController from "./components/conversation/ConversationController";
 
-const navItems = [
-  { label: "My Profile", path: "/my-profile" },
-  { label: "Log Out", path: "/" },
-];
+
 
 function App() {
   const navigate = useNavigate();
@@ -20,13 +17,21 @@ function App() {
   const isRehydrated = useStoreRehydrated();
   const { user, totalUnreadCount } = useStoreState((state) => state);
 
-  const { addConversation, forwardMessage, setActiveConversation } = useStoreActions(
+  const { addConversation, forwardMessage, setActiveConversation, handleLogOut } = useStoreActions(
     (actions) => actions
   );
   const getUser = useStoreState((state) => state.getUser);
   const hasConversation = useStoreState((state) => state.hasConversation);
   const [tab, setTab] = useState("users");
   const [searchVal, setSearchVal] = useState("");
+
+  const navItems = [
+    { label: "My Profile", path: "/my-profile" },
+    { label: "Log Out", func: () => {
+      handleLogOut();
+      navigate("/login");
+    } },
+  ];
 
   const handleCheckPacket = (packet) => {
     const { sender, to: receiver } = packet;
@@ -74,7 +79,7 @@ function App() {
     else navigate("/login");
 
     //return () => UserService.disconnect();
-  }, []);
+  }, [user]);
 
   if (!isRehydrated) return <div>Loading...in app</div>;
 

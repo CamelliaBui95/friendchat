@@ -37,7 +37,7 @@ const Tabs = ({ onSelectTab, selectedTab, onSearch, searchValue, countBadge }) =
         ></i>
         <input
           type="text"
-          name=""
+          name="search"
           id="search"
           value={searchValue}
           onChange={(e) => {
