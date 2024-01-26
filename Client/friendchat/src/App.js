@@ -79,7 +79,7 @@ function App() {
     else navigate("/login");
 
     //return () => UserService.disconnect();
-  }, [user]);
+  }, []);
 
   if (!isRehydrated) return <div>Loading...in app</div>;
 
@@ -114,29 +114,3 @@ function App() {
 
 export default App;
 
-/* { sender: user.username,
-     payload: {type: String,
-               data: String},
-     roomId: "#public" }*/
-
-// abcd1234
-
-// {
-// const handleCheckPacket = (packet) => {
-//   const { sender, to: receiver } = packet;
-
-//   if (receiver === "#public")
-//     return forwardMessage({ key: receiver, msg: packet });
-
-//   if (sender === user.username) {
-//     if (hasRoom(receiver))
-//       return forwardMessage({ key: receiver, msg: packet });
-
-//     return addRoom({ key: receiver, roomId: receiver, msg: packet });
-//   }
-
-//   if (!hasRoom(sender)) {
-//     return addRoom({ key: sender, roomId: sender, msg: packet });
-//   } else forwardMessage({ key: sender, msg: packet });
-// };
-// }

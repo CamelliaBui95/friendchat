@@ -42,12 +42,9 @@ const Input = ({ onSubmit }) => {
     <>
       <div
         onSubmit={(e) => handleSubmit(e)}
-        className="h-[10%] w-full bg-white rounded-b-xl p-2 flex flex-row justify-center items-center"
+        className="h-[10%] w-full bg-white rounded-b-xl p-2 flex flex-row justify-center items-center relative"
       >
-        <Emojis
-          display={emojisDisplay}
-          onEmojiClick={handleClickEmoji}
-        ></Emojis>
+       
         <form className="input flex flex-row flex-grow-1 justify-start items-center h-full">
           <input
             className="focus:outline-none flex-grow-1 h-[80%]"
@@ -89,6 +86,10 @@ const Input = ({ onSubmit }) => {
             ></i>
           </button>
         </div>
+        <Emojis
+          display={emojisDisplay}
+          onEmojiClick={handleClickEmoji}
+        ></Emojis>
       </div>
     </>
   );

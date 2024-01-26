@@ -1,17 +1,32 @@
+.emojis-container::-webkit-scrollbar {
+    width: 0.65rem;
+}
+
+.emojis-container::-webkit-scrollbar-track {
+ background-color: rgb(233, 231, 231);
+ border-radius: 100px;
+}
+
+.emojis-container::-webkit-scrollbar-thumb {
+   background-color: rgb(29, 64, 114, 0.9);
+   border-radius: 100px;
+}
+
 .emojis {
     position: relative;
 }
 
 .emojis-container {
     position: absolute;
-    top: -270px;
     right: 60px;
+    top: -300px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background-color: white;
-    width: 310px;
+    width: 315px;
     height: 250px;
     padding: 5px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .emoji-btn {
