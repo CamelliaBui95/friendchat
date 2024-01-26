@@ -17,7 +17,7 @@ const userImages = [
 
 const Register = () => {
   const { handleRegister, fetchAllUsernames } = useStoreActions(actions => actions);
-  const { authError, allUsernames, user } = useStoreState(state => state);
+  const { authError, allUsernames, userToken } = useStoreState(state => state);
   const [userData, setUserData] = useState({username: "", email: "", password: ""});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -44,6 +44,7 @@ const Register = () => {
 
     await handleRegister({...userData, imgUrl});
     if (authError === null) {
+      console.log(userToken)
       navigate("/login");
     }
   };

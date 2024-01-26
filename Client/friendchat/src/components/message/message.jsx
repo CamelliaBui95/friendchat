@@ -40,11 +40,3 @@ function Message({ sender, payload, onCheckSender }) {
 }
 
 export default Message;
-
-/*message = {
-  sender: "",
-  payload: {
-    type: <text or image>
-    data: ""
-  }
-} */

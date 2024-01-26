@@ -57,36 +57,38 @@ const Input = ({ onSubmit }) => {
             ref={textRef}
           />
         </form>
-        <button
-          id="choose-file-btn"
-          onClick={handleFile}
-          className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
-        >
-          <i
-            className="fa-solid fa-image text-2xl 3xl:text-4xl"
-            style={{ color: "#1d4072" }}
-          ></i>
-        </button>
-        <button
-          id="emojis-btn"
-          onClick={() => setEmojisDisplay(!emojisDisplay)}
-          className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
-        >
-          <i
-            className="fa-regular fa-face-smile text-2xl 3xl:text-4xl"
-            style={{ color: "#1d4072" }}
-          ></i>
-        </button>
-        <button
-          id="submit-btn"
-          className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
-          onClick={(e) => handleSubmit(e)}
-        >
-          <i
-            className="fa-regular fa-paper-plane text-2xl 3xl:text-4xl"
-            style={{ color: "#1d4072" }}
-          ></i>
-        </button>
+        <div className="flex gap-2">
+          <button
+            id="choose-file-btn"
+            onClick={handleFile}
+            className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
+          >
+            <i
+              className="fa-solid fa-image text-2xl 3xl:text-4xl"
+              style={{ color: "#1d4072" }}
+            ></i>
+          </button>
+          <button
+            id="emojis-btn"
+            onClick={() => setEmojisDisplay(!emojisDisplay)}
+            className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
+          >
+            <i
+              className="fa-regular fa-face-smile text-2xl 3xl:text-4xl"
+              style={{ color: "#1d4072" }}
+            ></i>
+          </button>
+          <button
+            id="submit-btn"
+            className="rounded-xl p-2 3xl:p-3 hover:bg-slate-300"
+            onClick={(e) => handleSubmit(e)}
+          >
+            <i
+              className="fa-regular fa-paper-plane text-2xl 3xl:text-4xl"
+              style={{ color: "#1d4072" }}
+            ></i>
+          </button>
+        </div>
       </div>
     </>
   );

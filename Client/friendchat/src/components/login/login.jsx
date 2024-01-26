@@ -1,5 +1,5 @@
 import "./login.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { validate, validateProperty } from "../../utils/dataValidator";
 import Joi from "joi";
@@ -118,51 +118,3 @@ const Login = () => {
 
 export default Login;
 
-{
-  /* <Form className="login text-pink" onSubmit={(e) => handleSubmit(e)}>
-      <h2 className="text-center">Log In</h2>
-      <Form.Group className="mt-3" controlId="email">
-        <Form.Label className="text-md">Email</Form.Label>
-        <Form.Control
-          className="shadow-none form-input"
-          type="text"
-          value={userData.email}
-          name="email"
-          onChange={(e) => handleChange(e)}
-        />
-      </Form.Group>
-      {errors.email && <p className="error-message">{errors.email}</p>}
-
-      <Form.Group className="mt-3" controlId="password">
-        <Form.Label className="text-md">Password</Form.Label>
-        <Form.Control
-          className="shadow-none form-input"
-          type="password"
-          value={userData.password}
-          name="password"
-          onChange={(e) => handleChange(e)}
-        />
-      </Form.Group>
-      {errors.password && <p className="error-message">{errors.password}</p>}
-
-      <div>
-        <Button
-          className="secondary-btn text-md"
-          variant="primary mt-4"
-          style={{ marginRight: "1rem" }}
-          type="submit"
-          disabled={validate({userData, schema})}
-        >
-          Join Chat
-        </Button>
-        <Button
-          variant="outline-primary mt-4"
-          className="secondary-btn-outline text-md"
-          as={Link}
-          to="/register"
-        >
-          Sign Up
-        </Button>
-      </div>
-    </Form> */
-}

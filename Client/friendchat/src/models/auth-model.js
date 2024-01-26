@@ -47,13 +47,16 @@ const authModel = {
       Socket.pollSocket(authToken);
       actions.setAuthError(null);
     } catch (ex) {
+      console.log(ex.response.data)
       actions.setAuthError(ex.response.data);
     }
   }),
 
   handleRegister: thunk(async (actions, userData, helpers) => {
     try {
-      const { data: userToken } = await UserService.registerUser(userData);
+      const { data } = await UserService.registerUser(userData);
+      const userToken = data.token;
+      actions.setUserToken(userToken);
       await actions.handleLogin({
         userData: { email: userData.email, password: userData.password, imgUrl: userData.imgUrl },
         userToken,
@@ -64,14 +67,14 @@ const authModel = {
     }
   }),
 
-  handleLoginWithAuth: thunk(async (actions, userData) => {
-    actions.setUser(userData);
-    try {
-      UserService.connectUser(userData);
-    } catch (error) {
-      actions.setAuthError(error);
-    }
-  }),
+  // handleLoginWithAuth: thunk(async (actions, userData) => {
+  //   actions.setUser(userData);
+  //   try {
+  //     UserService.connectUser(userData);
+  //   } catch (error) {
+  //     actions.setAuthError(error);
+  //   }
+  // }),
 };
 
 export default authModel;
