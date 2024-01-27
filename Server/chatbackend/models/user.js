@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const { Schema } = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -25,12 +26,6 @@ const userSchema = new mongoose.Schema({
     maxLength: 255,
     required: true,
   },
-  imgUrl: {
-    type: String,
-    trim: true,
-    required: false
-  }
-  ,
   status: {
     type: String,
     default: "online",
@@ -40,6 +35,18 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
     required: true,
+  },
+  profile: {
+    imgUrl: {
+      type: String,
+      trim: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+      default: ""
+    },
+    interests: [{ type: Schema.Types.ObjectId, ref: "Interest" }],
   },
 });
 
@@ -65,7 +72,6 @@ const validateUser = (user) => {
   const schema = Joi.object({
     email: Joi.string().email().min(5).max(50).required(),
     password: Joi.string().min(8).max(50).required(),
-    imgUrl: Joi.string()
   });
 
   return schema.validate(user);

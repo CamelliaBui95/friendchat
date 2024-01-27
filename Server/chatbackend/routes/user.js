@@ -40,11 +40,17 @@ router.post("/register", async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send("User Already Registered.");
 
+  let imgUrl = req.body.imgUrl ? req.body.imgUrl : "";
+
   user = new User({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    imgUrl: req.body.imgUrl
+    profile: {
+      imgUrl: imgUrl,
+      description: "",
+      hobbies: []
+    }
   });
 
   /**Password Encryption*/

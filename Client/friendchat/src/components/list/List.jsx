@@ -25,7 +25,7 @@ const List = ({ selectedTab, searchValue }) => {
         _id: user._id,
         master: user.username,
         status: user.status,
-        imgUrl: user.imgUrl,
+        imgUrl: user.profile.imgUrl,
       });
 
     setActiveConversation(user._id);
@@ -51,7 +51,7 @@ const List = ({ selectedTab, searchValue }) => {
         _id: updatedUser._id,
         master: updatedUser.username,
         status: updatedUser.status,
-        imgUrl: updatedUser.imgUrl,
+        imgUrl: updatedUser.profile.imgUrl,
       })
     });
   }, [usersList]);
@@ -74,7 +74,7 @@ const List = ({ selectedTab, searchValue }) => {
             <Card
               label={user.username}
               index={index}
-              imgUrl={user.imgUrl}
+              imgUrl={user.profile.imgUrl}
               status={user.status}
               onClick={() => handleUserClick(user)}
               onClose={null}

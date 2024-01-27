@@ -5,7 +5,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 const statuses = { online: "Online", busy: "Busy", idle: "Idle" };
 
 const Status = () => {
-  const { username, status: currentStatus, imgUrl } = useStoreState(
+  const { username, status: currentStatus, profile } = useStoreState(
     (state) => state.user
   );
   const [toggleStatusMenu, setToggleStatusMenu] = useState(false);
@@ -17,7 +17,7 @@ const Status = () => {
       <div className="flex flex-col justify-center items-center">
         <div className="relative">
           <img
-            src={imgUrl}
+            src={profile.imgUrl}
             alt=""
             className="profile-img w-[90px] h-[90px] 3xl:w-[100px] 3xl:h-[100px] rounded-full mb-1"
           />

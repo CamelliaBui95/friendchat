@@ -30,7 +30,7 @@ function Message({ sender, payload, onCheckSender }) {
     >
       {renderSender && user._id !== sender && (
         <div className="mt-2 mb-1 flex flex-row justify-start items-center relative">
-          <img src={senderData.imgUrl} width="40px" className="rounded-full shadow-md"/>
+          <img src={senderData.profile.imgUrl} width="40px" className="rounded-full shadow-md"/>
           <p className="mb-0 ml-1 font-semibold text-lg">{senderData.username}</p>
         </div>
       )}

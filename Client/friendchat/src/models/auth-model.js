@@ -58,7 +58,7 @@ const authModel = {
       const userToken = data.token;
       actions.setUserToken(userToken);
       await actions.handleLogin({
-        userData: { email: userData.email, password: userData.password, imgUrl: userData.imgUrl },
+        userData: { email: userData.email, password: userData.password },
         userToken,
       });
       actions.setAuthError(null);

@@ -51,7 +51,7 @@ const Login = () => {
     return (
       <div className="dialog-box-container pt-[10rem]">
         <div className="dialog-box w-[80%] md:w-[40%] h-[300px]">
-          <img src={user.imgUrl } alt="" width={90} className="rounded-full"/>
+          <img src={user.profile.imgUrl } alt="" width={90} className="rounded-full"/>
           <h2 className="mt-2 mb-4 text-blue-dark">Hello, {user.username} !</h2>
           <button
             className="secondary-btn text-xl"

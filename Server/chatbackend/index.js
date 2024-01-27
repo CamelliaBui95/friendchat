@@ -12,6 +12,7 @@ const auth = require('./routes/auth');
 //const { getSslConfigObj } = require("./utils/utils");
 const { userLoginHandlers, updateUserHandlers } = require("./handlers/userHandlers");
 const { messagesDelivery } = require('./handlers/messagesHandlers');
+const { init } = require('./init');
 
 if (!config.get("jwtPrivateKey")) {
   console.error("Error: jwtPrivateKey is not defined.");
@@ -30,6 +31,12 @@ mongoose
   getSslConfigObj(__dirname),
   app
 );*/
+
+try {
+  init();
+} catch (err) {
+  console.log(err);
+}
 
 const io = new Server(server, { cors: { origin: '*' } });
 
