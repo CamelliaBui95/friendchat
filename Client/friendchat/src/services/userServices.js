@@ -6,6 +6,7 @@ const apiEndpoint = "http://localhost:4000/api";
 class UserService {
   static ioSocket = Socket;
   static socket;
+  static isConnected = false;
 
   /**Observer Pattern */
   static update = () => {
@@ -33,8 +34,10 @@ class UserService {
   }
 
   static connectUser = (user) => {
-    if (this.socket)
+    if (this.socket) {
       this.socket.volatile.emit("user_login", user);
+      this.isConnected = true;
+    }
   };
 
   static disconnect = () => {
@@ -44,6 +47,7 @@ class UserService {
     if (this.socket) {
       console.log("disconnecting...");
       this.socket.disconnect();
+      this.isConnected = false;
     }  
   };
 
