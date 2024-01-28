@@ -10,8 +10,8 @@ import ConversationController from "./components/conversation/ConversationContro
 
 function App() {
   const navigate = useNavigate();
-  const [navItems, setNavItems] = useOutletContext();
-  const { username } = useParams();
+  const [setNavItems] = useOutletContext();
+  
   const isRehydrated = useStoreRehydrated();
   const { user, totalUnreadCount } = useStoreState((state) => state);
 
@@ -52,17 +52,17 @@ function App() {
       _id: "#public",
       master: "#public",
       status: "online",
-      imgUrl: "../images/cat-user.png",
+      imgUrl: "/images/universe.png",
     });
     setActiveConversation("#public");
   }, []);
 
   useEffect(() => {
-    if (user && user.username === username) {
+    /*if (user && user.username === username) {
       if (!UserService.isConnected)
         UserService.connectUser(user);
     }
-    else navigate("/login");
+    else navigate("/login");*/
 
     const navItems = [
       { label: "My Profile", path: "profile/1234" },

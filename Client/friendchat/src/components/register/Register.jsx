@@ -7,12 +7,25 @@ import Joi from "joi";
 import { Link } from "react-router-dom";
 
 const userImages = [
-  "../images/cat-user.png",
-  "../images/cat-user-2.png",
-  "../images/cat-user-3.png",
-  "../images/cat-user-4.png",
-  "../images/cat-user-5.png",
-  "../images/cat-user-6.png",
+  "/images/cat-user.png",
+  "/images/dog-user-1.png",
+  "/images/fish-user-1.png",
+  "/images/dinosaur-user-1.png",
+  "/images/cat-user-2.png",
+  "/images/fish-user-2.png",
+  "/images/dinosaur-user-2.png",
+  "/images/dog-user-2.png",
+  "/images/cat-user-3.png",
+  "/images/fish-user-3.png",
+  "/images/dinosaur-user-3.png",
+  "/images/dog-user-3.png",
+  "/images/cat-user-4.png",
+  "/images/dog-user-4.png",
+  "/images/fish-user-4.png",
+  "/images/cat-user-5.png",
+  "/images/dog-user-5.png",
+  "/images/cat-user-6.png",
+  "/images/dog-user-6.png",
 ];
 
 const Register = () => {

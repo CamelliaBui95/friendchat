@@ -33,11 +33,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/app",
+    path: "/app/:username",
     element: <AppLayout />,
     children: [
       {
-        path: ":username",
+        path: "platform",
         element: <App />,
       },
       {

@@ -33,7 +33,7 @@ const NavBar = ({ navItems }) => {
     <nav className="py-3 px-4 flex justify-between fixed top-0 left-0 right-0 z-[100]">
       <div>
         <Link
-          to="/"
+          to="/app"
           className="no-underline text-2xl sm:text-3xl md:text-4xl font-semibold text-slate-100 hover:text-white"
         >
           FriendChat

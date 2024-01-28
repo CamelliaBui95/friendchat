@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "../navBar/NavBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStoreState, useStoreActions } from "easy-peasy";
+import UserService from "../../services/userServices";
 
 const AppLayout = () => {
   const navigate = useNavigate();
+  const { username } = useParams();
   const [navItems, setNavItems] = useState([]);
-  const { handleLogOut } = useStoreActions((actions) => actions);
+  const { user } = useStoreState(state => state);
 
-  const navItemsForProfile = [];
+  useEffect(() => {
+     if (user && user.username === username) {
+       if (!UserService.isConnected) UserService.connectUser(user);
+     } else navigate("/login");
+  }, [user])
 
   return (
     <main className="h-screen w-screen bg-bgGradient">
       <NavBar navItems={navItems} />
       <div className="flex flex-row justify-center items-center h-full w-full pt-5">
-        <Outlet context={[navItems, setNavItems]} />
+        <Outlet context={[setNavItems]} />
       </div>
     </main>
   );

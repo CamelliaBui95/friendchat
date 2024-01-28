@@ -1,0 +1,25 @@
+.profile {
+    color: var(--dark-blue);
+}
+
+
+.pen-icon {
+    cursor: pointer;
+    color: var(--dark-blue);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.section-container:hover > .pen-icon {
+    opacity: 0.8;
+}
+
+.pen-icon:hover,
+.pen-icon:focus,
+.pen-icon:active {
+    transform: scale(1.2);
+}
+
+.desc-input:focus {
+    outline: 2px solid var(--dark-blue);
+}
