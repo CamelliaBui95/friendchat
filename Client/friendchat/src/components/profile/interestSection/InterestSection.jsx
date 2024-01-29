@@ -5,7 +5,7 @@ import InterestCard from "./InterestCard";
 import InterestCategoriesDropdown from "./InterestCategoriesDropdown";
 import AppService from "../../../services/appServices";
 
-const InterestSection = () => {
+const InterestSection = ({ modifiable, userInterests }) => {
   const { interestCategories } = useStoreState((state) => state);
   const { setCategories } = useStoreActions((actions) => actions);
   const [interestsByCategory, setInterestsByCategory] = useState([]);
@@ -20,11 +20,12 @@ const InterestSection = () => {
   useEffect(() => {
     if (interestCategories.length === 0)
       AppService.getInterestCategories(setCategories);
+    
   }, []);
 
   useEffect(() => {
     if (currentCategory) {
-      const newInterestMap = {...interestMap};
+      const newInterestMap = { ...interestMap };
       newInterestMap[currentCategory.label] = interestsByCategory;
       setInterestMap(newInterestMap);
     }
@@ -32,13 +33,17 @@ const InterestSection = () => {
 
   return (
     <div className="row-span-5 flex flex-col justify-items-center gap-2">
-      <InterestCategoriesDropdown onCategoryClick={handleCategoryClick} />
+      {modifiable && (
+        <InterestCategoriesDropdown onCategoryClick={handleCategoryClick} />
+      )}
       <ul className="interest-card-container flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto">
         {Object.keys(interestMap).map((key, index) => (
           <InterestCard
             index={index}
             category={key}
             interests={interestMap[key]}
+            userInterests={userInterests}
+            modifiable={modifiable}
           />
         ))}
       </ul>

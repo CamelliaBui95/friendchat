@@ -58,14 +58,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    /*if (user && user.username === username) {
-      if (!UserService.isConnected)
-        UserService.connectUser(user);
-    }
-    else navigate("/login");*/
-
     const navItems = [
-      { label: "My Profile", path: "profile/1234" },
+      { label: "My Profile", path: "profile/65b62b9e02b7f4a2dd71efc9" },
       {
         label: "Log Out",
         func: () => {

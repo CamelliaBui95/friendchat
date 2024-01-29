@@ -1,8 +1,7 @@
 import React from "react";
 import "./interest.css";
 
-const InterestCard = ({ index, category, interests }) => {
-
+const InterestCard = ({ index, category, interests, userInterests }) => {
   return (
     <li
       key={index}
@@ -13,7 +12,7 @@ const InterestCard = ({ index, category, interests }) => {
       </h5>
       <ul className="interest-tag-container flex flex-row flex-wrap gap-1">
         {interests.map((interest, index) => (
-          <li className="interest-tag" key={index}>{interest.name}</li>
+          <li className={`interest-tag ${!userInterests.includes(interest) && "tag-inactive"} cursor-pointer tag-effect`} key={index}>{interest.name}</li>
         ))}
       </ul>
     </li>

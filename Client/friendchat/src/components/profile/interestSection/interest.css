@@ -43,7 +43,7 @@
 
 .interest-card {
   position: relative;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .interest-tag-container {
@@ -51,17 +51,17 @@
 }
 
 .interest-card-container::-webkit-scrollbar {
-    width: 0.65rem;
+  width: 0.65rem;
 }
 
 .interest-card-container::-webkit-scrollbar-track {
- background-color: rgb(233, 231, 231);
- border-radius: 100px;
+  background-color: rgb(233, 231, 231);
+  border-radius: 100px;
 }
 
 .interest-card-container::-webkit-scrollbar-thumb {
-   background-color: rgb(29, 64, 114, 0.9);
-   border-radius: 100px;
+  background-color: rgb(29, 64, 114, 0.9);
+  border-radius: 100px;
 }
 
 .interest-tag {
@@ -72,3 +72,17 @@
   font-size: 1.1rem;
 }
 
+.tag-inactive {
+  @apply bg-slate-200;
+  color: var(--dark-blue);
+}
+
+.tag-effect {
+  transition: all 0.3s;
+}
+
+.tag-effect:hover {
+  background-color: var(--dark-blue);
+  opacity: 0.8;
+  color: white;
+}

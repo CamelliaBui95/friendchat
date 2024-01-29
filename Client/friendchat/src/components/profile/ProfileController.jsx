@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import InterestSection from "./interestSection/InterestSection";
 import UserInfoSection from "./userInfoSection/UserInfoSection";
 import AboutSection from "./aboutSection/AboutSection";
 import UserService from "../../services/userServices";
+import "./profile.css";
 
 const ProfileController = () => {
+  const { userId } = useParams();
   const [setNavItems] = useOutletContext();
   const { handleLogOut } = useStoreActions((actions) => actions);
   const { user } = useStoreState((state) => state);
-  const [currentUser, setCurrentUser] = useState(null);
   const [profile, setProfile] = useState({});
   const navigate = useNavigate();
+
+  const extractProfile = user => {
+    setProfile(user.profile);
+  }
 
   useEffect(() => {
     const navItems = [
@@ -30,13 +35,8 @@ const ProfileController = () => {
   }, []);
 
   useEffect(() => {
-    UserService.getUserProfile(setCurrentUser, user._id);
-  }, [user])
-
-  useEffect(() => {
-    if(currentUser)
-      setProfile(currentUser.profile);
-  }, [currentUser])
+    UserService.getUserProfile(extractProfile, userId);
+  }, [userId])
 
   return (
     <div className="profile w-[90%] h-[90%] bg-white rounded-lg shadow-md overflow-hidden">
@@ -51,7 +51,7 @@ const ProfileController = () => {
             <i class="pen-icon fa-solid fa-pen-to-square text-md"></i>
           </div>
 
-          <InterestSection />
+          <InterestSection modifiable={true} userInterests={profile.interests}/>
 
           <div className="row-span-1 w-full flex flex-row justify-end items-center">
             <button className="secondary-btn text-xl">Say Hi 👋</button>
