@@ -4,6 +4,7 @@ import messageModel from "./message-model";
 import emojisModel from "./emojis-model";
 import authModel from "./auth-model";
 import conversationModel from "./conversation-model";
+import interestModel from "./interest-model";
 
 const storeModel = {
     ...authModel,
@@ -12,6 +13,7 @@ const storeModel = {
     ...roomModel,
     ...messageModel,
     ...emojisModel,
+    ...interestModel
 }
 
 export default storeModel;

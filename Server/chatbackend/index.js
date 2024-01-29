@@ -10,8 +10,9 @@ const jwt = require("jsonwebtoken");
 const user = require('./routes/user');
 const auth = require('./routes/auth');
 //const { getSslConfigObj } = require("./utils/utils");
-const { userLoginHandlers, updateUserHandlers } = require("./handlers/userHandlers");
+const { userLoginHandlers, updateUserHandlers, userProfileHandlers } = require("./handlers/userHandlers");
 const { messagesDelivery } = require('./handlers/messagesHandlers');
+const { interestCategoryHandlers, interestHandlers } = require("./handlers/interestHandlers");
 const { init } = require('./init');
 
 if (!config.get("jwtPrivateKey")) {
@@ -75,7 +76,10 @@ io.on('connection', socket => {
 
   userLoginHandlers(io, socket);
   updateUserHandlers(io, socket);
+  userProfileHandlers(io, socket);
   messagesDelivery(io, socket);
+  interestCategoryHandlers(io, socket);
+  interestHandlers(io, socket);
 
 });
 

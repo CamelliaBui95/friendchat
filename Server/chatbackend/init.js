@@ -79,9 +79,13 @@ const interests = [
 ];
 
 const init = async () => {
-  await initCategory().then(async (result) => {
-    await initInterest();
-  });
+  const categoryCollection = await Category.find({});
+  if (categoryCollection.length === 0) {
+    await initCategory().then(async (result) => {
+      await initInterest();
+    });
+  }
+  
 };
 
 const initCategory = async () => {

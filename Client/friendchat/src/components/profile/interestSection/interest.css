@@ -1,0 +1,74 @@
+/*Interest Section*/
+.category-dropdown-btn {
+  padding: 0.25rem;
+  width: 100%;
+  background-color: var(--dark-blue);
+  opacity: 0.8;
+  color: white;
+  transition: opacity 0.3s;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn:active,
+.dropdown-btn:focus {
+  opacity: 1;
+}
+
+.category-dropdown {
+  position: relative;
+}
+
+.category-dropdown-content {
+  max-height: 200px;
+  background-color: white;
+  position: absolute;
+  margin-top: 0.5rem;
+  padding: 0;
+  width: 100%;
+  overflow: auto;
+  box-shadow: var(--shadow-sm-3);
+}
+
+.category-dropdown-content > .category {
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.category-dropdown-content > .category:hover {
+  background-color: var(--dark-blue);
+  color: white;
+}
+
+/*Interest Card Section*/
+
+.interest-card {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.interest-tag-container {
+  padding: 1.5rem 1.5rem 1.5rem 1rem;
+}
+
+.interest-card-container::-webkit-scrollbar {
+    width: 0.65rem;
+}
+
+.interest-card-container::-webkit-scrollbar-track {
+ background-color: rgb(233, 231, 231);
+ border-radius: 100px;
+}
+
+.interest-card-container::-webkit-scrollbar-thumb {
+   background-color: rgb(29, 64, 114, 0.9);
+   border-radius: 100px;
+}
+
+.interest-tag {
+  padding: 0.5rem 0.75rem;
+  background-color: var(--dark-blue);
+  color: white;
+  @apply rounded-lg;
+  font-size: 1.1rem;
+}
+

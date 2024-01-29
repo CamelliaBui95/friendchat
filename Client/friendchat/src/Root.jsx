@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Socket from "./services/socket";
 import UserService from "./services/userServices";
 import MessageService from "./services/messageServices";
-import { useStoreActions, useStoreState } from "easy-peasy";
+import { useStoreActions } from "easy-peasy";
 import "./root.css";
 import Home from "./components/home/Home";
 import App from "./App";
@@ -12,6 +12,7 @@ import Login from "./components/login/login";
 import Register from "./components/register/Register";
 import AppLayout from "./components/appLayout/AppLayout";
 import ProfileController from "./components/profile/ProfileController";
+import AppService from "./services/appServices";
 
 const router = createBrowserRouter([
   {
@@ -54,11 +55,10 @@ const Root = () => {
   const [socketConnected, setSocketConnected] = useState(false);
   const { setAuthToken, setUserToken } = useStoreActions((actions) => actions);
 
-  
-
   useEffect(() => {
     Socket.addHandler(UserService);
     Socket.addHandler(MessageService);
+    Socket.addHandler(AppService);
 
     const authToken = sessionStorage.getItem("authToken");
     const userToken = sessionStorage.getItem("userToken");

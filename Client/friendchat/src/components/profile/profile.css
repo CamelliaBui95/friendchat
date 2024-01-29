@@ -2,7 +2,6 @@
     color: var(--dark-blue);
 }
 
-
 .pen-icon {
     cursor: pointer;
     color: var(--dark-blue);
@@ -20,6 +19,6 @@
     transform: scale(1.2);
 }
 
-.desc-input:focus {
-    outline: 2px solid var(--dark-blue);
-}
+
+
+

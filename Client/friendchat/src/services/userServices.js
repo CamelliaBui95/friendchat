@@ -66,6 +66,13 @@ class UserService {
       setUpdateUsers(updatedUser);
     })
   }
+
+  static getUserProfile = (callback, userId) => {
+    this.socket.emit("get_user_profile", userId);
+    this.socket.on("get_user_profile", user => {
+      callback(user);
+    })
+  }
 }
 
 export default UserService;
