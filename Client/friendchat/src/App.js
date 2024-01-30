@@ -59,7 +59,7 @@ function App() {
 
   useEffect(() => {
     const navItems = [
-      { label: "My Profile", path: "profile/65b62b9e02b7f4a2dd71efc9" },
+      { label: "My Profile", path: `profile/${user._id}` },
       {
         label: "Log Out",
         func: () => {
@@ -70,7 +70,7 @@ function App() {
     ];
 
     setNavItems(navItems);
-  }, []);
+  }, [user]);
 
   if (!isRehydrated) return <div>Loading...in app</div>;
 

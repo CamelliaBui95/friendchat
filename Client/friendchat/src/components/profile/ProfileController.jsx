@@ -10,10 +10,13 @@ import "./profile.css";
 const ProfileController = () => {
   const { userId } = useParams();
   const [setNavItems] = useOutletContext();
-  const { handleLogOut } = useStoreActions((actions) => actions);
-  const { user } = useStoreState((state) => state);
+  const { handleLogOut, setUsername, setDescription, setUserInterests } = useStoreActions((actions) => actions);
+  const { user, username, description } = useStoreState((state) => state);
+  const getCategoryById = useStoreState(state => state.getCategoryById);
+
   const [profile, setProfile] = useState({});
   const navigate = useNavigate();
+  const [modifiable, setModifiable] = useState(false);
 
   const extractProfile = user => {
     setProfile(user.profile);
@@ -32,10 +35,17 @@ const ProfileController = () => {
     ];
 
     setNavItems(navItems);
+
   }, []);
 
   useEffect(() => {
     UserService.getUserProfile(extractProfile, userId);
+
+    if(userId === user._id) 
+      setModifiable(true);
+    
+    
+    
   }, [userId])
 
   return (

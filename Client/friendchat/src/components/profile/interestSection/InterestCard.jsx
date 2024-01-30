@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./interest.css";
+import InterestTag from "./InterestTag";
 
-const InterestCard = ({ index, category, interests, userInterests }) => {
+const InterestCard = ({
+  index,
+  category,
+  interests,
+  userInterests,
+  modifiable,
+}) => {
+  const [selectedInterests, setSelectedInterests] = useState([]);
+
+  const handleInterestClick = (interest) => {
+    let newSelectedInterests = [];
+    if(!selectedInterests.includes(interest)) 
+      newSelectedInterests = [...selectedInterests, interest];
+    else 
+      newSelectedInterests = selectedInterests.filter(i => i != interest);
+    
+      setSelectedInterests(newSelectedInterests);
+  };
+
+  useEffect(() => {
+    setSelectedInterests(userInterests);
+  }, [userInterests]);
+
   return (
     <li
       key={index}
@@ -12,7 +35,13 @@ const InterestCard = ({ index, category, interests, userInterests }) => {
       </h5>
       <ul className="interest-tag-container flex flex-row flex-wrap gap-1">
         {interests.map((interest, index) => (
-          <li className={`interest-tag ${!userInterests.includes(interest) && "tag-inactive"} cursor-pointer tag-effect`} key={index}>{interest.name}</li>
+          <InterestTag
+            label={interest.name}
+            index={index}
+            toggle={selectedInterests.includes(interest)}
+            modifiable={modifiable}
+            onClick={() => handleInterestClick(interest)}
+          />
         ))}
       </ul>
     </li>
@@ -20,3 +49,5 @@ const InterestCard = ({ index, category, interests, userInterests }) => {
 };
 
 export default InterestCard;
+
+//<li className={`interest-tag ${!userInterests.includes(interest) && "tag-inactive"} cursor-pointer tag-effect`} key={index}>{interest.name}</li>

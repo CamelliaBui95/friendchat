@@ -5,6 +5,10 @@ const interestModel = {
   
   setCategories: action((state, categories) => {
     state.interestCategories = categories;
+  }),
+
+  getCategoryById: computed((state) => {
+    return (categoryId) => state.interestCategories.find(i => i._id === categoryId);
   })
 };
 
