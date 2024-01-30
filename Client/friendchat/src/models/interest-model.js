@@ -9,7 +9,7 @@ const interestModel = {
 
   getCategoryById: computed((state) => {
     return (categoryId) => state.interestCategories.find(i => i._id === categoryId);
-  })
+  }),
 };
 
 export default interestModel;

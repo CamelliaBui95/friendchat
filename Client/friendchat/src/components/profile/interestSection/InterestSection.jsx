@@ -5,10 +5,11 @@ import InterestCard from "./InterestCard";
 import InterestCategoriesDropdown from "./InterestCategoriesDropdown";
 import AppService from "../../../services/appServices";
 
-const InterestSection = ({ modifiable, userInterests }) => {
-  const { interestCategories } = useStoreState((state) => state);
+const InterestSection = ({ modifiable }) => {
+  const { interestCategories, userInterests } = useStoreState((state) => state);
   const { setCategories } = useStoreActions((actions) => actions);
   const [interestsByCategory, setInterestsByCategory] = useState([]);
+  const getCategoryById = useStoreState((state) => state.getCategoryById);
   const [interestMap, setInterestMap] = useState({});
   const [currentCategory, setCurrentCategory] = useState(null);
 
@@ -26,10 +27,14 @@ const InterestSection = ({ modifiable, userInterests }) => {
   useEffect(() => {
     if (currentCategory) {
       const newInterestMap = { ...interestMap };
-      newInterestMap[currentCategory.label] = interestsByCategory;
+      newInterestMap[currentCategory._id] = interestsByCategory;
       setInterestMap(newInterestMap);
     }
   }, [interestsByCategory]);
+
+  useEffect(() => {
+    setInterestMap(userInterests);
+  }, [modifiable])
 
   return (
     <div className="row-span-5 flex flex-col justify-items-center gap-2">
@@ -37,15 +42,19 @@ const InterestSection = ({ modifiable, userInterests }) => {
         <InterestCategoriesDropdown onCategoryClick={handleCategoryClick} />
       )}
       <ul className="interest-card-container flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto">
-        {Object.keys(interestMap).map((key, index) => (
-          <InterestCard
-            index={index}
-            category={key}
-            interests={interestMap[key]}
-            userInterests={userInterests}
-            modifiable={modifiable}
-          />
-        ))}
+        {Object.keys(interestMap).map((key, index) => {
+          return (
+            <InterestCard
+              index={index}
+              category={getCategoryById(key)}
+              interests={interestMap[key]}
+              userInterests={userInterests[key] ? userInterests[key] : []}
+              modifiable={modifiable}
+            />
+          );
+        }
+          
+        )}
       </ul>
     </div>
   );

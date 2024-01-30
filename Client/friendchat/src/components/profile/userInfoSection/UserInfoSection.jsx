@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserInfoSection = ({imgUrl, username}) => {
+const UserInfoSection = ({imgUrl, username, toggleSetting}) => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -16,7 +16,9 @@ const UserInfoSection = ({imgUrl, username}) => {
     <div className="col-span-1 flex flex-col justify-center items-center gap-3">
       <div className="section-container flex flex-row relative">
         <img src={imgUrl} alt="" className="w-[150px] rounded-full" />
-        <i class="pen-icon fa-solid fa-pen-to-square text-md absolute right-0 bottom-0"></i>
+        <i
+          className={`pen-icon fa-solid fa-pen-to-square text-md absolute right-0 bottom-0 ${!toggleSetting && "hidden"}`}
+        ></i>
       </div>
       <div className="w-full">
         <form

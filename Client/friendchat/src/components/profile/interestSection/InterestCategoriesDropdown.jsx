@@ -25,7 +25,8 @@ const InterestCategoriesDropdown = ({ onCategoryClick }) => {
           <li
             key={index}
             className="category"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               handleToggleCategory();
               onCategoryClick(category);
             }}

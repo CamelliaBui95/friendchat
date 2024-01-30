@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./interest.css";
 import InterestTag from "./InterestTag";
+import { useStoreActions, useStoreState } from "easy-peasy";
 
 const InterestCard = ({
   index,
@@ -10,15 +11,16 @@ const InterestCard = ({
   modifiable,
 }) => {
   const [selectedInterests, setSelectedInterests] = useState([]);
+  const { userInterests: userInterestsMap } = useStoreState((state) => state);
+  const { setUserInterests } = useStoreActions((actions) => actions);
 
   const handleInterestClick = (interest) => {
     let newSelectedInterests = [];
-    if(!selectedInterests.includes(interest)) 
+    if (!selectedInterests.includes(interest))
       newSelectedInterests = [...selectedInterests, interest];
-    else 
-      newSelectedInterests = selectedInterests.filter(i => i != interest);
-    
-      setSelectedInterests(newSelectedInterests);
+    else newSelectedInterests = selectedInterests.filter((i) => i != interest);
+
+    setSelectedInterests(newSelectedInterests);
   };
 
   useEffect(() => {
@@ -31,18 +33,31 @@ const InterestCard = ({
       className="interest-card rounded-lg border-2 border-slate-200"
     >
       <h5 className="absolute bg-white -top-[15%] left-2 px-2 m-0">
-        {category}
+        {category.label}
       </h5>
       <ul className="interest-tag-container flex flex-row flex-wrap gap-1">
-        {interests.map((interest, index) => (
-          <InterestTag
-            label={interest.name}
-            index={index}
-            toggle={selectedInterests.includes(interest)}
-            modifiable={modifiable}
-            onClick={() => handleInterestClick(interest)}
-          />
-        ))}
+        {modifiable &&
+          interests.map((interest, index) => (
+            <InterestTag
+              label={interest.name}
+              index={index}
+              toggle={selectedInterests.includes(interest)}
+              modifiable={modifiable}
+              onClick={() => handleInterestClick(interest)}
+            />
+          ))}
+        {!modifiable &&
+          userInterests
+            .filter((i) => i.category === category._id)
+            .map((i, index) => (
+              <InterestTag
+                label={i.name}
+                index={index}
+                toggle={true}
+                modifiable={false}
+                onClick={() => {}}
+              />
+            ))}
       </ul>
     </li>
   );

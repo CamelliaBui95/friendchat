@@ -19,6 +19,18 @@
     transform: scale(1.2);
 }
 
+.setting-icon {
+    color: var(--dark-blue);
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.3s;
+}
 
-
+.setting-icon:hover,
+.sectting-icon:focus,
+.setting-icon:active
+ {
+    transform: scale(1.2);
+    opacity: 1;
+ }
 
