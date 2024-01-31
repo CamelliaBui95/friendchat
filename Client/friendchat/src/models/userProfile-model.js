@@ -1,4 +1,4 @@
-import { action, computed, thunk } from "easy-peasy";
+import { action, computed } from "easy-peasy";
 import UserService from "../services/userServices";
 
 const userProfileModel = {
@@ -24,17 +24,24 @@ const userProfileModel = {
   }),
 
   addUserInterest: action((state, { interest, categoryId }) => {
-    if (!state.userInterests[categoryId])
-      state.userInterests[categoryId] = [];
+    if (!state.userInterests[categoryId]) state.userInterests[categoryId] = [];
+
+    const index = state.userInterests[categoryId].findIndex(i => i._id === interest._id);
+    if (index !== -1)
+      return;
+
 
     state.userInterests[categoryId].push(interest);
+    
+      
   }),
 
-  removeUserInterest: action((state, {interest, categoryId }) => {
-    if (!state.userInterests[categoryId])
-        return;
+  removeUserInterest: action((state, { interest, categoryId }) => {
+    if (!state.userInterests[categoryId]) return;
 
-    const newUserInterests = state.userInterests[categoryId].filter(i => i._id != interest._id);
+    const newUserInterests = state.userInterests[categoryId].filter(
+      (i) => i._id !== interest._id
+    );
 
     state.userInterests[categoryId] = newUserInterests;
   }),
@@ -50,9 +57,21 @@ const userProfileModel = {
   }),
   updateProfile: action((state) => {
     const userId = state.user._id;
-    let interestsArr = [];
+    let interests = [];
 
-  })
+    Object.values(state.userInterests).forEach((interestArr) => {
+      interestArr.forEach((i) => interests.push(i._id));
+    });
+
+    const profile = {
+      description: state.description,
+      imgUrl: state.profileImg,
+      username: state.username,
+      interests: interests,
+    };
+
+    UserService.updateUserProfile({ userId: userId, profile: profile });
+  }),
 };
 
 export default userProfileModel;

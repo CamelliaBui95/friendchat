@@ -16,10 +16,9 @@ const ProfileController = () => {
     setDescription,
     addUserInterest,
     setProfileImg,
+    updateProfile,
   } = useStoreActions((actions) => actions);
-  const { user } = useStoreState(
-    (state) => state
-  );
+  const { user } = useStoreState((state) => state);
   const navigate = useNavigate();
   const [modifiable, setModifiable] = useState(false);
   const [toggleSetting, setToggleSetting] = useState(false);
@@ -30,7 +29,7 @@ const ProfileController = () => {
     setProfileImg(user.profile.imgUrl);
 
     user.profile.interests.forEach((i) => {
-      addUserInterest({ interest: i, category: i.category });
+      addUserInterest({ interest: i, categoryId: i.category });
     });
   };
 
@@ -65,9 +64,7 @@ const ProfileController = () => {
       ></i>
       <div className="grid grid-rows-5 h-full w-full p-2">
         <div className="row-span-2 border-b-2 border-slate-200 grid grid-cols-4 gap-2">
-          <UserInfoSection
-            toggleSetting={toggleSetting}
-          />
+          <UserInfoSection toggleSetting={toggleSetting} />
           <AboutSection />
         </div>
         <div className="row-span-3 p-2 grid grid-rows-7">
@@ -79,7 +76,18 @@ const ProfileController = () => {
             {!modifiable ? (
               <button className="secondary-btn text-xl">Say Hi 👋</button>
             ) : (
-              (toggleSetting && <button className="secondary-btn text-xl">Save Changes</button>)
+              toggleSetting && (
+                <button
+                  className="secondary-btn text-xl"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    updateProfile();
+                    setToggleSetting(false);
+                  }}
+                >
+                  Save Changes
+                </button>
+              )
             )}
           </div>
         </div>

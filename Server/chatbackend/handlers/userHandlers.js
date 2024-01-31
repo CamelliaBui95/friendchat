@@ -80,7 +80,7 @@ const userProfileHandlers = (io, socket) => {
   });
 
   socket.on("update_user_profile", async ({ userId, profile }) => {
-    const updatedUser = await User.updateOne(
+    await User.findOneAndUpdate(
       { _id: userId },
       {
         $set: {
@@ -91,10 +91,12 @@ const userProfileHandlers = (io, socket) => {
         },
       },
       { new: true }
-    );
-
-    io.to(socket.id).emit("get_user_profile", updatedUser);
-    io.emit("update_user_list", updatedUser);
+    )
+      .populate("profile.interests")
+      .then((result) => {
+        io.to(socket.id).emit("get_user_profile", result);
+        io.emit("update_user_list", result);
+      });
   });
 };
 

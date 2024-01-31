@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./about.css";
 import { useStoreActions, useStoreState } from "easy-peasy";
 
 const AboutSection = ({ toggleSetting }) => {
-  const {description} = useStoreState(state => state.description);
-  const {setDescription} = useStoreActions(actions => actions);
+  const {description} = useStoreState(state => state);
+  const { setDescription } = useStoreActions(actions => actions);
 
   return (
     <div className="col-span-3 flex flex-col justify-start gap-1 py-2 px-3">

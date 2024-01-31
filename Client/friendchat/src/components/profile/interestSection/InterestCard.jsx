@@ -24,9 +24,14 @@ const InterestCard = ({
     setSelectedInterests(userInterests);
   }, [userInterests]);
 
+  const isActive = (interest) => {
+    const index = selectedInterests.findIndex(i => i._id === interest._id);
+    return index !== -1;
+  }
+
   return (
     <li
-      key={index}
+      key={"card-" + index}
       className="interest-card rounded-lg border-2 border-slate-200"
     >
       <h5 className="absolute bg-white -top-[15%] left-2 px-2 m-0">
@@ -38,7 +43,7 @@ const InterestCard = ({
             <InterestTag
               label={interest.name}
               index={index}
-              toggle={selectedInterests.includes(interest)}
+              toggle={isActive(interest)}
               modifiable={modifiable}
               onClick={() => handleInterestClick(interest)}
             />

@@ -23,7 +23,7 @@ const InterestCategoriesDropdown = ({ onCategoryClick }) => {
       >
         {interestCategories.map((category, index) => (
           <li
-            key={index}
+            key={"cd-" + index}
             className="category"
             onClick={(e) => {
               e.preventDefault();

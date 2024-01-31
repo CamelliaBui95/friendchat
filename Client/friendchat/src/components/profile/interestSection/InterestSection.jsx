@@ -21,7 +21,7 @@ const InterestSection = ({ modifiable }) => {
   useEffect(() => {
     if (interestCategories.length === 0)
       AppService.getInterestCategories(setCategories);
-    
+
   }, []);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const InterestSection = ({ modifiable }) => {
 
   useEffect(() => {
     setInterestMap(userInterests);
-  }, [modifiable])
+  }, [modifiable, userInterests])
 
   return (
     <div className="row-span-5 flex flex-col justify-items-center gap-2">
