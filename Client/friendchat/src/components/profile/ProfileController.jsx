@@ -17,8 +17,9 @@ const ProfileController = () => {
     addUserInterest,
     setProfileImg,
   } = useStoreActions((actions) => actions);
-  const { user, username, description, profileImg } = useStoreState((state) => state);
-  const getCategoryById = useStoreState((state) => state.getCategoryById);
+  const { user } = useStoreState(
+    (state) => state
+  );
   const navigate = useNavigate();
   const [modifiable, setModifiable] = useState(false);
   const [toggleSetting, setToggleSetting] = useState(false);
@@ -28,10 +29,9 @@ const ProfileController = () => {
     setDescription(user.profile.description);
     setProfileImg(user.profile.imgUrl);
 
-    user.profile.interests.forEach(i => {
+    user.profile.interests.forEach((i) => {
       addUserInterest({ interest: i, category: i.category });
-    })
-
+    });
   };
 
   useEffect(() => {
@@ -53,7 +53,6 @@ const ProfileController = () => {
     UserService.getUserProfile(extractProfile, userId);
 
     if (userId === user._id) setModifiable(true);
-   
   }, [userId]);
 
   return (
@@ -67,24 +66,21 @@ const ProfileController = () => {
       <div className="grid grid-rows-5 h-full w-full p-2">
         <div className="row-span-2 border-b-2 border-slate-200 grid grid-cols-4 gap-2">
           <UserInfoSection
-            imgUrl={profileImg}
-            username={username}
             toggleSetting={toggleSetting}
           />
-          <AboutSection description={description} />
+          <AboutSection />
         </div>
         <div className="row-span-3 p-2 grid grid-rows-7">
-          <div className="section-container row-span-1 flex flex-row justify-start items-center gap-3">
-            <h3 className="3xl:text-4xl">Interests</h3>
-            <i className="pen-icon fa-solid fa-pen-to-square text-md"></i>
-          </div>
+          <h3 className="3xl:text-4xl">Interests</h3>
 
-          <InterestSection
-            modifiable={toggleSetting}
-          />
+          <InterestSection modifiable={toggleSetting} />
 
           <div className="row-span-1 w-full flex flex-row justify-end items-center">
-            <button className="secondary-btn text-xl">Say Hi 👋</button>
+            {!modifiable ? (
+              <button className="secondary-btn text-xl">Say Hi 👋</button>
+            ) : (
+              (toggleSetting && <button className="secondary-btn text-xl">Save Changes</button>)
+            )}
           </div>
         </div>
       </div>

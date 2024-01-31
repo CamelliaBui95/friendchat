@@ -78,6 +78,24 @@ const userProfileHandlers = (io, socket) => {
 
     io.emit("get_user_profile", user);
   });
+
+  socket.on("update_user_profile", async ({ userId, profile }) => {
+    const updatedUser = await User.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          username: profile.username,
+          "profile.description": profile.description,
+          "profile.imgUrl": profile.imgUrl,
+          "profile.interests": profile.interests,
+        },
+      },
+      { new: true }
+    );
+
+    io.to(socket.id).emit("get_user_profile", updatedUser);
+    io.emit("update_user_list", updatedUser);
+  });
 };
 
 const getSocket = (id) => {

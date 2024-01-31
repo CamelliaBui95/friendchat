@@ -23,12 +23,20 @@ const userProfileModel = {
     state.userInterests[categoryId] = interests;
   }),
 
-    addUserInterest: action((state, { interest, categoryId }) => {
-      
-    if (state.userInterests[categoryId] === null)
+  addUserInterest: action((state, { interest, categoryId }) => {
+    if (!state.userInterests[categoryId])
       state.userInterests[categoryId] = [];
 
     state.userInterests[categoryId].push(interest);
+  }),
+
+  removeUserInterest: action((state, {interest, categoryId }) => {
+    if (!state.userInterests[categoryId])
+        return;
+
+    const newUserInterests = state.userInterests[categoryId].filter(i => i._id != interest._id);
+
+    state.userInterests[categoryId] = newUserInterests;
   }),
 
   getUserInterests: computed((state) => {
@@ -40,6 +48,11 @@ const userProfileModel = {
 
     return interests;
   }),
+  updateProfile: action((state) => {
+    const userId = state.user._id;
+    let interestsArr = [];
+
+  })
 };
 
 export default userProfileModel;

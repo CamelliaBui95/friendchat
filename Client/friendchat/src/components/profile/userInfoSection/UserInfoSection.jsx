@@ -1,6 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
-const UserInfoSection = ({imgUrl, username, toggleSetting}) => {
+const UserInfoSection = ({toggleSetting}) => {
+    const {profileImg, username} = useStoreState(state => state);
+    const {setUsername, setProfileImg} = useStoreActions(actions => actions);
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -15,7 +18,7 @@ const UserInfoSection = ({imgUrl, username, toggleSetting}) => {
   return (
     <div className="col-span-1 flex flex-col justify-center items-center gap-3">
       <div className="section-container flex flex-row relative">
-        <img src={imgUrl} alt="" className="w-[150px] rounded-full" />
+        <img src={profileImg} alt="" className="w-[150px] rounded-full" />
         <i
           className={`pen-icon fa-solid fa-pen-to-square text-md absolute right-0 bottom-0 ${!toggleSetting && "hidden"}`}
         ></i>
@@ -30,6 +33,7 @@ const UserInfoSection = ({imgUrl, username, toggleSetting}) => {
             className="profile-username-input font-semibold text-center text-2xl 3xl:text-3xl focus:outline-none"
             disabled={false}
             value={username}
+            onChange={e => setUsername(e.target.value)}
           ></input>
         </form>
       </div>

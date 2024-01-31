@@ -11,17 +11,14 @@ const InterestCard = ({
   modifiable,
 }) => {
   const [selectedInterests, setSelectedInterests] = useState([]);
-  const { userInterests: userInterestsMap } = useStoreState((state) => state);
-  const { setUserInterests } = useStoreActions((actions) => actions);
+  const { addUserInterest, removeUserInterest } = useStoreActions((actions) => actions);
 
-  const handleInterestClick = (interest) => {
-    let newSelectedInterests = [];
-    if (!selectedInterests.includes(interest))
-      newSelectedInterests = [...selectedInterests, interest];
-    else newSelectedInterests = selectedInterests.filter((i) => i != interest);
-
-    setSelectedInterests(newSelectedInterests);
-  };
+  const handleInterestClick = interest => {
+    if(userInterests.includes(interest))
+      removeUserInterest({interest: interest, categoryId: interest.category});
+    else
+      addUserInterest({interest: interest, categoryId: interest.category});
+  }
 
   useEffect(() => {
     setSelectedInterests(userInterests);

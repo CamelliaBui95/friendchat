@@ -73,6 +73,10 @@ class UserService {
       callback(user);
     })
   }
+
+  static updateUserProfile = (payload) => {
+    this.socket.emit("update_user_profile", payload);
+  }
 }
 
 export default UserService;
