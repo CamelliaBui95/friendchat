@@ -9,6 +9,7 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 const user = require('./routes/user');
 const auth = require('./routes/auth');
+const appRoute = require("./routes/appRoute");
 //const { getSslConfigObj } = require("./utils/utils");
 const { userLoginHandlers, updateUserHandlers, userProfileHandlers } = require("./handlers/userHandlers");
 const { messagesDelivery } = require('./handlers/messagesHandlers');
@@ -49,6 +50,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/api/user', user);
 app.use('/api/auth', auth);
+app.use('/api/app', appRoute);
 
 /**Auth Middleware*/
 io.use((socket, next) => {

@@ -74,29 +74,39 @@ const updateUserHandlers = (io, socket) => {
 
 const userProfileHandlers = (io, socket) => {
   socket.on("get_user_profile", async (userId) => {
-    const user = await User.findById(userId).populate("profile.interests");
+    try {
+      const user = await User.findById(userId).populate("profile.interests");
 
-    io.emit("get_user_profile", user);
+      io.to(socket.id).emit("get_user_profile", user);
+    } catch (e) {
+      console.log(e);
+      io.to(socket.id).emit("get_user_profile", null);
+    }
   });
 
   socket.on("update_user_profile", async ({ userId, profile }) => {
-    await User.findOneAndUpdate(
-      { _id: userId },
-      {
-        $set: {
-          username: profile.username,
-          "profile.description": profile.description,
-          "profile.imgUrl": profile.imgUrl,
-          "profile.interests": profile.interests,
+    console.log(profile)
+    try {
+      await User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: {
+            username: profile.username,
+            "profile.description": profile.description,
+            "profile.imgUrl": profile.imgUrl,
+            "profile.interests": profile.interests,
+          },
         },
-      },
-      { new: true }
-    )
-      .populate("profile.interests")
-      .then((result) => {
-        io.to(socket.id).emit("get_user_profile", result);
-        io.emit("update_user_list", result);
-      });
+        { new: true }
+      )
+        .populate("profile.interests")
+        .then((result) => {
+          io.to(socket.id).emit("get_user_profile", result);
+          io.emit("update_user_list", result);
+        });
+    } catch (e) {
+      io.to(socket.id).emit("get_user_profile", null);
+    }
   });
 };
 

@@ -1,3 +1,9 @@
 .desc-input:focus {
     outline: 2px solid var(--dark-blue);
+    border: 1px solid var(--dark-blue);
 }
+
+.desc-input:disabled {
+    background-color: white;
+}
+

@@ -18,7 +18,7 @@ const InterestCategoriesDropdown = ({ onCategoryClick }) => {
         Add a category
       </button>
       <ul
-        class="category-dropdown-content rounded-lg z-1"
+        className="category-dropdown-content rounded-lg z-1"
         hidden={!toggleCategory}
       >
         {interestCategories.map((category, index) => (

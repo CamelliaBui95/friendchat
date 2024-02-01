@@ -70,8 +70,7 @@ class UserService {
   static getUserProfile = (callback, userId) => {
     this.socket.emit("get_user_profile", userId);
     this.socket.on("get_user_profile", user => {
-      if(user)
-        callback(user);
+      callback(user);
     })
   }
 

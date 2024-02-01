@@ -4,57 +4,70 @@ import "./interest.css";
 import InterestCard from "./InterestCard";
 import InterestCategoriesDropdown from "./InterestCategoriesDropdown";
 import AppService from "../../../services/appServices";
+import ModifiableInterestCard from "./ModifiableInterestCard";
 
 const InterestSection = ({ modifiable }) => {
   const { interestCategories, userInterests } = useStoreState((state) => state);
   const { setCategories } = useStoreActions((actions) => actions);
-  const [interestsByCategory, setInterestsByCategory] = useState([]);
   const getCategoryById = useStoreState((state) => state.getCategoryById);
-  const [interestMap, setInterestMap] = useState({});
-  const [currentCategory, setCurrentCategory] = useState(null);
+  const [currentCategories, setCurrentCategories] = useState([]);
 
   const handleCategoryClick = (category) => {
-    setCurrentCategory(category);
-    AppService.getInterestsByCategory(setInterestsByCategory, category._id);
+    setCurrentCategories([...currentCategories, category]);
   };
 
   useEffect(() => {
     if (interestCategories.length === 0)
       AppService.getInterestCategories(setCategories);
-
   }, []);
 
   useEffect(() => {
-    if (currentCategory) {
-      const newInterestMap = { ...interestMap };
-      newInterestMap[currentCategory._id] = interestsByCategory;
-      setInterestMap(newInterestMap);
-    }
-  }, [interestsByCategory]);
+    Object.keys(userInterests).map((categoryId) => {
+      if (!hasCategory(categoryId)) {
+        const category = getCategoryById(categoryId);
+        setCurrentCategories([...currentCategories, category]);
+      }
+    });
+  }, [userInterests, modifiable]);
 
-  useEffect(() => {
-    setInterestMap(userInterests);
-  }, [modifiable, userInterests])
+  const hasCategory = (categoryId) => {
+    if (currentCategories.length === 0) return false;
+
+    const index = currentCategories.findIndex((c) => c._id === categoryId);
+
+    return index !== -1;
+  };
 
   return (
     <div className="row-span-5 flex flex-col justify-items-center gap-2">
       {modifiable && (
         <InterestCategoriesDropdown onCategoryClick={handleCategoryClick} />
       )}
-      <ul className="interest-card-container flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto">
-        {Object.keys(interestMap).map((key, index) => {
-          return (
-            <InterestCard
+      <ul className="interest-card-container[ flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto">
+        {modifiable &&
+          currentCategories.map((category, index) => (
+            <ModifiableInterestCard
               index={index}
-              category={getCategoryById(key)}
-              interests={interestMap[key]}
-              userInterests={userInterests[key] ? userInterests[key] : []}
-              modifiable={modifiable}
+              category={category}
+              userInterests={
+                userInterests[category._id] ? userInterests[category._id] : []
+              }
             />
-          );
-        }
-          
-        )}
+          ))}
+        {!modifiable &&
+          Object.entries(userInterests).map(
+            ([categoryId, interests], index) => {
+              if (interests.length === 0) return;
+
+              return (
+                <InterestCard
+                  index={index}
+                  category={getCategoryById(categoryId)}
+                  userInterests={interests}
+                />
+              );
+            }
+          )}
       </ul>
     </div>
   );

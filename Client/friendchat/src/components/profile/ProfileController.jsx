@@ -23,14 +23,20 @@ const ProfileController = () => {
   const [modifiable, setModifiable] = useState(false);
   const [toggleSetting, setToggleSetting] = useState(false);
 
-  const extractProfile = (user) => {
-    setUsername(user.username);
-    setDescription(user.profile.description);
-    setProfileImg(user.profile.imgUrl);
+  const extractProfile = (currentUser) => {
 
-    user.profile.interests.forEach((i) => {
-      addUserInterest({ interest: i, categoryId: i.category });
-    });
+    if(currentUser === null) {
+      navigate(`/app/${user.username}/platform`)
+    } else {
+      setUsername(currentUser.username);
+      setDescription(currentUser.profile.description);
+      setProfileImg(currentUser.profile.imgUrl);
+  
+      currentUser.profile.interests.forEach((i) => {
+        addUserInterest({ interest: i, categoryId: i.category });
+      });
+    }
+   
   };
 
   useEffect(() => {
@@ -64,8 +70,8 @@ const ProfileController = () => {
       ></i>
       <div className="grid grid-rows-5 h-full w-full p-2">
         <div className="row-span-2 border-b-2 border-slate-200 grid grid-cols-4 gap-2">
-          <UserInfoSection toggleSetting={toggleSetting} />
-          <AboutSection />
+          <UserInfoSection toggleSetting={toggleSetting} user={user} />
+          <AboutSection toggleSetting={toggleSetting && modifiable} />
         </div>
         <div className="row-span-3 p-2 grid grid-rows-7">
           <h3 className="3xl:text-4xl">Interests</h3>
