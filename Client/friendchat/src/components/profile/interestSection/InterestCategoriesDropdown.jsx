@@ -2,13 +2,22 @@ import React, { useState } from "react";
 import "./interest.css";
 import { useStoreState } from "easy-peasy";
 
-const InterestCategoriesDropdown = ({ onCategoryClick }) => {
+const InterestCategoriesDropdown = ({ onCategoryClick, selectedCategories }) => {
   const { interestCategories } = useStoreState((state) => state);
   const [toggleCategory, setToggleCategory] = useState(false);
 
   const handleToggleCategory = () => {
     setToggleCategory(!toggleCategory);
   };
+
+  const isSelected = (category) => {
+     if (selectedCategories.length === 0) return false;
+
+     const index = selectedCategories.findIndex((c) => c._id === category._id);
+
+     return index !== -1;
+  }
+
   return (
     <div className="category-dropdown w-[20%]">
       <button
@@ -24,7 +33,7 @@ const InterestCategoriesDropdown = ({ onCategoryClick }) => {
         {interestCategories.map((category, index) => (
           <li
             key={"cd-" + index}
-            className="category"
+            className={`category ${isSelected(category) && "category-active"}`}
             onClick={(e) => {
               e.preventDefault();
               handleToggleCategory();

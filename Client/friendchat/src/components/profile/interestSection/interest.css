@@ -39,6 +39,10 @@
   color: white;
 }
 
+.category-active {
+  color: white;
+  background-color: var(--dark-blue);
+}
 /*Interest Card Section*/
 
 .interest-card {

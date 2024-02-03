@@ -9,7 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate(`app/${user.username}`);
+    if (user) navigate(`app/${user._id}`);
   }, [user]);
 
   return (

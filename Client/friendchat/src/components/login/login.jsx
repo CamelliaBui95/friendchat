@@ -56,7 +56,7 @@ const Login = () => {
           <button
             className="secondary-btn text-xl"
             type="submit"
-            onClick={() => navigate(`/app/${user.username}/platform`)}
+            onClick={() => navigate(`/app/${user._id}/platform`)}
           >
             Join Chat
           </button>

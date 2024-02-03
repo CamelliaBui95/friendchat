@@ -14,7 +14,8 @@ const InterestSection = ({ modifiable }) => {
   const [currentCategories, setCurrentCategories] = useState([]);
 
   const handleCategoryClick = (category) => {
-    setCurrentCategories([...currentCategories, category]);
+    if (!hasCategory(category._id))
+      setCurrentCategories([...currentCategories, category]);
   };
 
   useEffect(() => {
@@ -31,19 +32,6 @@ const InterestSection = ({ modifiable }) => {
     });
   }, [userInterests, modifiable]);
 
-  useEffect(() => {
-    const observer = new MutationObserver((list) => {
-      for (let m of list)
-        if (m.type === "childList")
-          if (boxRef.current)
-            boxRef.current.scrollTop = boxRef.current.scrollHeight;
-    });
-
-    if (boxRef.current) observer.observe(boxRef.current, { childList: true });
-
-    return () => observer.disconnect();
-  }, []);
-
   const hasCategory = (categoryId) => {
     if (currentCategories.length === 0) return false;
 
@@ -55,9 +43,15 @@ const InterestSection = ({ modifiable }) => {
   return (
     <div className="row-span-5 flex flex-col justify-items-center gap-2">
       {modifiable && (
-        <InterestCategoriesDropdown onCategoryClick={handleCategoryClick} />
+        <InterestCategoriesDropdown
+          onCategoryClick={handleCategoryClick}
+          selectedCategories={currentCategories}
+        />
       )}
-      <ul ref={boxRef} className="interest-card-container[ flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto">
+      <ul
+        ref={boxRef}
+        className="interest-card-container flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto"
+      >
         {modifiable &&
           currentCategories.map((category, index) => (
             <ModifiableInterestCard

@@ -19,8 +19,8 @@ const userProfileModel = {
     state.profileImg = imgUrl;
   }),
 
-  setUserInterests: action((state, { interests, categoryId }) => {
-    state.userInterests[categoryId] = interests;
+  setUserInterests: action((state, interests) => {
+    state.userInterests = interests;
   }),
 
   addUserInterest: action((state, { interest, categoryId }) => {

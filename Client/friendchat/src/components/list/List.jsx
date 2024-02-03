@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import UserService from "../../services/userServices";
 import "./list.css";
 import Card from "../card/Card";
 
 const List = ({ selectedTab, searchValue }) => {
+  const navigate = useNavigate();
   const usersList = useStoreState((state) => state.usersList);
   const conversationsList = useStoreState((state) => state.conversationsList);
-  const {activeConversation} = useStoreState(state => state);
-  const hasConversation = useStoreState((state) => state.hasConversation);
+  const {activeConversation, user} = useStoreState(state => state);
+  
   const {
     setAllUsers,
     updateUsers,
-    addConversation,
     setActiveConversation,
     updateConversation,
     storeConversation,
     removeConversation
   } = useStoreActions((actions) => actions);
-
-  const handleUserClick = (user) => {
-    if (!hasConversation(user._id))
-      addConversation({
-        _id: user._id,
-        master: user.username,
-        status: user.status,
-        imgUrl: user.profile.imgUrl,
-      });
-
-    setActiveConversation(user._id);
-  };
 
   const handleConversationClick = (convo) => {
     setActiveConversation(convo._id);
@@ -54,6 +43,7 @@ const List = ({ selectedTab, searchValue }) => {
         imgUrl: updatedUser.profile.imgUrl,
       })
     });
+
   }, [usersList]);
 
   let filteredItems;
@@ -70,13 +60,13 @@ const List = ({ selectedTab, searchValue }) => {
     <div className="list-container h-[87%] bg-white w-[100%] rounded-b-xl py-3 px-1">
       <ul className="list h-[100%] overflow-y-auto px-0">
         {selectedTab === "users" &&
-          filteredItems.map((user, index) => (
+          filteredItems.map((u, index) => (
             <Card
-              label={user.username}
+              label={u.username}
               index={index}
-              imgUrl={user.profile.imgUrl}
-              status={user.status}
-              onClick={() => handleUserClick(user)}
+              imgUrl={u.profile.imgUrl}
+              status={u.status}
+              onClick={() => navigate(`/app/${user._id}/profile/${u._id}`)}
               onClose={null}
             />
           ))}

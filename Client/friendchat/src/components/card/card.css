@@ -8,14 +8,6 @@
     color: white;
 }
 
-.scale-on-hover {
-    transition: all 0.3s;
-}
-
-.scale-on-hover:hover {
-    transform: scale(1.2);
-}
-
 .count-badge {
     padding: 0 5px;
     text-align: center;

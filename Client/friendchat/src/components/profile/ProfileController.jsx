@@ -14,29 +14,49 @@ const ProfileController = () => {
     handleLogOut,
     setUsername,
     setDescription,
+    setUserInterests,
     addUserInterest,
     setProfileImg,
     updateProfile,
+    addConversation,
+    setActiveConversation,
   } = useStoreActions((actions) => actions);
+  const hasConversation = useStoreState((state) => state.hasConversation);
   const { user } = useStoreState((state) => state);
   const navigate = useNavigate();
   const [modifiable, setModifiable] = useState(false);
   const [toggleSetting, setToggleSetting] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const extractProfile = (currentUser) => {
-
-    if(currentUser === null) {
-      navigate(`/app/${user.username}/platform`)
+    if (currentUser === null) {
+      navigate(`/app/${user._id}/platform`);
     } else {
+      setSelectedUser(currentUser);
       setUsername(currentUser.username);
       setDescription(currentUser.profile.description);
       setProfileImg(currentUser.profile.imgUrl);
-  
+
       currentUser.profile.interests.forEach((i) => {
         addUserInterest({ interest: i, categoryId: i.category });
       });
+
     }
-   
+  };
+
+  const handleClick = () => {
+    if (selectedUser === null) return;
+
+    if (!hasConversation(selectedUser._id))
+      addConversation({
+        _id: selectedUser._id,
+        master: selectedUser.username,
+        status: selectedUser.status,
+        imgUrl: selectedUser.profile.imgUrl,
+      });
+
+    setActiveConversation(selectedUser._id);
+    navigate(`/app/${user._id}/platform`);
   };
 
   useEffect(() => {
@@ -52,6 +72,8 @@ const ProfileController = () => {
     ];
 
     setNavItems(navItems);
+
+    return () => setUserInterests({});
   }, []);
 
   useEffect(() => {
@@ -80,7 +102,9 @@ const ProfileController = () => {
 
           <div className="row-span-1 w-full flex flex-row justify-end items-center">
             {!modifiable ? (
-              <button className="secondary-btn text-xl">Say Hi 👋</button>
+              <button className="secondary-btn text-xl" onClick={handleClick}>
+                Say Hi 👋
+              </button>
             ) : (
               toggleSetting && (
                 <button
