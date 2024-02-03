@@ -70,7 +70,15 @@ const userProfileModel = {
       interests: interests,
     };
 
-    UserService.updateUserProfile({ userId: userId, profile: profile });
+    try {
+      UserService.updateUserProfile({ userId: userId, profile: profile });
+      state.user.username = state.username;
+      state.user.profile.imgUrl = state.profileImg;
+      state.user.profile.description = state.description;
+      state.user.profile.interests = state.userInterests;
+    } catch (e) {
+      console.log(e)
+    }
   }),
 };
 

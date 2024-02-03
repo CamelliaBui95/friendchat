@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import "./interest.css";
 import InterestCard from "./InterestCard";
@@ -7,6 +7,7 @@ import AppService from "../../../services/appServices";
 import ModifiableInterestCard from "./ModifiableInterestCard";
 
 const InterestSection = ({ modifiable }) => {
+  const boxRef = useRef(null);
   const { interestCategories, userInterests } = useStoreState((state) => state);
   const { setCategories } = useStoreActions((actions) => actions);
   const getCategoryById = useStoreState((state) => state.getCategoryById);
@@ -30,6 +31,19 @@ const InterestSection = ({ modifiable }) => {
     });
   }, [userInterests, modifiable]);
 
+  useEffect(() => {
+    const observer = new MutationObserver((list) => {
+      for (let m of list)
+        if (m.type === "childList")
+          if (boxRef.current)
+            boxRef.current.scrollTop = boxRef.current.scrollHeight;
+    });
+
+    if (boxRef.current) observer.observe(boxRef.current, { childList: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   const hasCategory = (categoryId) => {
     if (currentCategories.length === 0) return false;
 
@@ -43,7 +57,7 @@ const InterestSection = ({ modifiable }) => {
       {modifiable && (
         <InterestCategoriesDropdown onCategoryClick={handleCategoryClick} />
       )}
-      <ul className="interest-card-container[ flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto">
+      <ul ref={boxRef} className="interest-card-container[ flex-grow-1 p-2 border border-slate-200 shadow-inner rounded-lg overflow-y-auto">
         {modifiable &&
           currentCategories.map((category, index) => (
             <ModifiableInterestCard

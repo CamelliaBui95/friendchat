@@ -19,7 +19,7 @@ const Card = ({
         <div className="flex flex-row relative">
           <img src={imgUrl} alt="" className="w-[64px] rounded-full" />
           <i
-            className={`absolute transform top-[75%] right-0 text-md fa fa-circle ${status}`}
+            className={`absolute transform top-[75%] right-0 text-md fa fa-circle ${status} border-2 border-white rounded-full`}
           ></i>
         </div>
         <div className="flex flex-row flex-grow-1 justify-start gap-2 relative">

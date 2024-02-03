@@ -85,7 +85,6 @@ const userProfileHandlers = (io, socket) => {
   });
 
   socket.on("update_user_profile", async ({ userId, profile }) => {
-    console.log(profile)
     try {
       await User.findOneAndUpdate(
         { _id: userId },

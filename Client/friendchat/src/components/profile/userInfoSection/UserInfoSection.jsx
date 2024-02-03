@@ -1,27 +1,36 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
-
 const UserInfoSection = ({ toggleSetting, user }) => {
   const inputRef = useRef(null);
   const { profileImg, username, allUsernames } = useStoreState(
     (state) => state
   );
-  const { setUsername, setProfileImg } = useStoreActions((actions) => actions);
+  const { setUsername, setProfileImg, fetchAllUsernames } = useStoreActions((actions) => actions);
   const [input, setInput] = useState("");
   const [errorHidden, setErrorHidden] = useState(true);
 
-  const handleOnChange = ({ value }) => {
-    setInput(value);
-    setUsername(value);
+  const handleOnChange = (e) => {
+    setInput(e.target.value);
+
+    if (isUsernameAvailable(e.target.value)) {
+      setUsername(e.target.value);
+      setErrorHidden(true);
+    } 
+    else
+      setErrorHidden(false);
   };
 
   const isUsernameAvailable = (username) => {
     const predicate1 = user.username === username;
-    const predicate2 =
-      allUsernames.find((u) => u.username === username) === undefined;
+    const predicate2 = allUsernames.find(u => u.username === username) === undefined;
 
     return predicate1 || predicate2;
   };
+
+  useEffect(() => {
+    if (allUsernames.length === 0)
+      fetchAllUsernames();
+  }, [])
 
   useEffect(() => {
     setInput(username);
@@ -44,17 +53,18 @@ const UserInfoSection = ({ toggleSetting, user }) => {
         ></i>
       </div>
       <div className="w-full">
-        <div className="flex flex-row justify-center items-center h-full">
+        <div className="flex flex-row justify-center items-center">
           <input
             type="text"
             className="profile-username-input font-semibold text-center text-2xl 3xl:text-3xl focus:outline-none rounded-xl focus:underline"
             disabled={!toggleSetting}
             value={input}
+            name="username"
             onChange={(e) => handleOnChange(e)}
             ref={inputRef}
           ></input>
         </div>
-        <p className="text-center m-0 text-red-500" hidden={errorHidden}>
+        <p className="text-center mb-0 mt-1 text-red-500" hidden={errorHidden}>
           Username is not available.
         </p>
       </div>

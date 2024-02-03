@@ -7,12 +7,11 @@ import UserService from "../../services/userServices";
 
 const AppLayout = () => {
   const navigate = useNavigate();
-  const { username } = useParams();
   const [navItems, setNavItems] = useState([]);
   const { user } = useStoreState(state => state);
 
   useEffect(() => {
-     if (user && user.username === username) {
+     if (user) {
        if (!UserService.isConnected) UserService.connectUser(user);
      } else navigate("/login");
   }, [user])

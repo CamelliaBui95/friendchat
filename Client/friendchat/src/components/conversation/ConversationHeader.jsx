@@ -11,7 +11,7 @@ const ConversationHeader = ({imgUrl, status, title}) => {
           />
           <i
             className={
-              "fa fa-circle absolute bottom-0 right-0 text-[0.9rem] 3xl:text-[1rem] " +
+              "fa fa-circle absolute -bottom-1 -right-1 text-[0.9rem] 3xl:text-[1rem] border-2 border-white rounded-full " +
               status
             }
           ></i>
