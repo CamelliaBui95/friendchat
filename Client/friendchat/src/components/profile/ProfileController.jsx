@@ -5,6 +5,8 @@ import InterestSection from "./interestSection/InterestSection";
 import UserInfoSection from "./userInfoSection/UserInfoSection";
 import AboutSection from "./aboutSection/AboutSection";
 import UserService from "../../services/userServices";
+import AppService from "../../services/appServices";
+import MessageService from "../../services/messageServices";
 import "./profile.css";
 
 const ProfileController = () => {
@@ -44,7 +46,7 @@ const ProfileController = () => {
     }
   };
 
-  const handleClick = () => {
+  /*const handleClick = () => {
     if (selectedUser === null) return;
 
     if (!hasConversation(selectedUser._id))
@@ -57,7 +59,16 @@ const ProfileController = () => {
 
     setActiveConversation(selectedUser._id);
     navigate(`/app/${user._id}/platform`);
-  };
+  };*/
+
+  const handleClickSayHi = () => {
+    navigate(`/app/${user._id}/platform`);
+    AppService.sendNotification({
+      from: user._id,
+      to: selectedUser._id,
+      notification: `${user.username} says 👋`,
+    });
+  }
 
   useEffect(() => {
     const navItems = [
@@ -102,7 +113,7 @@ const ProfileController = () => {
 
           <div className="row-span-1 w-full flex flex-row justify-end items-center">
             {!modifiable ? (
-              <button className="secondary-btn text-xl" onClick={handleClick}>
+              <button className="secondary-btn text-xl" onClick={handleClickSayHi}>
                 Say Hi 👋
               </button>
             ) : (

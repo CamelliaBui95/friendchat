@@ -5,6 +5,7 @@ import authModel from "./auth-model";
 import conversationModel from "./conversation-model";
 import interestModel from "./interest-model";
 import userProfileModel from "./userProfile-model";
+import notificationModel from "./notification-model";
 
 const storeModel = {
     ...authModel,
@@ -13,7 +14,8 @@ const storeModel = {
     ...messageModel,
     ...emojisModel,
     ...interestModel,
-    ...userProfileModel
+    ...userProfileModel,
+    ...notificationModel,
 }
 
 export default storeModel;

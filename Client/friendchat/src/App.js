@@ -32,8 +32,20 @@ function App() {
     if (receiver === "#public")
       return forwardMessage({ key: receiver, msg: packet });
 
-    if (sender === user._id)
-      return forwardMessage({ key: receiver, msg: packet });
+    if (sender === user._id) {
+      if (!hasConversation(receiver)) {
+        const other = getUser(receiver);
+        addConversation({
+          _id: receiver,
+          master: other.username,
+          status: other.status,
+          imgUrl: other.profile.imgUrl,
+          message: packet
+        })
+      }
+      else return forwardMessage({ key: receiver, msg: packet });
+    }
+      
 
     if (!hasConversation(sender)) {
       const other = getUser(sender);

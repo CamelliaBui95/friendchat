@@ -46,6 +46,7 @@ const conversationModel = {
   removeConversation: action((state, id) => {
     if (state.activeConversation._id === id) 
       state.activeConversation = state.conversations["#public"];
+    state.totalUnreadCount -= state.conversations[id].unreadCount;
     delete state.conversations[id];
   }),
   storeConversation: action((state, id) => {

@@ -1,0 +1,19 @@
+.notification-container {
+    min-width: 30%;
+    max-width: 50%;
+    overflow: hidden;
+}
+
+.notification {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    padding: 0.2rem;
+    @apply rounded-lg;
+    background-color: white;
+    color: var(--dark-blue);
+    transition: all 0.9s;
+}
+
+.hide-notification {
+    transform: translateX(-110%);
+}

@@ -2,17 +2,33 @@ const {  getSocket } = require("./userHandlers");
 
 const messagesDelivery = (io, socket) => {  
     socket.on("chat_message", packet => {
+        console.log(packet)
         const receiver = packet.to;
-        if(receiver === "#public")
+        if (receiver === "#public")
             io.to(receiver).emit("chat_message", packet);
         else {
             const senderSocket = getSocket(packet.sender);
             const receiverSocket = getSocket(receiver);
-            if(receiverSocket)
+            if (receiverSocket)
                 io.to([senderSocket.id, receiverSocket.id]).emit("chat_message", packet);
             else
                 io.to(senderSocket.id).emit("get_notified", "This User has disconnected");
         }
+    });
+
+    socket.on("notification", notification => {
+        const toSocket = getSocket(notification.to);
+        const fromSocket = getSocket(notification.from);
+
+        if (toSocket) {
+            io.to(toSocket.id).emit("get_notification", notification);
+            io.to([toSocket.id, fromSocket.id]).emit("chat_message", {
+              sender: notification.from,
+              to: notification.to,
+              payload: { type: "text", data: "Hi 👋!" },
+            });
+        }
+            
     })
 }
 
@@ -23,3 +39,10 @@ module.exports = { messagesDelivery };
                data: String},
 
      to: user._id }*/
+
+/**
+ * {
+ *    to: userId,
+ *    notification: String
+ * }
+ */

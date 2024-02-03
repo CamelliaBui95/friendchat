@@ -37,6 +37,16 @@ class AppService {
       }
     );
   };
+
+  static sendNotification = notification => {
+    this.socket.volatile.emit("notification", notification)
+  }
+
+  static getNotification = callback => {
+    this.socket.on("get_notification", notification => {
+      callback(notification);
+    })
+  }
 }
 
 export default AppService;
