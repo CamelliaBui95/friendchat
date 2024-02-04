@@ -1,7 +1,7 @@
 import { action, thunk, computed } from "easy-peasy";
 
 const conversationModel = {
-  activeConversation: {},
+  activeConversation: null,
   conversations: {},
   addConversation: action((state, conversation) => {
     const { _id, master, status, imgUrl, message } = conversation;

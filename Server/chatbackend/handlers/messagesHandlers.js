@@ -22,11 +22,14 @@ const messagesDelivery = (io, socket) => {
 
         if (toSocket) {
             io.to(toSocket.id).emit("get_notification", notification);
-            io.to([toSocket.id, fromSocket.id]).emit("chat_message", {
-              sender: notification.from,
-              to: notification.to,
-              payload: { type: "text", data: "Hi 👋!" },
-            });
+            if (notification.hasOwnProperty("message") && notification.message !== null) {
+                io.to([toSocket.id, fromSocket.id]).emit("chat_message", {
+                  sender: notification.from,
+                  to: notification.to,
+                  payload: notification.message.payload,
+                });
+            }
+            
         }
             
     })

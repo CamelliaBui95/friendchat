@@ -1,7 +1,11 @@
 import { action, computed } from "easy-peasy";
 
 const messageModel = {
+  currentMessage: "",
   totalUnreadCount: 0,
+  setCurrentMessage: action((state, msg) => {
+    state.currentMessage = msg;
+  }),
   forwardMessage: action((state, packet) => {
     const { key, msg } = packet;
     const { sender } = msg;

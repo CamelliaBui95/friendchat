@@ -3,20 +3,10 @@ import Conversation from './Conversation';
 import MessageService from '../../services/messageServices';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-const ConversationController = ({onCheckPacket}) => {
+const ConversationController = () => {
   const {activeConversation, user} = useStoreState(state => state);
-  const [currentMessage, setCurrentMessage] = useState("");
   const [notification, setNotification] = useState("");
   const {onReadMessages} = useStoreActions(actions => actions);
-
-  useEffect(() => {
-    MessageService.getMessage(setCurrentMessage);
-    MessageService.getNotification(setNotification);
-  }, []);
-
-  useEffect(() => {
-    if (currentMessage) onCheckPacket(currentMessage);
-  }, [currentMessage])
 
   useEffect(() => {
     if(activeConversation)

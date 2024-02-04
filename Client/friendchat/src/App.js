@@ -1,72 +1,41 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useStoreState, useStoreActions, useStoreRehydrated } from "easy-peasy";
 import Status from "./components/status/Status";
-import UserService from "./services/userServices";
 import Tabs from "./components/tabs/Tabs";
 import List from "./components/list/List";
 import ConversationController from "./components/conversation/ConversationController";
 
 function App() {
   const navigate = useNavigate();
-  const [setNavItems] = useOutletContext();
+  const [setNavItems, handleCheckPacket] = useOutletContext();
   
   const isRehydrated = useStoreRehydrated();
-  const { user, totalUnreadCount } = useStoreState((state) => state);
+  const { user, totalUnreadCount, activeConversation, conversations } = useStoreState((state) => state);
 
   const {
     addConversation,
-    forwardMessage,
     setActiveConversation,
     handleLogOut,
   } = useStoreActions((actions) => actions);
-  const getUser = useStoreState((state) => state.getUser);
-  const hasConversation = useStoreState((state) => state.hasConversation);
   const [tab, setTab] = useState("users");
   const [searchVal, setSearchVal] = useState("");
 
-  const handleCheckPacket = (packet) => {
-    const { sender, to: receiver } = packet;
-
-    if (receiver === "#public")
-      return forwardMessage({ key: receiver, msg: packet });
-
-    if (sender === user._id) {
-      if (!hasConversation(receiver)) {
-        const other = getUser(receiver);
+  useEffect(() => {
+    if (activeConversation === null) {
+      if (!conversations.hasOwnProperty("#public")) {
         addConversation({
-          _id: receiver,
-          master: other.username,
-          status: other.status,
-          imgUrl: other.profile.imgUrl,
-          message: packet
-        })
+          _id: "#public",
+          master: "#public",
+          status: "online",
+          imgUrl: "/images/universe.png",
+        });
       }
-      else return forwardMessage({ key: receiver, msg: packet });
+      setActiveConversation("#public");
     }
       
-
-    if (!hasConversation(sender)) {
-      const other = getUser(sender);
-      return addConversation({
-        _id: sender,
-        master: other.username,
-        status: other.status,
-        imgUrl: other.profile.imgUrl,
-        message: packet,
-      });
-    } else forwardMessage({ key: sender, msg: packet });
-  };
-
-  useEffect(() => {
-    addConversation({
-      _id: "#public",
-      master: "#public",
-      status: "online",
-      imgUrl: "/images/universe.png",
-    });
-    setActiveConversation("#public");
+    
   }, []);
 
   useEffect(() => {
@@ -84,7 +53,7 @@ function App() {
     setNavItems(navItems);
   }, [user]);
 
-  if (!isRehydrated) return <div>Loading...in app</div>;
+  if (!isRehydrated) return <div>Loading...</div>;
 
   return (
     <div className="grid grid-cols-12 gap-2 w-[90%] h-[90%]">

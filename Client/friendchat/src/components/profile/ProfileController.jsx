@@ -23,8 +23,7 @@ const ProfileController = () => {
     addConversation,
     setActiveConversation,
   } = useStoreActions((actions) => actions);
-  const hasConversation = useStoreState((state) => state.hasConversation);
-  const { user } = useStoreState((state) => state);
+  const { user, activeConversation } = useStoreState((state) => state);
   const navigate = useNavigate();
   const [modifiable, setModifiable] = useState(false);
   const [toggleSetting, setToggleSetting] = useState(false);
@@ -46,28 +45,20 @@ const ProfileController = () => {
     }
   };
 
-  /*const handleClick = () => {
-    if (selectedUser === null) return;
-
-    if (!hasConversation(selectedUser._id))
-      addConversation({
-        _id: selectedUser._id,
-        master: selectedUser.username,
-        status: selectedUser.status,
-        imgUrl: selectedUser.profile.imgUrl,
-      });
-
-    setActiveConversation(selectedUser._id);
-    navigate(`/app/${user._id}/platform`);
-  };*/
-
   const handleClickSayHi = () => {
-    navigate(`/app/${user._id}/platform`);
     AppService.sendNotification({
       from: user._id,
       to: selectedUser._id,
       notification: `${user.username} says 👋`,
+      message: { payload: { type: "text", data: "Hi 👋!" } },
     });
+  
+    // MessageService.sendMessage({
+    //   sender: user._id,
+    //   to: selectedUser._id,
+    //   payload: { type: "text", data: "Hi 👋!" },
+    // });
+   
   }
 
   useEffect(() => {

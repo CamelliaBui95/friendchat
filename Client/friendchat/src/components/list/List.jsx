@@ -12,10 +12,7 @@ const List = ({ selectedTab, searchValue }) => {
   const {activeConversation, user} = useStoreState(state => state);
   
   const {
-    setAllUsers,
-    updateUsers,
     setActiveConversation,
-    updateConversation,
     storeConversation,
     removeConversation
   } = useStoreActions((actions) => actions);
@@ -31,20 +28,6 @@ const List = ({ selectedTab, searchValue }) => {
     storeConversation(convo._id);
     removeConversation(convo._id);
   }
-
-  useEffect(() => {
-    UserService.getAllUsers(setAllUsers);
-    UserService.updateUserList((updatedUser) => {
-      updateUsers(updatedUser);
-      updateConversation({
-        _id: updatedUser._id,
-        master: updatedUser.username,
-        status: updatedUser.status,
-        imgUrl: updatedUser.profile.imgUrl,
-      })
-    });
-
-  }, [usersList]);
 
   let filteredItems;
   if (selectedTab === "users")
