@@ -2,7 +2,6 @@ const {  getSocket } = require("./userHandlers");
 
 const messagesDelivery = (io, socket) => {  
     socket.on("chat_message", packet => {
-        console.log(packet)
         const receiver = packet.to;
         if (receiver === "#public")
             io.to(receiver).emit("chat_message", packet);

@@ -39,7 +39,6 @@ class AppService {
   };
 
   static sendNotification = notification => {
-    console.log("sending notif...")
     this.socket.volatile.emit("notification", notification)
   }
 

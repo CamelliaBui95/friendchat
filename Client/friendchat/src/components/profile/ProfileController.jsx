@@ -20,10 +20,8 @@ const ProfileController = () => {
     addUserInterest,
     setProfileImg,
     updateProfile,
-    addConversation,
-    setActiveConversation,
   } = useStoreActions((actions) => actions);
-  const { user, activeConversation } = useStoreState((state) => state);
+  const { user } = useStoreState((state) => state);
   const navigate = useNavigate();
   const [modifiable, setModifiable] = useState(false);
   const [toggleSetting, setToggleSetting] = useState(false);

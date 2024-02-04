@@ -52,6 +52,7 @@ const Input = ({ onSubmit }) => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             ref={textRef}
+            spellCheck="false"
           />
         </form>
         <div className="flex gap-2">

@@ -41,6 +41,7 @@ const AboutSection = ({ toggleSetting }) => {
             setDescription(e.target.value);
           }}
           disabled={!toggleSetting}
+          spellCheck='false'
         ></textarea>
       </div>
     </div>
